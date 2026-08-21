@@ -2801,3 +2801,182 @@
     transform:translateY(-2px);
 
 }
+/* =====================================
+   LEAVE TEAM POPUP
+===================================== */
+
+
+.leave-popup-overlay {
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+    rgba(0,0,0,.75);
+
+    backdrop-filter:blur(8px);
+
+    z-index:9999;
+
+}
+
+
+.leave-popup-box {
+
+    width:360px;
+
+    padding:35px;
+
+    text-align:center;
+
+    background:#080808;
+
+    border:1px solid var(--neon);
+
+    box-shadow:
+    0 0 25px rgba(200,255,0,.25),
+    inset 0 0 20px rgba(200,255,0,.05);
+
+
+    animation:
+    popupShow .35s ease;
+
+}
+
+
+@keyframes popupShow {
+
+    from {
+
+        opacity:0;
+
+        transform:
+        scale(.8)
+        translateY(20px);
+
+    }
+
+
+    to {
+
+        opacity:1;
+
+        transform:
+        scale(1)
+        translateY(0);
+
+    }
+
+}
+
+
+
+.popup-icon {
+
+    font-size:40px;
+
+    color:var(--neon);
+
+    text-shadow:
+    0 0 20px var(--neon);
+
+}
+
+
+
+.leave-popup-box h2 {
+
+    margin-top:15px;
+
+    color:white;
+
+    font-size:24px;
+
+    font-weight:950;
+
+    letter-spacing:2px;
+
+}
+
+
+
+.leave-popup-box p {
+
+    color:#888;
+
+    font-size:12px;
+
+    margin:15px 0 30px;
+
+}
+
+
+
+.popup-actions {
+
+    display:flex;
+
+    gap:15px;
+
+    justify-content:center;
+
+}
+
+
+
+.popup-actions button {
+
+    width:120px;
+
+    height:42px;
+
+    cursor:pointer;
+
+    font-size:10px;
+
+    font-weight:950;
+
+    letter-spacing:2px;
+
+}
+
+
+
+.popup-no {
+
+    background:#111;
+
+    color:#aaa;
+
+    border:1px solid #333;
+
+}
+
+
+
+.popup-yes {
+
+    background:var(--neon);
+
+    color:#050505;
+
+    border:none;
+
+    box-shadow:
+    0 0 20px rgba(200,255,0,.35);
+
+}
+
+
+.popup-actions button:hover {
+
+    transform:translateY(-3px);
+
+}

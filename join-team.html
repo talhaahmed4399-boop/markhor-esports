@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Markhor Esports - Join Team</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<a class="logo" href="index.html">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</a>
+
+<nav>
+
+<a href="index.html">HOME</a>
+
+<a href="index.html#tournaments">TOURNAMENTS</a>
+
+<a href="index.html#leaderboard">LEADERBOARD</a>
+
+<a href="profile.html">PROFILE</a>
+
+<a href="team.html">TEAMS</a>
+
+</nav>
+
+</header>
+
+
+<main>
+
+<section class="profile-page">
+
+
+<div class="profile-page-title">
+
+<small>MARKHOR ESPORTS</small>
+
+<h1>JOIN TEAM</h1>
+
+<p>
+Choose a registered esports team and send a request to join.
+</p>
+
+</div>
+
+
+<div class="join-tools">
+
+<input
+id="teamSearch"
+type="text"
+placeholder="Search team name or tag..."
+autocomplete="off"
+>
+
+<button
+class="outline"
+id="refreshTeams"
+type="button"
+>
+REFRESH
+</button>
+
+</div>
+
+
+<div
+class="teams-list"
+id="teamsList"
+>
+
+<div class="team-loading">
+Loading registered teams...
+</div>
+
+</div>
+
+
+<p id="joinMessage"></p>
+
+
+</section>
+
+</main>
+
+
+<footer>
+
+<div class="logo">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</div>
+
+<p>
+© 2026 Markhor Esports. Compete. Conquer. Rise.
+</p>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="join-team.js"></script>
+
+</body>
+
+</html>

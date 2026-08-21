@@ -372,6 +372,10 @@ document.getElementById("auth").onsubmit =
 
             msg.textContent =
                 "Login successful.";
+            
+            setTimeout(function () {
+    window.location.href = "profile.html";
+}, 800);
 
             setTimeout(function () {
 

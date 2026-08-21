@@ -137,17 +137,13 @@ async function loadMyTeam() {
         ===================================== */
 
         const {
-            data: membership,
-            error: membershipError
-        } = await client
-            .from("team_members")
-            .select("team_id")
-            .eq(
-                "player_id",
-                currentUser.id
-            )
-            .limit(1)
-            .maybeSingle();
+    data: membership,
+    error: membershipError
+} = await client
+    .from("team_members")
+    .select("team_id, player_id, role")
+    .eq("player_id", currentUser.id)
+    .maybeSingle();
 
 
         if (membershipError) {

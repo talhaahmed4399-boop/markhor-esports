@@ -1315,5 +1315,113 @@ if (chatInput) {
 /* =========================================
    START
 ========================================= */
+/* =========================================
+   LEAVE TEAM
+========================================= */
 
+const leaveTeamBtn =
+    document.getElementById("leaveTeamBtn");
+
+
+if (leaveTeamBtn) {
+
+    leaveTeamBtn.addEventListener(
+        "click",
+        () => {
+
+            const confirmed = confirm(
+                "Are you really want to leave your team?"
+            );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            leaveTeam();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   LEAVE TEAM FUNCTION
+========================================= */
+
+async function leaveTeam() {
+
+    if (!currentUser || !currentTeamId) {
+
+        alert(
+            "Team information is not loaded."
+        );
+
+        return;
+
+    }
+
+
+    leaveTeamBtn.disabled =
+        true;
+
+
+    leaveTeamBtn.textContent =
+        "LEAVING...";
+
+
+    const {
+        error
+    } = await client
+        .from("team_members")
+        .delete()
+        .eq(
+            "team_id",
+            currentTeamId
+        )
+        .eq(
+            "player_id",
+            currentUser.id
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Leave team error:",
+            error
+        );
+
+
+        alert(
+            "Unable to leave team."
+        );
+
+
+        leaveTeamBtn.disabled =
+            false;
+
+
+        leaveTeamBtn.textContent =
+            "LEAVE TEAM";
+
+
+        return;
+
+    }
+
+
+    alert(
+        "You have left the team."
+    );
+
+
+    window.location.href =
+        "team.html";
+
+}
 loadMyTeam();

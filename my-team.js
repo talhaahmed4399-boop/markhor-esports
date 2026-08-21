@@ -732,27 +732,27 @@ async function handleRequest(
     status
 ) {
 
+
+    // Request data fetch
     const {
-        error
+        data: request,
+        error: requestError
     } = await client
         .from("team_join_requests")
-        .update({
-            status: status
-        })
+        .select("*")
         .eq("id", requestId)
-        .eq("team_id", currentTeamId)
-        .eq("status", "pending");
+        .single();
 
 
-    if (error) {
+    if (requestError || !request) {
 
         console.error(
-            "Request update error:",
-            error
+            "Request fetch error:",
+            requestError
         );
 
         alert(
-            "Request could not be updated."
+            "Request not found"
         );
 
         return;
@@ -760,12 +760,100 @@ async function handleRequest(
     }
 
 
+
+    // ACCEPT PLAYER
+    if (status === "accepted") {
+
+
+        const {
+            error: memberError
+        } = await client
+            .from("team_members")
+            .insert({
+
+                team_id:
+                    request.team_id,
+
+                player_id:
+                    request.player_id,
+
+                role:
+                    "player"
+
+            });
+
+
+
+        if (memberError) {
+
+            console.error(
+                "Member add error:",
+                memberError
+            );
+
+            alert(
+                "Player could not be added"
+            );
+
+            return;
+
+        }
+
+
+    }
+
+
+
+    // UPDATE REQUEST STATUS
+
+    const {
+        error:updateError
+    } = await client
+        .from("team_join_requests")
+        .update({
+
+            status: status
+
+        })
+        .eq(
+            "id",
+            requestId
+        );
+
+
+
+    if(updateError){
+
+        console.error(
+            "Request update error:",
+            updateError
+        );
+
+        alert(
+            "Request update failed"
+        );
+
+        return;
+
+    }
+
+
+
+    // Refresh
+
     await loadRequests();
 
     await loadRequestCount();
 
-}
 
+    alert(
+        status === "accepted"
+        ? "Player joined your team"
+        : "Request rejected"
+    );
+
+
+}
 
 /* =========================================
    NOTIFICATION BUTTON

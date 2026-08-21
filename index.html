@@ -445,49 +445,72 @@ UPCOMING
 <p>Create and manage your Markhor Esports player profile.</p>
 </div>
 
-
 <div class="accountbox">
 
-<h3>PLAYER PROFILE</h3>
+<div class="player-card">
 
-<p id="status">
-You are currently signed out.
-</p>
+<div class="player-card-top">
+<div class="player-avatar">M</div>
+
+<div>
+<small>MARKHOR ESPORTS</small>
+<h3>PLAYER ID</h3>
+</div>
+</div>
 
 
-<div class="profile-row">
-<label>Username</label>
+<div class="player-status">
+<span></span>
+ONLINE PLAYER
+</div>
+
+
+<div class="profile-fields">
+
+<div class="profile-field">
+<label>USERNAME</label>
 <input id="profileUsername" type="text" readonly>
 </div>
 
 
-<div class="profile-row">
-<label>Full Name</label>
+<div class="profile-field">
+<label>FULL NAME</label>
 <input id="fullName" type="text" placeholder="Enter Full Name">
 </div>
 
 
-<div class="profile-row">
+<div class="profile-field">
 <label>PUBG UID</label>
 <input id="pubgUid" type="text" placeholder="Enter PUBG UID">
 </div>
 
 
-<div class="profile-row">
-<label>Country</label>
+<div class="profile-field">
+<label>COUNTRY</label>
 <input id="country" type="text" value="Pakistan">
 </div>
 
+</div>
 
-<button class="lime full" id="saveProfile">
+
+<div class="player-actions">
+
+<button class="lime full" id="saveProfile" type="button">
 SAVE PROFILE
 </button>
 
-
-<button class="outline full" id="accountBtn">
+<button class="outline full" id="accountBtn" type="button">
 LOGIN / SIGN UP
 </button>
 
+</div>
+
+
+<p id="status">
+You are currently signed out.
+</p>
+
+</div>
 
 </div>
 

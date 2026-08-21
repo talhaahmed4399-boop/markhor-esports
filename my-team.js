@@ -490,20 +490,31 @@ async function loadRequests() {
     `;
 
 
-    const {
-        data: requests,
-        error
-    } = await client
-        .from("team_join_requests")
-        .select("*")
-        .eq("team_id", currentTeamId)
-        .eq("status", "pending")
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
+   const {
+    data: requests,
+    error
+} = await client
+    .from("team_join_requests")
+    .select(`
+        id,
+        player_id,
+        status,
+        profiles (
+            username,
+            full_name,
+            pubguid,
+            country,
+            avatarurl
+        )
+    `)
+    .eq("team_id", currentTeamId)
+    .eq("status", "pending")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
 
     if (error) {

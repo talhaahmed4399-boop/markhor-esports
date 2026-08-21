@@ -1,3 +1,13 @@
+/* =========================================
+   MARKHOR ESPORTS
+   MY TEAM SYSTEM
+========================================= */
+
+
+/* =========================================
+   SUPABASE
+========================================= */
+
 const client = window.supabase.createClient(
     window.MARKHOR_CONFIG.supabaseUrl,
     window.MARKHOR_CONFIG.supabasePublishableKey
@@ -14,6 +24,9 @@ const pageMessage =
 const teamContainer =
     document.getElementById("myTeamContainer");
 
+
+/* CHAT */
+
 const chatMessages =
     document.getElementById("teamChatMessages");
 
@@ -22,6 +35,9 @@ const chatInput =
 
 const sendButton =
     document.getElementById("sendTeamMessage");
+
+
+/* REQUESTS */
 
 const requestsButton =
     document.getElementById("teamRequestsButton");
@@ -38,6 +54,9 @@ const requestsList =
 const closeRequests =
     document.getElementById("closeTeamRequests");
 
+
+/* LEAVE */
+
 const leaveTeamBtn =
     document.getElementById("leaveTeamBtn");
 
@@ -51,10 +70,33 @@ const confirmLeave =
     document.getElementById("confirmLeave");
 
 
+/* DISBAND */
+
+const disbandTeamBtn =
+    document.getElementById("disbandTeamBtn");
+
+const disbandPopup =
+    document.getElementById("disbandPopup");
+
+const cancelDisband =
+    document.getElementById("cancelDisband");
+
+const confirmDisband =
+    document.getElementById("confirmDisband");
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
 let currentUser = null;
+
 let currentTeamId = null;
 
+let currentRole = null;
+
 let chatChannel = null;
+
 let requestChannel = null;
 
 
@@ -68,8 +110,10 @@ function setText(id, value) {
         document.getElementById(id);
 
     if (element) {
+
         element.textContent =
             value ?? "-";
+
     }
 
 }
@@ -79,13 +123,13 @@ function setText(id, value) {
    ESCAPE HTML
 ========================================= */
 
-function escapeHtml(text) {
+function escapeHtml(value) {
 
     const div =
         document.createElement("div");
 
     div.textContent =
-        text || "";
+        value || "";
 
     return div.innerHTML;
 
@@ -102,11 +146,16 @@ async function loadMyTeam() {
 
         if (pageMessage) {
 
+            pageMessage.style.display =
+                "block";
+
             pageMessage.textContent =
                 "Loading your team...";
 
         }
 
+
+        /* GET USER */
 
         const {
             data: userData,
@@ -114,7 +163,11 @@ async function loadMyTeam() {
         } = await client.auth.getUser();
 
 
-        if (userError || !userData.user) {
+        if (
+            userError ||
+            !userData ||
+            !userData.user
+        ) {
 
             if (pageMessage) {
 
@@ -132,18 +185,27 @@ async function loadMyTeam() {
             userData.user;
 
 
-        /* =====================================
-           FIND TEAM MEMBERSHIP
-        ===================================== */
+        console.log(
+            "Current user:",
+            currentUser.id
+        );
+
+
+        /* FIND MEMBERSHIP */
 
         const {
-    data: membership,
-    error: membershipError
-} = await client
-    .from("team_members")
-    .select("team_id, player_id, role")
-    .eq("player_id", currentUser.id)
-    .maybeSingle();
+            data: membership,
+            error: membershipError
+        } = await client
+            .from("team_members")
+            .select(
+                "team_id, player_id, role"
+            )
+            .eq(
+                "player_id",
+                currentUser.id
+            )
+            .maybeSingle();
 
 
         if (membershipError) {
@@ -152,6 +214,7 @@ async function loadMyTeam() {
                 "Membership error:",
                 membershipError
             );
+
 
             if (pageMessage) {
 
@@ -165,12 +228,21 @@ async function loadMyTeam() {
         }
 
 
+        /* NO TEAM */
+
         if (!membership) {
 
             if (pageMessage) {
 
                 pageMessage.textContent =
                     "You are not a member of any team.";
+
+            }
+
+            if (teamContainer) {
+
+                teamContainer.style.display =
+                    "none";
 
             }
 
@@ -182,35 +254,65 @@ async function loadMyTeam() {
         currentTeamId =
             membership.team_id;
 
-        const disbandTeamBtn =
-document.getElementById("disbandTeamBtn");
+        currentRole =
+            membership.role;
 
 
-if(membership.role === "captain"){
+        console.log(
+            "Team ID:",
+            currentTeamId
+        );
 
-    if(leaveTeamBtn)
-        leaveTeamBtn.style.display="none";
-
-
-    if(disbandTeamBtn)
-        disbandTeamBtn.style.display="block";
-
-}
-else{
-
-    if(leaveTeamBtn)
-        leaveTeamBtn.style.display="block";
-
-
-    if(disbandTeamBtn)
-        disbandTeamBtn.style.display="none";
-
-}
+        console.log(
+            "Role:",
+            currentRole
+        );
 
 
         /* =====================================
-           LOAD TEAM
+           CAPTAIN / PLAYER BUTTONS
         ===================================== */
+
+        if (
+            currentRole === "captain"
+        ) {
+
+            if (leaveTeamBtn) {
+
+                leaveTeamBtn.style.display =
+                    "none";
+
+            }
+
+
+            if (disbandTeamBtn) {
+
+                disbandTeamBtn.style.display =
+                    "block";
+
+            }
+
+        } else {
+
+            if (leaveTeamBtn) {
+
+                leaveTeamBtn.style.display =
+                    "block";
+
+            }
+
+
+            if (disbandTeamBtn) {
+
+                disbandTeamBtn.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        /* LOAD TEAM */
 
         const {
             data: team,
@@ -228,9 +330,10 @@ else{
         if (teamError) {
 
             console.error(
-                "Team error:",
+                "Team loading error:",
                 teamError
             );
+
 
             if (pageMessage) {
 
@@ -258,9 +361,7 @@ else{
         }
 
 
-        /* =====================================
-           SHOW TEAM PAGE
-        ===================================== */
+        /* SHOW TEAM */
 
         if (pageMessage) {
 
@@ -279,7 +380,7 @@ else{
 
 
         /* =====================================
-           BASIC TEAM DATA
+           TEAM INFORMATION
         ===================================== */
 
         setText(
@@ -294,8 +395,7 @@ else{
 
         setText(
             "myTeamIGL",
-            team.igl ||
-            team.captain_name
+            team.igl_name
         );
 
         setText(
@@ -304,23 +404,23 @@ else{
         );
 
 
-        /* =====================================
-           TEAM LOGO
-        ===================================== */
+        /* LOGO */
 
-        const logo =
-            document.getElementById("myTeamLogo");
+        const teamLogo =
+            document.getElementById(
+                "myTeamLogo"
+            );
 
 
         if (
-            logo &&
-            team.team_logo
+            teamLogo &&
+            team.logo_url
         ) {
 
-            logo.innerHTML = `
+            teamLogo.innerHTML = `
                 <img
-                    src="${escapeHtml(team.team_logo)}"
-                    alt="Team Logo"
+                    src="${escapeHtml(team.logo_url)}"
+                    alt="${escapeHtml(team.name)}"
                 >
             `;
 
@@ -328,39 +428,7 @@ else{
 
 
         /* =====================================
-           TEAM STATS
-        ===================================== */
-
-        setText(
-            "teamRank",
-            team.rank
-                ? "#" + team.rank
-                : "#--"
-        );
-
-        setText(
-            "teamPoints",
-            team.points || 0
-        );
-
-        setText(
-            "teamMatches",
-            team.matches || 0
-        );
-
-        setText(
-            "teamKills",
-            team.kills || 0
-        );
-
-        setText(
-            "teamWins",
-            team.wwcd || 0
-        );
-
-
-        /* =====================================
-           PLAYER 1
+           PLAYERS
         ===================================== */
 
         setText(
@@ -377,10 +445,6 @@ else{
         );
 
 
-        /* =====================================
-           PLAYER 2
-        ===================================== */
-
         setText(
             "p2Name",
             team.player2_name
@@ -394,10 +458,6 @@ else{
                 : "PUBG UID: -"
         );
 
-
-        /* =====================================
-           PLAYER 3
-        ===================================== */
 
         setText(
             "p3Name",
@@ -413,10 +473,6 @@ else{
         );
 
 
-        /* =====================================
-           PLAYER 4
-        ===================================== */
-
         setText(
             "p4Name",
             team.player4_name
@@ -431,9 +487,7 @@ else{
         );
 
 
-        /* =====================================
-           SUBSTITUTE 1
-        ===================================== */
+        /* SUBSTITUTES */
 
         setText(
             "sub1Name",
@@ -449,10 +503,6 @@ else{
                 : "PUBG UID: -"
         );
 
-
-        /* =====================================
-           SUBSTITUTE 2
-        ===================================== */
 
         setText(
             "sub2Name",
@@ -475,6 +525,7 @@ else{
 
         let rosterCount = 0;
 
+
         if (team.player1_name)
             rosterCount++;
 
@@ -495,24 +546,19 @@ else{
 
 
         /* =====================================
-           LOAD CHAT
+           TEAM CHAT
         ===================================== */
 
         await loadMessages();
 
+        startRealtime();
+
 
         /* =====================================
-           LOAD REQUESTS
+           JOIN REQUESTS
         ===================================== */
 
         await loadRequestCount();
-
-
-        /* =====================================
-           START REALTIME
-        ===================================== */
-
-        startRealtime();
 
         startRequestRealtime();
 
@@ -520,9 +566,10 @@ else{
     } catch (error) {
 
         console.error(
-            "My Team error:",
+            "MY TEAM ERROR:",
             error
         );
+
 
         if (pageMessage) {
 
@@ -542,7 +589,8 @@ else{
 
 async function loadRequestCount() {
 
-    if (!currentTeamId) return;
+    if (!currentTeamId)
+        return;
 
 
     const {
@@ -584,6 +632,7 @@ async function loadRequestCount() {
         requestCount.textContent =
             count || 0;
 
+
         requestCount.style.display =
             count > 0
                 ? "flex"
@@ -600,7 +649,8 @@ async function loadRequestCount() {
 
 async function loadRequests() {
 
-    if (!currentTeamId) return;
+    if (!currentTeamId)
+        return;
 
 
     if (requestsList) {
@@ -651,9 +701,10 @@ async function loadRequests() {
     if (error) {
 
         console.error(
-            "Requests error:",
+            "Request loading error:",
             error
         );
+
 
         if (requestsList) {
 
@@ -692,7 +743,8 @@ async function loadRequests() {
 
     if (requestsList) {
 
-        requestsList.innerHTML = "";
+        requestsList.innerHTML =
+            "";
 
     }
 
@@ -714,35 +766,31 @@ async function loadRequests() {
                 "team-request-card";
 
 
-            const avatar =
-                profile.avatarurl
-                    ? `
-                        <img
-                            src="${escapeHtml(profile.avatarurl)}"
-                            alt="Player Avatar"
-                        >
-                    `
-                    : `
-                        <span>
-                            ${escapeHtml(
-                                (
-                                    profile.username ||
-                                    "P"
-                                )
-                                .charAt(0)
-                                .toUpperCase()
-                            )}
-                        </span>
-                    `;
-
-
             card.innerHTML = `
 
                 <div class="team-request-profile">
 
                     <div class="team-request-avatar">
 
-                        ${avatar}
+                        ${
+                            profile.avatarurl
+                            ?
+                            `<img
+                                src="${escapeHtml(profile.avatarurl)}"
+                                alt="Avatar"
+                            >`
+                            :
+                            `<span>
+                                ${escapeHtml(
+                                    (
+                                        profile.username ||
+                                        "P"
+                                    )
+                                    .charAt(0)
+                                    .toUpperCase()
+                                )}
+                            </span>`
+                        }
 
                     </div>
 
@@ -755,7 +803,6 @@ async function loadRequests() {
                                 "Unknown Player"
                             )}
                         </strong>
-
 
                         <span>
                             ${escapeHtml(
@@ -775,7 +822,6 @@ async function loadRequests() {
                                 )}
                             </small>
 
-
                             <small>
                                 COUNTRY:
                                 ${escapeHtml(
@@ -794,8 +840,8 @@ async function loadRequests() {
                 <div class="team-request-actions">
 
                     <button
-                        class="view-request-profile"
                         type="button"
+                        class="view-request-profile"
                         data-player-id="${escapeHtml(
                             request.player_id
                         )}"
@@ -805,8 +851,8 @@ async function loadRequests() {
 
 
                     <button
-                        class="accept-request"
                         type="button"
+                        class="accept-request"
                         data-request-id="${escapeHtml(
                             request.id
                         )}"
@@ -816,8 +862,8 @@ async function loadRequests() {
 
 
                     <button
-                        class="reject-request"
                         type="button"
+                        class="reject-request"
                         data-request-id="${escapeHtml(
                             request.id
                         )}"
@@ -852,6 +898,7 @@ async function loadRequests() {
 ========================================= */
 
 function attachRequestButtons() {
+
 
     document
         .querySelectorAll(
@@ -948,7 +995,7 @@ function attachRequestButtons() {
 
 
 /* =========================================
-   ACCEPT / REJECT REQUEST
+   ACCEPT / REJECT
 ========================================= */
 
 async function handleRequest(
@@ -970,7 +1017,7 @@ async function handleRequest(
             "team_id",
             currentTeamId
         )
-        .single();
+        .maybeSingle();
 
 
     if (
@@ -979,7 +1026,7 @@ async function handleRequest(
     ) {
 
         console.error(
-            "Request fetch error:",
+            "Request error:",
             requestError
         );
 
@@ -987,16 +1034,12 @@ async function handleRequest(
             "Request not found."
         );
 
-        await loadRequests();
-
         return;
 
     }
 
 
-    /* =====================================
-       ACCEPT
-    ===================================== */
+    /* ACCEPT */
 
     if (
         status === "accepted"
@@ -1023,30 +1066,14 @@ async function handleRequest(
         if (memberError) {
 
             console.error(
-                "Member add error:",
+                "Add member error:",
                 memberError
             );
 
 
-            if (
-                memberError.code ===
-                "23505"
-            ) {
-
-                alert(
-                    "This player is already in the team."
-                );
-
-            } else {
-
-                alert(
-                    "Player could not be added to the team."
-                );
-
-            }
-
-
-            await loadRequests();
+            alert(
+                "Player could not be added."
+            );
 
             return;
 
@@ -1055,9 +1082,7 @@ async function handleRequest(
     }
 
 
-    /* =====================================
-       UPDATE REQUEST
-    ===================================== */
+    /* UPDATE REQUEST */
 
     const {
         error: updateError
@@ -1069,10 +1094,6 @@ async function handleRequest(
         .eq(
             "id",
             requestId
-        )
-        .eq(
-            "team_id",
-            currentTeamId
         );
 
 
@@ -1097,27 +1118,17 @@ async function handleRequest(
     await loadRequestCount();
 
 
-    if (
+    alert(
         status === "accepted"
-    ) {
-
-        alert(
-            "Player joined your team."
-        );
-
-    } else {
-
-        alert(
-            "Request rejected."
-        );
-
-    }
+            ? "Player joined your team."
+            : "Request rejected."
+    );
 
 }
 
 
 /* =========================================
-   NOTIFICATION BUTTON
+   REQUEST PANEL
 ========================================= */
 
 if (requestsButton) {
@@ -1126,20 +1137,21 @@ if (requestsButton) {
         "click",
         async () => {
 
-            if (
-                !requestsPanel ||
+            if (!requestsPanel)
+                return;
+
+
+            const isHidden =
                 requestsPanel.style.display ===
                 "none" ||
-                requestsPanel.style.display === ""
-            ) {
+                requestsPanel.style.display ===
+                "";
 
-                if (requestsPanel) {
 
-                    requestsPanel.style.display =
-                        "block";
+            if (isHidden) {
 
-                }
-
+                requestsPanel.style.display =
+                    "block";
 
                 await loadRequests();
 
@@ -1155,10 +1167,6 @@ if (requestsButton) {
 
 }
 
-
-/* =========================================
-   CLOSE REQUESTS
-========================================= */
 
 if (closeRequests) {
 
@@ -1185,7 +1193,8 @@ if (closeRequests) {
 
 function startRequestRealtime() {
 
-    if (!currentTeamId) return;
+    if (!currentTeamId)
+        return;
 
 
     if (requestChannel) {
@@ -1230,27 +1239,19 @@ function startRequestRealtime() {
 
                 }
             )
-            .subscribe(
-                status => {
-
-                    console.log(
-                        "Team requests:",
-                        status
-                    );
-
-                }
-            );
+            .subscribe();
 
 }
 
 
 /* =========================================
-   LOAD CHAT
+   CHAT
 ========================================= */
 
 async function loadMessages() {
 
-    if (!currentTeamId) return;
+    if (!currentTeamId)
+        return;
 
 
     const {
@@ -1274,7 +1275,7 @@ async function loadMessages() {
     if (error) {
 
         console.error(
-            "Chat load error:",
+            "Chat error:",
             error
         );
 
@@ -1294,11 +1295,10 @@ async function loadMessages() {
    RENDER CHAT
 ========================================= */
 
-function renderMessages(
-    messages
-) {
+function renderMessages(messages) {
 
-    if (!chatMessages) return;
+    if (!chatMessages)
+        return;
 
 
     if (!messages.length) {
@@ -1326,7 +1326,8 @@ function renderMessages(
     }
 
 
-    chatMessages.innerHTML = "";
+    chatMessages.innerHTML =
+        "";
 
 
     messages.forEach(
@@ -1347,7 +1348,7 @@ function renderMessages(
 
 
 /* =========================================
-   ADD CHAT MESSAGE
+   ADD MESSAGE
 ========================================= */
 
 function addMessageToChat(
@@ -1355,7 +1356,8 @@ function addMessageToChat(
     scroll = true
 ) {
 
-    if (!chatMessages) return;
+    if (!chatMessages)
+        return;
 
 
     const empty =
@@ -1364,20 +1366,17 @@ function addMessageToChat(
         );
 
 
-    if (empty) {
-
+    if (empty)
         empty.remove();
 
-    }
 
-
-    const messageElement =
+    const element =
         document.createElement(
             "div"
         );
 
 
-    messageElement.className =
+    element.className =
         "team-chat-message";
 
 
@@ -1388,7 +1387,7 @@ function addMessageToChat(
             : "TEAM MEMBER";
 
 
-    messageElement.innerHTML = `
+    element.innerHTML = `
 
         <strong>
             ${sender}
@@ -1404,15 +1403,12 @@ function addMessageToChat(
 
 
     chatMessages.appendChild(
-        messageElement
+        element
     );
 
 
-    if (scroll) {
-
+    if (scroll)
         scrollChat();
-
-    }
 
 }
 
@@ -1423,7 +1419,8 @@ function addMessageToChat(
 
 function scrollChat() {
 
-    if (!chatMessages) return;
+    if (!chatMessages)
+        return;
 
 
     chatMessages.scrollTop =
@@ -1444,7 +1441,7 @@ async function sendTeamMessage() {
     ) {
 
         alert(
-            "Your team is still loading."
+            "Team information is not loaded."
         );
 
         return;
@@ -1452,19 +1449,18 @@ async function sendTeamMessage() {
     }
 
 
-    const text =
-        chatInput.value.trim();
+    const message =
+        chatInput
+            ? chatInput.value.trim()
+            : "";
 
 
-    if (!text) return;
+    if (!message)
+        return;
 
 
-    if (sendButton) {
-
-        sendButton.disabled =
-            true;
-
-    }
+    if (sendButton)
+        sendButton.disabled = true;
 
 
     const {
@@ -1480,17 +1476,13 @@ async function sendTeamMessage() {
                 currentUser.id,
 
             message:
-                text
+                message
 
         });
 
 
-    if (sendButton) {
-
-        sendButton.disabled =
-            false;
-
-    }
+    if (sendButton)
+        sendButton.disabled = false;
 
 
     if (error) {
@@ -1509,11 +1501,8 @@ async function sendTeamMessage() {
     }
 
 
-    if (chatInput) {
-
+    if (chatInput)
         chatInput.value = "";
-
-    }
 
 }
 
@@ -1524,7 +1513,8 @@ async function sendTeamMessage() {
 
 function startRealtime() {
 
-    if (!currentTeamId) return;
+    if (!currentTeamId)
+        return;
 
 
     if (chatChannel) {
@@ -1561,22 +1551,50 @@ function startRealtime() {
 
                 }
             )
-            .subscribe(
-                status => {
-
-                    console.log(
-                        "Team chat:",
-                        status
-                    );
-
-                }
-            );
+            .subscribe();
 
 }
 
 
 /* =========================================
-   LEAVE TEAM BUTTON
+   SEND BUTTON
+========================================= */
+
+if (sendButton) {
+
+    sendButton.addEventListener(
+        "click",
+        sendTeamMessage
+    );
+
+}
+
+
+if (chatInput) {
+
+    chatInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                event.preventDefault();
+
+                sendTeamMessage();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   LEAVE POPUP
 ========================================= */
 
 if (leaveTeamBtn) {
@@ -1590,10 +1608,6 @@ if (leaveTeamBtn) {
                 leavePopup.style.display =
                     "flex";
 
-            } else {
-
-                leaveTeam();
-
             }
 
         }
@@ -1601,10 +1615,6 @@ if (leaveTeamBtn) {
 
 }
 
-
-/* =========================================
-   CANCEL LEAVE
-========================================= */
 
 if (cancelLeave) {
 
@@ -1624,10 +1634,6 @@ if (cancelLeave) {
 
 }
 
-
-/* =========================================
-   CONFIRM LEAVE
-========================================= */
 
 if (confirmLeave) {
 
@@ -1652,7 +1658,7 @@ if (confirmLeave) {
 
 
 /* =========================================
-   LEAVE TEAM FUNCTION
+   LEAVE TEAM
 ========================================= */
 
 async function leaveTeam() {
@@ -1671,6 +1677,20 @@ async function leaveTeam() {
     }
 
 
+    if (
+        currentRole ===
+        "captain"
+    ) {
+
+        alert(
+            "Captain cannot leave the team. Please disband the team."
+        );
+
+        return;
+
+    }
+
+
     if (leaveTeamBtn) {
 
         leaveTeamBtn.disabled =
@@ -1682,14 +1702,19 @@ async function leaveTeam() {
     }
 
 
-const {
-    error
-} = await client
-    .from("team_members")
-    .delete()
-    .eq("team_id", currentTeamId)
-    .eq("player_id", currentUser.id);
-    
+    const {
+        error
+    } = await client
+        .from("team_members")
+        .delete()
+        .eq(
+            "team_id",
+            currentTeamId
+        )
+        .eq(
+            "player_id",
+            currentUser.id
+        );
 
 
     if (error) {
@@ -1715,10 +1740,14 @@ const {
 
         }
 
-
         return;
 
     }
+
+
+    alert(
+        "You have left the team."
+    );
 
 
     window.location.href =
@@ -1728,42 +1757,263 @@ const {
 
 
 /* =========================================
-   SEND BUTTON
+   DISBAND POPUP
 ========================================= */
 
-if (sendButton) {
+if (disbandTeamBtn) {
 
-    sendButton.addEventListener(
+    disbandTeamBtn.addEventListener(
         "click",
-        sendTeamMessage
+        () => {
+
+            if (
+                currentRole !==
+                "captain"
+            ) {
+
+                return;
+
+            }
+
+
+            if (disbandPopup) {
+
+                disbandPopup.style.display =
+                    "flex";
+
+            }
+
+        }
+    );
+
+}
+
+
+if (cancelDisband) {
+
+    cancelDisband.addEventListener(
+        "click",
+        () => {
+
+            if (disbandPopup) {
+
+                disbandPopup.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+if (confirmDisband) {
+
+    confirmDisband.addEventListener(
+        "click",
+        async () => {
+
+            if (disbandPopup) {
+
+                disbandPopup.style.display =
+                    "none";
+
+            }
+
+
+            await disbandTeam();
+
+        }
     );
 
 }
 
 
 /* =========================================
-   ENTER KEY CHAT
+   DISBAND TEAM
 ========================================= */
 
-if (chatInput) {
+async function disbandTeam() {
 
-    chatInput.addEventListener(
-        "keydown",
-        event => {
+    if (
+        !currentUser ||
+        !currentTeamId
+    ) {
 
-            if (
-                event.key ===
-                "Enter"
-            ) {
+        alert(
+            "Team information is not loaded."
+        );
 
-                event.preventDefault();
+        return;
 
-                sendTeamMessage();
+    }
 
-            }
+
+    if (
+        currentRole !==
+        "captain"
+    ) {
+
+        alert(
+            "Only the captain can disband the team."
+        );
+
+        return;
+
+    }
+
+
+    if (disbandTeamBtn) {
+
+        disbandTeamBtn.disabled =
+            true;
+
+        disbandTeamBtn.textContent =
+            "DISBANDING...";
+
+    }
+
+
+    /* DELETE MESSAGES */
+
+    const {
+        error: chatError
+    } = await client
+        .from("team_messages")
+        .delete()
+        .eq(
+            "team_id",
+            currentTeamId
+        );
+
+
+    if (chatError) {
+
+        console.error(
+            "Chat delete error:",
+            chatError
+        );
+
+    }
+
+
+    /* DELETE JOIN REQUESTS */
+
+    const {
+        error: requestError
+    } = await client
+        .from("team_join_requests")
+        .delete()
+        .eq(
+            "team_id",
+            currentTeamId
+        );
+
+
+    if (requestError) {
+
+        console.error(
+            "Request delete error:",
+            requestError
+        );
+
+    }
+
+
+    /* DELETE MEMBERS */
+
+    const {
+        error: memberError
+    } = await client
+        .from("team_members")
+        .delete()
+        .eq(
+            "team_id",
+            currentTeamId
+        );
+
+
+    if (memberError) {
+
+        console.error(
+            "Member delete error:",
+            memberError
+        );
+
+
+        alert(
+            "Team members could not be removed."
+        );
+
+
+        if (disbandTeamBtn) {
+
+            disbandTeamBtn.disabled =
+                false;
+
+            disbandTeamBtn.textContent =
+                "DISBAND TEAM";
 
         }
+
+        return;
+
+    }
+
+
+    /* DELETE TEAM */
+
+    const {
+        error: teamError
+    } = await client
+        .from("teams")
+        .delete()
+        .eq(
+            "id",
+            currentTeamId
+        )
+        .eq(
+            "captain_id",
+            currentUser.id
+        );
+
+
+    if (teamError) {
+
+        console.error(
+            "Team delete error:",
+            teamError
+        );
+
+
+        alert(
+            "Team could not be disbanded."
+        );
+
+
+        if (disbandTeamBtn) {
+
+            disbandTeamBtn.disabled =
+                false;
+
+            disbandTeamBtn.textContent =
+                "DISBAND TEAM";
+
+        }
+
+        return;
+
+    }
+
+
+    alert(
+        "Your team has been disbanded."
     );
+
+
+    window.location.href =
+        "team.html";
 
 }
 

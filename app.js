@@ -6,215 +6,373 @@ const msg = document.getElementById("message");
 const status = document.getElementById("status");
 const submit = document.getElementById("submit");
 
+const usernameInput = document.getElementById("profileUsername");
+const fullNameInput = document.getElementById("fullName");
+const pubgUidInput = document.getElementById("pubgUid");
+const countryInput = document.getElementById("country");
+const saveProfileBtn = document.getElementById("saveProfile");
+
+
 function ready() {
-  return window.MARKHOR_CONFIG &&
+    return window.MARKHOR_CONFIG &&
     window.MARKHOR_CONFIG.supabaseUrl &&
     window.MARKHOR_CONFIG.supabasePublishableKey;
 }
 
+
 if (ready() && window.supabase) {
-  client = window.supabase.createClient(
-    window.MARKHOR_CONFIG.supabaseUrl,
-    window.MARKHOR_CONFIG.supabasePublishableKey
-  );
 
-  client.auth.getSession().then(({ data }) => {
-    session(data.session);
-  });
+    client = window.supabase.createClient(
+        window.MARKHOR_CONFIG.supabaseUrl,
+        window.MARKHOR_CONFIG.supabasePublishableKey
+    );
 
-  client.auth.onAuthStateChange((event, sessionData) => {
-    session(sessionData);
-  });
 
-} else {
-  status.textContent = "Supabase is not configured yet.";
+    client.auth.getSession()
+    .then(({data}) => {
+        loadSession(data.session);
+    });
+
+
+    client.auth.onAuthStateChange((event, session)=>{
+        loadSession(session);
+    });
+
+}
+else {
+
+    status.textContent = "Supabase is not configured.";
+
 }
 
 
-function session(s) {
-  if (s) {
-    status.textContent = "Logged in as " + s.user.email;
-    document.getElementById("accountBtn").textContent = "LOGOUT";
-  } else {
-    status.textContent = "You are currently signed out.";
-    document.getElementById("accountBtn").textContent = "LOGIN / SIGN UP";
-  }
-}
+
+async function loadSession(session){
+
+    if(session){
+
+        status.textContent =
+        "Logged in as " + session.user.email;
 
 
-function openModal() {
-  modal.classList.add("show");
-  msg.textContent = "";
-}
+        document.getElementById("accountBtn").textContent =
+        "LOGOUT";
 
 
-function closeModal() {
-  modal.classList.remove("show");
-}
+        await loadProfile(session.user.id);
 
-
-document.getElementById("openLogin").onclick = openModal;
-
-
-document.getElementById("accountBtn").onclick = async () => {
-
-  if (client) {
-    const { data } = await client.auth.getSession();
-
-    if (data.session) {
-      await client.auth.signOut();
-      return;
     }
-  }
 
-  openModal();
+    else{
+
+        status.textContent =
+        "You are currently signed out.";
+
+        document.getElementById("accountBtn").textContent =
+        "LOGIN / SIGN UP";
+
+
+        clearProfile();
+
+    }
+
+}
+
+
+
+async function loadProfile(id){
+
+    const {data,error} = await client
+    .from("profiles")
+    .select("*")
+    .eq("id",id)
+    .single();
+
+
+    if(data){
+
+        usernameInput.value =
+        data.username || "";
+
+        fullNameInput.value =
+        data.full_name || "";
+
+        pubgUidInput.value =
+        data.pubg_uid || "";
+
+        countryInput.value =
+        data.country || "Pakistan";
+
+    }
+
+}
+
+
+
+function clearProfile(){
+
+    usernameInput.value="";
+    fullNameInput.value="";
+    pubgUidInput.value="";
+    countryInput.value="Pakistan";
+
+}
+
+
+
+document.getElementById("openLogin").onclick = ()=>{
+    modal.classList.add("show");
+    msg.textContent="";
 };
 
 
-document.getElementById("close").onclick = closeModal;
 
-
-modal.onclick = (e) => {
-  if (e.target === modal) {
-    closeModal();
-  }
+document.getElementById("close").onclick = ()=>{
+    modal.classList.remove("show");
 };
 
 
-document.getElementById("menu").onclick = () => {
-  document.getElementById("nav").classList.toggle("open");
+
+modal.onclick = (e)=>{
+
+    if(e.target===modal){
+        modal.classList.remove("show");
+    }
+
 };
 
 
-document.querySelectorAll(".registerBtn").forEach(btn => {
 
-  btn.onclick = () => {
-    document.getElementById("account")
-      .scrollIntoView({ behavior:"smooth" });
+document.getElementById("accountBtn").onclick = async ()=>{
 
-    openModal();
-  };
+
+    const {data}=await client.auth.getSession();
+
+
+    if(data.session){
+
+        await client.auth.signOut();
+
+    }
+
+    else{
+
+        modal.classList.add("show");
+
+    }
+
+};
+
+
+
+document.getElementById("menu").onclick = ()=>{
+
+    document.getElementById("nav")
+    .classList.toggle("open");
+
+};
+
+
+
+document.querySelectorAll(".registerBtn")
+.forEach(btn=>{
+
+    btn.onclick=()=>{
+
+        document.getElementById("account")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+        modal.classList.add("show");
+
+    };
 
 });
 
 
-document.querySelectorAll(".tabs button").forEach(btn => {
 
-  btn.onclick = () => {
+document.querySelectorAll(".tabs button")
+.forEach(btn=>{
 
-    document.querySelectorAll(".tabs button")
-      .forEach(x => x.classList.remove("active"));
 
-    btn.classList.add("active");
+    btn.onclick=()=>{
 
-    mode = btn.dataset.mode;
 
-    submit.textContent =
-      mode === "login"
-      ? "LOGIN →"
-      : "CREATE ACCOUNT →";
+        document.querySelectorAll(".tabs button")
+        .forEach(x=>x.classList.remove("active"));
 
-    msg.textContent = "";
-  };
+
+        btn.classList.add("active");
+
+
+        mode = btn.dataset.mode;
+
+
+        submit.textContent =
+        mode==="login"
+        ? "LOGIN →"
+        : "CREATE ACCOUNT →";
+
+
+        msg.textContent="";
+
+
+    };
+
 
 });
 
 
 
-document.getElementById("auth").onsubmit = async (e) => {
-
-  e.preventDefault();
+document.getElementById("auth").onsubmit = async(e)=>{
 
 
-  if (!client) {
-    msg.textContent = "Supabase not connected.";
-    return;
-  }
+    e.preventDefault();
 
 
-  const email =
+    const email =
     document.getElementById("email")
     .value.trim();
 
-  const password =
+
+    const password =
     document.getElementById("password")
     .value;
 
 
-  msg.textContent = "Please wait...";
+
+    msg.textContent="Please wait...";
 
 
-  let result;
+
+    let result;
 
 
-  if (mode === "login") {
 
-    result =
-      await client.auth.signInWithPassword({
-        email,
-        password
-      });
+    if(mode==="login"){
 
 
-  } else {
-
-
-    result =
-      await client.auth.signUp({
-        email,
-        password
-      });
-
-
-    if (!result.error && result.data.user) {
-
-
-      const { error: profileError } =
-        await client
-        .from("profiles")
-        .insert({
-
-          id: result.data.user.id,
-
-          username:
-            email.split("@")[0],
-
-          country:
-            "Pakistan"
-
+        result =
+        await client.auth.signInWithPassword({
+            email,
+            password
         });
 
 
-      if (profileError) {
+    }
 
-        console.log(profileError);
+    else{
 
-      }
+
+        result =
+        await client.auth.signUp({
+            email,
+            password
+        });
+
+
+        if(!result.error && result.data.user){
+
+
+            await client
+            .from("profiles")
+            .insert({
+
+                id: result.data.user.id,
+
+                username:
+                email.split("@")[0],
+
+                country:
+                "Pakistan"
+
+            });
+
+
+        }
+
 
     }
 
-  }
 
 
+    if(result.error){
 
-  if (result.error) {
+        msg.textContent =
+        result.error.message;
+
+        return;
+
+    }
+
+
 
     msg.textContent =
-      result.error.message;
-
-    return;
-
-  }
-
-
-  msg.textContent =
-    mode === "login"
+    mode==="login"
     ? "Login successful."
-    : "Account created successfully.";
+    : "Account created.";
 
 
-  if(mode === "login"){
-    setTimeout(closeModal,700);
-  }
+
+};
+
+
+
+saveProfileBtn.onclick = async()=>{
+
+
+    const {data} =
+    await client.auth.getSession();
+
+
+
+    if(!data.session){
+
+        alert("Please login first.");
+
+        return;
+
+    }
+
+
+
+    const id =
+    data.session.user.id;
+
+
+
+    const {error} =
+    await client
+    .from("profiles")
+    .update({
+
+        full_name:
+        fullNameInput.value,
+
+        pubg_uid:
+        pubgUidInput.value,
+
+        country:
+        countryInput.value
+
+    })
+
+    .eq("id",id);
+
+
+
+    if(error){
+
+        alert(error.message);
+
+    }
+
+    else{
+
+        alert("Profile saved successfully.");
+
+    }
+
 
 };

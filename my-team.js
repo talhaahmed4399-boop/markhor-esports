@@ -1661,19 +1661,22 @@ async function leaveTeam() {
     }
 
 
-    const {
-        error
-    } = await client
-        .from("team_members")
-        .delete()
-        .eq(
-            "team_id",
-            currentTeamId
-        )
-        .eq(
-            "player_id",
-            currentUser.id
-        );
+   const {
+    data,
+    error
+} = await client
+.from("team_members")
+.delete()
+console.log("Deleted:", data);
+.eq(
+    "team_id",
+    currentTeamId
+)
+.eq(
+    "player_id",
+    currentUser.id)
+.select();
+    
 
 
     if (error) {

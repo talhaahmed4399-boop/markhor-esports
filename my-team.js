@@ -1329,24 +1329,45 @@ if (leaveTeamBtn) {
         "click",
         () => {
 
-            const confirmed = confirm(
-                "Are you really want to leave your team?"
-            );
+            const leavePopup =
+document.getElementById("leavePopup");
 
 
-            if (!confirmed) {
-
-                return;
-
-            }
+const cancelLeave =
+document.getElementById("cancelLeave");
 
 
-            leaveTeam();
+const confirmLeave =
+document.getElementById("confirmLeave");
 
-        }
-    );
 
-}
+leaveTeamBtn.addEventListener(
+"click",
+()=>{
+
+    leavePopup.style.display="flex";
+
+});
+
+
+cancelLeave.addEventListener(
+"click",
+()=>{
+
+    leavePopup.style.display="none";
+
+});
+
+
+confirmLeave.addEventListener(
+"click",
+()=>{
+
+    leavePopup.style.display="none";
+
+    leaveTeam();
+
+});
 
 
 /* =========================================

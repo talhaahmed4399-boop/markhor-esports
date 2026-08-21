@@ -1,178 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Markhor Esports — competitive PUBG esports tournaments, teams, players, matches and leaderboards.">
-  <title>Markhor Esports | PUBG Esports Platform</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="topbar">
-    <div>MARKHOR ESPORTS</div>
-    <div class="top-status"><span class="pulse"></span> LIVE ESPORTS PLATFORM</div>
-  </div>
-
-  <header class="navbar">
-    <a class="brand" href="#home">
-      <span class="brand-mark">M</span>
-      <span><b>MARKHOR</b><small>ESPORTS</small></span>
-    </a>
-    <button class="menu-toggle" aria-label="Open menu">☰</button>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#tournaments">Tournaments</a>
-      <a href="#teams">Teams</a>
-      <a href="#players">Players</a>
-      <a href="#leaderboard">Leaderboard</a>
-      <a href="#matches">Matches</a>
-      <a href="#register">Register</a>
-    </nav>
-    <a class="nav-btn" href="#register">Join Tournament</a>
-  </header>
-
-  <main id="home">
-    <section class="hero">
-      <div class="hero-grid"></div>
-      <div class="hero-copy">
-        <div class="eyebrow"><span></span> PAKISTAN'S COMPETITIVE ARENA</div>
-        <h1>WHERE<br><strong>CHAMPIONS</strong><br>RISE.</h1>
-        <p>Markhor Esports is a competitive PUBG tournament platform built for teams, players and organizers.</p>
-        <div class="hero-actions">
-          <a class="btn primary" href="#tournaments">Explore Tournaments <span>→</span></a>
-          <a class="btn ghost" href="#leaderboard">View Leaderboard</a>
-        </div>
-        <div class="hero-stats">
-          <div><b>24+</b><span>Teams</span></div>
-          <div><b>12</b><span>Tournaments</span></div>
-          <div><b>₨500K+</b><span>Prize Pool</span></div>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="card-glow"></div>
-        <div class="crest">M</div>
-        <div class="hero-card-label">MARKHOR ESPORTS</div>
-        <div class="hero-card-title">SEASON 01</div>
-        <div class="hero-card-line"></div>
-        <div class="hero-card-meta"><span>COMPETITIVE</span><span>PUBG MOBILE</span></div>
-      </div>
-    </section>
-
-    <section class="ticker">
-      <span>● LIVE</span>
-      <div id="tickerText">MARKHOR SHOWDOWN S1 — REGISTRATION IS NOW OPEN</div>
-      <span>VIEW EVENT →</span>
-    </section>
-
-    <section class="section" id="tournaments">
-      <div class="section-head">
-        <div><span class="kicker">COMPETE</span><h2>Featured Tournaments</h2></div>
-        <a href="#register">View all →</a>
-      </div>
-      <div class="cards">
-        <article class="tournament-card featured">
-          <div class="t-cover cover-one"><span class="live-tag">REGISTRATION OPEN</span><span class="game-tag">PUBG MOBILE</span></div>
-          <div class="t-body">
-            <div class="t-title-row"><h3>Markhor Showdown S1</h3><span class="status open">OPEN</span></div>
-            <p>Squad tournament • Competitive lobby</p>
-            <div class="t-meta"><div><small>PRIZE POOL</small><b>₨100,000</b></div><div><small>ENTRY</small><b>₨500</b></div><div><small>TEAMS</small><b>32</b></div></div>
-            <a class="card-btn" href="#register">Register Team <span>↗</span></a>
-          </div>
-        </article>
-        <article class="tournament-card">
-          <div class="t-cover cover-two"><span class="live-tag">UPCOMING</span><span class="game-tag">PUBG MOBILE</span></div>
-          <div class="t-body">
-            <div class="t-title-row"><h3>Markhor Masters</h3><span class="status soon">SOON</span></div>
-            <p>Open qualifiers • Season 01</p>
-            <div class="t-meta"><div><small>PRIZE POOL</small><b>₨250,000</b></div><div><small>ENTRY</small><b>FREE</b></div><div><small>TEAMS</small><b>64</b></div></div>
-            <a class="card-btn" href="#register">Tournament Details <span>↗</span></a>
-          </div>
-        </article>
-        <article class="tournament-card">
-          <div class="t-cover cover-three"><span class="live-tag">COMPLETED</span><span class="game-tag">PUBG MOBILE</span></div>
-          <div class="t-body">
-            <div class="t-title-row"><h3>Markhor Battle Cup</h3><span class="status done">DONE</span></div>
-            <p>Grand final • 16 teams</p>
-            <div class="t-meta"><div><small>PRIZE POOL</small><b>₨50,000</b></div><div><small>WINNER</small><b>ROYAL</b></div><div><small>TEAMS</small><b>16</b></div></div>
-            <a class="card-btn" href="#leaderboard">View Results <span>↗</span></a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section dark-section" id="leaderboard">
-      <div class="section-head">
-        <div><span class="kicker">RANKINGS</span><h2>Season Leaderboard</h2></div>
-        <span class="season-pill">SEASON 01 · OVERALL</span>
-      </div>
-      <div class="table-wrap">
-        <table id="leaderboardTable">
-          <thead><tr><th>#</th><th>TEAM</th><th>M</th><th>WWCD</th><th>KILLS</th><th>PLACEMENT</th><th>TOTAL</th></tr></thead>
-          <tbody>
-            <tr><td class="rank gold">01</td><td><strong>ROYAL ESPORTS</strong><small>RYL</small></td><td>12</td><td>4</td><td>76</td><td>82</td><td class="points">158</td></tr>
-            <tr><td class="rank silver">02</td><td><strong>FALCON X</strong><small>FLX</small></td><td>12</td><td>3</td><td>70</td><td>78</td><td class="points">148</td></tr>
-            <tr><td class="rank bronze">03</td><td><strong>TEAM LEGACY</strong><small>LEG</small></td><td>12</td><td>2</td><td>69</td><td>71</td><td class="points">140</td></tr>
-            <tr><td class="rank">04</td><td><strong>QUANTUM</strong><small>QTM</small></td><td>12</td><td>2</td><td>61</td><td>67</td><td class="points">128</td></tr>
-            <tr><td class="rank">05</td><td><strong>VORTEX</strong><small>VTX</small></td><td>12</td><td>1</td><td>58</td><td>63</td><td class="points">121</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="section" id="matches">
-      <div class="section-head">
-        <div><span class="kicker">SCHEDULE</span><h2>Matches & Results</h2></div>
-        <span class="season-pill">ALL MATCHES</span>
-      </div>
-      <div class="match-list">
-        <div class="match"><div class="map"><b>ERANGEL</b><small>ROUND 04</small></div><div class="teams"><b>ROYAL ESPORTS</b><span>VS</span><b>FALCON X</b></div><div class="match-time"><b>08:00 PM</b><small>20 AUG 2026</small></div><span class="match-live">LIVE</span></div>
-        <div class="match"><div class="map"><b>MIRAMAR</b><small>ROUND 05</small></div><div class="teams"><b>TEAM LEGACY</b><span>VS</span><b>QUANTUM</b></div><div class="match-time"><b>09:00 PM</b><small>20 AUG 2026</small></div><span class="match-upcoming">UPCOMING</span></div>
-        <div class="match"><div class="map"><b>RONDO</b><small>ROUND 06</small></div><div class="teams"><b>VORTEX</b><span>VS</span><b>ROYAL ESPORTS</b></div><div class="match-time"><b>10:00 PM</b><small>20 AUG 2026</small></div><span class="match-upcoming">UPCOMING</span></div>
-      </div>
-    </section>
-
-    <section class="section dark-section" id="teams">
-      <div class="section-head"><div><span class="kicker">ORGANIZATIONS</span><h2>Top Teams</h2></div><a href="#players">Explore →</a></div>
-      <div class="team-grid">
-        <div class="team-card"><span class="team-logo">RYL</span><b>ROYAL ESPORTS</b><small>1ST · 158 PTS</small></div>
-        <div class="team-card"><span class="team-logo">FLX</span><b>FALCON X</b><small>2ND · 148 PTS</small></div>
-        <div class="team-card"><span class="team-logo">LEG</span><b>TEAM LEGACY</b><small>3RD · 140 PTS</small></div>
-        <div class="team-card"><span class="team-logo">QTM</span><b>QUANTUM</b><small>4TH · 128 PTS</small></div>
-      </div>
-    </section>
-
-    <section class="section" id="players">
-      <div class="section-head"><div><span class="kicker">ATHLETES</span><h2>Top Players</h2></div></div>
-      <div class="player-grid">
-        <div class="player-card"><span class="player-no">01</span><div class="avatar">R</div><div><b>RYL RAZOR</b><small>ROYAL ESPORTS</small></div><strong>76 K</strong></div>
-        <div class="player-card"><span class="player-no">02</span><div class="avatar">F</div><div><b>FLX FURY</b><small>FALCON X</small></div><strong>72 K</strong></div>
-        <div class="player-card"><span class="player-no">03</span><div class="avatar">L</div><div><b>LEGACY OP</b><small>TEAM LEGACY</small></div><strong>69 K</strong></div>
-      </div>
-    </section>
-
-    <section class="register-section" id="register">
-      <div class="register-copy">
-        <span class="kicker">YOUR NEXT DROP</span>
-        <h2>READY TO<br><strong>COMPETE?</strong></h2>
-        <p>Register your squad for the next Markhor Esports tournament. Your information is stored locally in this V1 demo.</p>
-      </div>
-      <form id="registrationForm" class="reg-form">
-        <div class="form-title">TEAM REGISTRATION <span>STEP 01</span></div>
-        <label>Team Name<input name="team" required placeholder="Enter team name"></label>
-        <div class="two"><label>Captain Name<input name="captain" required placeholder="Captain"></label><label>WhatsApp / Contact<input name="contact" required placeholder="+92..."></label></div>
-        <label>PUBG UID<input name="uid" required placeholder="Player UID"></label>
-        <div class="two"><label>Players<input name="players" required placeholder="4 players"></label><label>Tournament<select name="tournament"><option>Markhor Showdown S1</option><option>Markhor Masters</option></select></label></div>
-        <button class="btn primary full" type="submit">SUBMIT REGISTRATION <span>→</span></button>
-        <p id="formMessage" class="form-message"></p>
-      </form>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-brand"><span class="brand-mark">M</span><div><b>MARKHOR ESPORTS</b><small>COMPETE. CONQUER. RISE.</small></div></div>
-    <div class="footer-links"><a href="#tournaments">Tournaments</a><a href="#teams">Teams</a><a href="#leaderboard">Leaderboard</a><a href="#register">Register</a></div>
-    <p>© 2026 Markhor Esports. Built for competitive gaming.</p>
-  </footer>
-  <script src="script.js"></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Markhor Esports V2</title><link rel="stylesheet" href="style.css"></head><body>
+<header><a class="logo" href="#home"><b>M</b><span>MARKHOR<small>ESPORTS</small></span></a><button id="menu">☰</button><nav id="nav"><a href="#home">Home</a><a href="#tournaments">Tournaments</a><a href="#teams">Teams</a><a href="#leaderboard">Leaderboard</a><a href="#matches">Matches</a><a href="#account">Account</a></nav><button class="lime" id="openLogin">LOGIN</button></header>
+<main>
+<section id="home" class="hero"><div><small>MARKHOR ESPORTS • SEASON 01</small><h1>COMPETE.<br><em>CONQUER.</em><br>RISE.</h1><p>A competitive PUBG esports platform for tournaments, teams, players, matches and rankings.</p><a class="lime" href="#tournaments">EXPLORE TOURNAMENTS →</a></div><div class="crest">M</div></section>
+<section class="stats"><div><b>24+</b><small>TEAMS</small></div><div><b>12</b><small>TOURNAMENTS</small></div><div><b>500K+</b><small>PRIZE POOL PKR</small></div><div><b>01</b><small>SEASON</small></div></section>
+<section id="tournaments" class="section"><small>COMPETE</small><h2>FEATURED TOURNAMENTS</h2><div class="cards">
+<article><div class="cover c1">REGISTRATION OPEN</div><div class="body"><small>PUBG MOBILE • SQUAD</small><h3>Markhor Showdown S1</h3><div class="meta"><span>PRIZE<strong>₨100,000</strong></span><span>ENTRY<strong>₨500</strong></span><span>TEAMS<strong>32</strong></span></div><button class="outline full registerBtn">REGISTER TEAM →</button></div></article>
+<article><div class="cover c2">UPCOMING</div><div class="body"><small>PUBG MOBILE • OPEN QUALIFIER</small><h3>Markhor Masters</h3><div class="meta"><span>PRIZE<strong>₨250,000</strong></span><span>ENTRY<strong>FREE</strong></span><span>TEAMS<strong>64</strong></span></div><button class="outline full">DETAILS →</button></div></article>
+<article><div class="cover c3">COMPLETED</div><div class="body"><small>PUBG MOBILE • GRAND FINAL</small><h3>Markhor Battle Cup</h3><div class="meta"><span>PRIZE<strong>₨50,000</strong></span><span>WINNER<strong>ROYAL</strong></span><span>TEAMS<strong>16</strong></span></div><a class="outline full" href="#leaderboard">RESULTS →</a></div></article>
+</div></section>
+<section id="leaderboard" class="section dark"><small>RANKINGS</small><h2>SEASON LEADERBOARD</h2><div class="table"><table><thead><tr><th>#</th><th>TEAM</th><th>M</th><th>WWCD</th><th>KILLS</th><th>PLACEMENT</th><th>TOTAL</th></tr></thead><tbody>
+<tr><td class="gold">01</td><td><b>ROYAL ESPORTS</b><small>RYL</small></td><td>12</td><td>4</td><td>76</td><td>82</td><td class="gold big">158</td></tr>
+<tr><td>02</td><td><b>FALCON X</b><small>FLX</small></td><td>12</td><td>3</td><td>70</td><td>78</td><td class="big">148</td></tr>
+<tr><td>03</td><td><b>TEAM LEGACY</b><small>LEG</small></td><td>12</td><td>2</td><td>69</td><td>71</td><td class="big">140</td></tr>
+<tr><td>04</td><td><b>QUANTUM</b><small>QTM</small></td><td>12</td><td>2</td><td>61</td><td>67</td><td class="big">128</td></tr></tbody></table></div></section>
+<section id="matches" class="section"><small>SCHEDULE</small><h2>MATCH CENTER</h2><div class="matches"><div><b>ERANGEL <small>ROUND 04</small></b><strong>ROYAL ESPORTS <i>VS</i> FALCON X</strong><span>08:00 PM<br><small>20 AUG 2026</small></span><label>LIVE</label></div><div><b>MIRAMAR <small>ROUND 05</small></b><strong>TEAM LEGACY <i>VS</i> QUANTUM</strong><span>09:00 PM<br><small>20 AUG 2026</small></span><label class="muted">UPCOMING</label></div></div></section>
+<section id="teams" class="section dark"><small>ORGANIZATIONS</small><h2>TOP TEAMS</h2><div class="teams"><div><b>RYL</b><h3>ROYAL ESPORTS</h3><small>1ST • 158 PTS</small></div><div><b>FLX</b><h3>FALCON X</h3><small>2ND • 148 PTS</small></div><div><b>LEG</b><h3>TEAM LEGACY</h3><small>3RD • 140 PTS</small></div><div><b>QTM</b><h3>QUANTUM</h3><small>4TH • 128 PTS</small></div></div></section>
+<section id="account" class="section account"><div><small>PLAYER AREA</small><h2>YOUR ESPORTS ID</h2><p>Create your Markhor Esports account. V2 uses Supabase Email Authentication.</p></div><div class="accountbox"><h3>ACCOUNT</h3><p id="status">You are currently signed out.</p><button class="lime full" id="accountBtn">LOGIN / SIGN UP</button></div></section>
+</main><footer><div class="logo"><b>M</b><span>MARKHOR<small>ESPORTS</small></span></div><p>© 2026 Markhor Esports. Compete. Conquer. Rise.</p></footer>
+<div class="modal" id="modal"><div class="modalbox"><button id="close">×</button><h2>MARKHOR ESPORTS</h2><div class="tabs"><button class="active" data-mode="login">LOGIN</button><button data-mode="signup">SIGN UP</button></div><form id="auth"><label>Email<input id="email" type="email" required></label><label>Password<input id="password" type="password" minlength="6" required></label><button class="lime full" id="submit">LOGIN →</button></form><p id="message"></p><small>Never share a service-role/secret key.</small></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="app.js"></script></body></html>

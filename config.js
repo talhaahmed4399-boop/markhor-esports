@@ -2,6 +2,6 @@
 // Replace the two values below. Use ONLY the Publishable/anon client key.
 // NEVER use a service_role or secret key here.
 window.MARKHOR_CONFIG={
-  supabaseUrl:"PASTE_YOUR_PROJECT_URL_HERE",
-  supabasePublishableKey:"PASTE_YOUR_PUBLISHABLE_KEY_HERE"
+  supabaseUrl:"https://nxvcmatlqvrtsuidusos.supabase.co",
+  supabasePublishableKey:"sb_publishable_2GBTKUM5WEBUhsPW4BmSpQ_JLYePalj"
 };

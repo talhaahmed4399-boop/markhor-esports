@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>My Team - Markhor Esports</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<a class="logo" href="index.html">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</a>
+
+<nav>
+
+<a href="index.html">HOME</a>
+
+<a href="index.html#tournaments">TOURNAMENTS</a>
+
+<a href="index.html#leaderboard">LEADERBOARD</a>
+
+<a href="profile.html">PROFILE</a>
+
+<a href="team.html">TEAMS</a>
+
+</nav>
+
+</header>
+
+
+<main>
+
+<section class="profile-page">
+
+
+<!-- ==========================================
+     PAGE TITLE
+========================================== -->
+
+<div class="profile-page-title">
+
+<small>MARKHOR ESPORTS</small>
+
+<h1>MY TEAM</h1>
+
+<p>
+Your competitive organization, roster, rankings and team communication.
+</p>
+
+</div>
+
+
+<!-- ==========================================
+     LOADING / ERROR MESSAGE
+========================================== -->
+
+<div id="teamPageMessage">
+
+Loading your team...
+
+</div>
+
+
+<!-- ==========================================
+     MAIN TEAM CONTAINER
+========================================== -->
+
+<div
+id="myTeamContainer"
+class="my-team-container"
+style="display:none;"
+>
+
+
+<!-- ==========================================
+     TEAM HERO
+========================================== -->
+
+<div class="my-team-hero">
+
+
+<div
+class="my-team-logo"
+id="myTeamLogo"
+>
+
+M
+
+</div>
+
+
+<div class="my-team-heading">
+
+<small>REGISTERED ESPORTS ORGANIZATION</small>
+
+<h2 id="myTeamName">
+TEAM NAME
+</h2>
+
+<div class="team-tag-line">
+
+<span id="myTeamTag">
+TAG
+</span>
+
+<span class="verified-team">
+VERIFIED TEAM
+</span>
+
+</div>
+
+</div>
+
+
+<div class="captain-badge">
+
+CAPTAIN
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     TEAM RANKING
+========================================== -->
+
+<div class="team-section-title">
+
+COMPETITIVE RANKING
+
+<small>SEASON 01</small>
+
+</div>
+
+
+<div class="team-stats-grid">
+
+
+<div class="team-stat-card rank-card">
+
+<small>CURRENT RANK</small>
+
+<strong id="teamRank">
+#--
+</strong>
+
+<span>
+SEASON RANK
+</span>
+
+</div>
+
+
+<div class="team-stat-card">
+
+<small>TOTAL POINTS</small>
+
+<strong id="teamPoints">
+0
+</strong>
+
+<span>
+SEASON POINTS
+</span>
+
+</div>
+
+
+<div class="team-stat-card">
+
+<small>MATCHES</small>
+
+<strong id="teamMatches">
+0
+</strong>
+
+<span>
+PLAYED
+</span>
+
+</div>
+
+
+<div class="team-stat-card">
+
+<small>KILLS</small>
+
+<strong id="teamKills">
+0
+</strong>
+
+<span>
+TOTAL KILLS
+</span>
+
+</div>
+
+
+<div class="team-stat-card">
+
+<small>WWCD</small>
+
+<strong id="teamWins">
+0
+</strong>
+
+<span>
+VICTORIES
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     TEAM INFORMATION
+========================================== -->
+
+<div class="team-section-title">
+
+TEAM INFORMATION
+
+<small>ORGANIZATION</small>
+
+</div>
+
+
+<div class="my-team-info-grid">
+
+
+<div>
+
+<small>IGL</small>
+
+<strong id="myTeamIGL">
+-
+</strong>
+
+</div>
+
+
+<div>
+
+<small>WHATSAPP</small>
+
+<strong id="myTeamWhatsapp">
+-
+</strong>
+
+</div>
+
+
+<div>
+
+<small>MAIN ROSTER</small>
+
+<strong id="myTeamRoster">
+0 / 4
+</strong>
+
+</div>
+
+
+<div>
+
+<small>TEAM STATUS</small>
+
+<strong class="team-status">
+ACTIVE
+</strong>
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     ACHIEVEMENTS
+========================================== -->
+
+<div class="team-section-title">
+
+ACHIEVEMENTS
+
+<small>TEAM HONOURS</small>
+
+</div>
+
+
+<div
+id="teamAchievements"
+class="achievements-grid"
+>
+
+
+<div class="achievement-card">
+
+<div class="achievement-icon">
+🏆
+</div>
+
+<div>
+
+<strong>
+MARKHOR SHOWDOWN S1
+</strong>
+
+<small>
+CHAMPIONS
+</small>
+
+</div>
+
+</div>
+
+
+<div class="achievement-card">
+
+<div class="achievement-icon">
+🥈
+</div>
+
+<div>
+
+<strong>
+MARKHOR MASTERS
+</strong>
+
+<small>
+RUNNER-UP
+</small>
+
+</div>
+
+</div>
+
+
+<div class="achievement-card">
+
+<div class="achievement-icon">
+🏆
+</div>
+
+<div>
+
+<strong>
+BATTLE CUP
+</strong>
+
+<small>
+CHAMPIONS
+</small>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     MAIN ROSTER
+========================================== -->
+
+<div class="team-section-title">
+
+MAIN ROSTER
+
+<small>4 PLAYERS</small>
+
+</div>
+
+
+<div class="my-roster-grid">
+
+
+<div class="my-player-card">
+
+<div class="player-number">
+01
+</div>
+
+<div class="player-data">
+
+<strong id="p1Name">
+-
+</strong>
+
+<small id="p1Uid">
+PUBG UID: -
+</small>
+
+</div>
+
+<span class="roster-role">
+PLAYER
+</span>
+
+</div>
+
+
+<div class="my-player-card">
+
+<div class="player-number">
+02
+</div>
+
+<div class="player-data">
+
+<strong id="p2Name">
+-
+</strong>
+
+<small id="p2Uid">
+PUBG UID: -
+</small>
+
+</div>
+
+<span class="roster-role">
+PLAYER
+</span>
+
+</div>
+
+
+<div class="my-player-card">
+
+<div class="player-number">
+03
+</div>
+
+<div class="player-data">
+
+<strong id="p3Name">
+-
+</strong>
+
+<small id="p3Uid">
+PUBG UID: -
+</small>
+
+</div>
+
+<span class="roster-role">
+PLAYER
+</span>
+
+</div>
+
+
+<div class="my-player-card">
+
+<div class="player-number">
+04
+</div>
+
+<div class="player-data">
+
+<strong id="p4Name">
+-
+</strong>
+
+<small id="p4Uid">
+PUBG UID: -
+</small>
+
+</div>
+
+<span class="roster-role">
+PLAYER
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     SUBSTITUTE PLAYERS
+========================================== -->
+
+<div class="team-section-title">
+
+SUBSTITUTE PLAYERS
+
+<small>OPTIONAL</small>
+
+</div>
+
+
+<div class="my-roster-grid">
+
+
+<div class="my-player-card substitute">
+
+<div class="player-number">
+S1
+</div>
+
+<div class="player-data">
+
+<strong id="sub1Name">
+No Substitute
+</strong>
+
+<small id="sub1Uid">
+PUBG UID: -
+</small>
+
+</div>
+
+<span class="roster-role">
+SUB
+</span>
+
+</div>
+
+
+<div class="my-player-card substitute">
+
+<div class="player-number">
+S2
+</div>
+
+<div class="player-data">
+
+<strong id="sub2Name">
+No Substitute
+</strong>
+
+<small id="sub2Uid">
+PUBG UID: -
+</small>
+
+</div>
+
+<span class="roster-role">
+SUB
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     TEAM CHAT
+========================================== -->
+
+<div class="team-section-title">
+
+TEAM CHAT
+
+<small>PRIVATE TEAM CHANNEL</small>
+
+</div>
+
+
+<div class="team-chat-container">
+
+
+<div class="team-chat-header">
+
+<div>
+
+<strong>
+TEAM COMMUNICATION
+</strong>
+
+<small>
+Only team members can access this chat.
+</small>
+
+</div>
+
+<span class="chat-online">
+● ONLINE
+</span>
+
+</div>
+
+
+<div
+id="teamChatMessages"
+class="team-chat-messages"
+>
+
+<div class="chat-empty">
+
+<div class="chat-empty-icon">
+💬
+</div>
+
+<strong>
+TEAM CHAT
+</strong>
+
+<p>
+Your team messages will appear here.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="team-chat-input">
+
+
+<input
+id="teamChatInput"
+type="text"
+placeholder="Write a message..."
+maxlength="500"
+autocomplete="off"
+>
+
+
+<button
+id="sendTeamMessage"
+class="lime"
+type="button"
+>
+
+SEND
+
+</button>
+
+</div>
+
+
+</div>
+
+
+<!-- ==========================================
+     TEAM MANAGEMENT
+========================================== -->
+
+<div class="team-section-title">
+
+TEAM MANAGEMENT
+
+<small>CAPTAIN AREA</small>
+
+</div>
+
+
+<div class="team-actions">
+
+
+<a
+href="join-requests.html"
+class="lime"
+>
+
+JOIN REQUESTS
+
+</a>
+
+
+<a
+href="team.html"
+class="outline"
+>
+
+TEAM CENTER
+
+</a>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<div class="logo">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</div>
+
+<p>
+© 2026 Markhor Esports. Compete. Conquer. Rise.
+</p>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="my-team.js"></script>
+
+</body>
+
+</html>

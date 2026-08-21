@@ -1329,47 +1329,16 @@ if (leaveTeamBtn) {
         "click",
         () => {
 
-            const leavePopup =
-document.getElementById("leavePopup");
+         
+const confirmed = confirm(
+    "Are you really want to leave your team?"
+);
 
+if (!confirmed) {
+    return;
+}
 
-const cancelLeave =
-document.getElementById("cancelLeave");
-
-
-const confirmLeave =
-document.getElementById("confirmLeave");
-
-
-leaveTeamBtn.addEventListener(
-"click",
-()=>{
-
-    leavePopup.style.display="flex";
-
-});
-
-
-cancelLeave.addEventListener(
-"click",
-()=>{
-
-    leavePopup.style.display="none";
-
-});
-
-
-confirmLeave.addEventListener(
-"click",
-()=>{
-
-    leavePopup.style.display="none";
-
-    leaveTeam();
-
-});
-
-
+leaveTeam();
 /* =========================================
    LEAVE TEAM FUNCTION
 ========================================= */

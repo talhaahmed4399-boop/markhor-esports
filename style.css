@@ -276,3 +276,331 @@
     }
 
 }
+/* =========================================
+   MARKHOR ESPORTS - PLAYER PROFILE PAGE
+========================================= */
+
+.profile-page{
+    min-height:calc(100vh - 150px);
+    padding:100px 6%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.profile-page::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:#b7ff00;
+    opacity:.04;
+    filter:blur(120px);
+    border-radius:50%;
+    top:50px;
+    left:50%;
+    transform:translateX(-50%);
+    pointer-events:none;
+}
+
+.profile-page-title{
+    width:100%;
+    max-width:1000px;
+    margin-bottom:35px;
+    position:relative;
+}
+
+.profile-page-title small{
+    color:#b7ff00;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.profile-page-title h1{
+    margin:8px 0;
+    font-size:clamp(38px,6vw,72px);
+    line-height:.95;
+    font-weight:950;
+    letter-spacing:-2px;
+    color:#fff;
+    text-shadow:0 0 20px rgba(183,255,0,.15);
+}
+
+.profile-page-title p{
+    margin:0;
+    color:#777;
+    font-size:15px;
+}
+
+
+/* MAIN PLAYER CARD */
+
+.big-player-card{
+    width:100%;
+    max-width:1000px;
+    box-sizing:border-box;
+    padding:42px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(183,255,0,.06),
+            rgba(255,255,255,.015) 45%,
+            rgba(0,0,0,.8)
+        );
+
+    border:1px solid rgba(183,255,0,.55);
+    border-radius:22px;
+
+    position:relative;
+    overflow:hidden;
+
+    box-shadow:
+        0 0 25px rgba(183,255,0,.12),
+        inset 0 0 50px rgba(183,255,0,.025);
+}
+
+.big-player-card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:4px;
+    background:#b7ff00;
+    box-shadow:0 0 18px #b7ff00;
+}
+
+.big-player-card::after{
+    content:"M";
+    position:absolute;
+    right:-30px;
+    bottom:-80px;
+    font-size:300px;
+    font-weight:950;
+    color:rgba(183,255,0,.025);
+    pointer-events:none;
+}
+
+
+/* PLAYER HEADER */
+
+.player-header{
+    display:flex;
+    align-items:center;
+    gap:25px;
+    padding-bottom:30px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    position:relative;
+    z-index:2;
+}
+
+.big-avatar{
+    width:105px;
+    height:105px;
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid #b7ff00;
+    border-radius:50%;
+
+    color:#b7ff00;
+    font-size:48px;
+    font-weight:950;
+
+    text-shadow:0 0 18px #b7ff00;
+
+    box-shadow:
+        0 0 15px rgba(183,255,0,.4),
+        inset 0 0 20px rgba(183,255,0,.08);
+}
+
+.player-header small{
+    color:#b7ff00;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.player-header h2{
+    margin:7px 0 10px;
+    color:#fff;
+    font-size:38px;
+    font-weight:950;
+    letter-spacing:1px;
+}
+
+.online{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+
+    color:#888;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.online span{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#b7ff00;
+    box-shadow:0 0 10px #b7ff00;
+}
+
+
+/* PROFILE INFORMATION */
+
+.profile-info{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    margin-top:30px;
+
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:12px;
+    overflow:hidden;
+
+    position:relative;
+    z-index:2;
+}
+
+.profile-info > div{
+    padding:22px 25px;
+    background:#0a0a0a;
+}
+
+.profile-info small{
+    display:block;
+    margin-bottom:8px;
+
+    color:#777;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.profile-info strong{
+    display:block;
+
+    color:#fff;
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:.5px;
+
+    word-break:break-word;
+}
+
+
+/* STATS */
+
+.profile-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+
+    margin-top:25px;
+
+    position:relative;
+    z-index:2;
+}
+
+.profile-stats > div{
+    text-align:center;
+    padding:20px 10px;
+
+    background:#0b0b0b;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:10px;
+}
+
+.profile-stats strong{
+    display:block;
+
+    color:#b7ff00;
+    font-size:24px;
+    font-weight:950;
+
+    text-shadow:0 0 10px rgba(183,255,0,.3);
+}
+
+.profile-stats small{
+    display:block;
+    margin-top:5px;
+
+    color:#666;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1.5px;
+}
+
+
+/* BUTTONS */
+
+.big-player-card .full{
+    position:relative;
+    z-index:2;
+    margin-top:25px;
+}
+
+.big-player-card #logoutBtn{
+    margin-top:10px;
+}
+
+#profileMessage{
+    position:relative;
+    z-index:2;
+
+    text-align:center;
+    color:#777;
+    font-size:12px;
+    margin:15px 0 0;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .profile-page{
+        padding:60px 18px;
+    }
+
+    .profile-page-title h1{
+        font-size:42px;
+    }
+
+    .big-player-card{
+        padding:25px 18px;
+    }
+
+    .player-header{
+        gap:16px;
+    }
+
+    .big-avatar{
+        width:75px;
+        height:75px;
+        font-size:34px;
+    }
+
+    .player-header h2{
+        font-size:26px;
+    }
+
+    .profile-info{
+        grid-template-columns:1fr;
+    }
+
+    .profile-stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}

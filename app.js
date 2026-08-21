@@ -404,4 +404,4 @@ alert("Profile saved successfully");
 
 };
 
-}
+

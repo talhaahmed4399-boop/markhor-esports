@@ -240,7 +240,9 @@ document.getElementById("auth").onsubmit=async(e)=>{
 
         setTimeout(closeModal,800);
 const saveProfileBtn = document.getElementById("saveProfile");
-
+        
+console.log("Save profile loaded");
+        
 if(saveProfileBtn){
 
 saveProfileBtn.onclick = async()=>{

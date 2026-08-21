@@ -38,6 +38,18 @@ const requestsList =
 const closeRequests =
     document.getElementById("closeTeamRequests");
 
+const leaveTeamBtn =
+    document.getElementById("leaveTeamBtn");
+
+const leavePopup =
+    document.getElementById("leavePopup");
+
+const cancelLeave =
+    document.getElementById("cancelLeave");
+
+const confirmLeave =
+    document.getElementById("confirmLeave");
+
 
 let currentUser = null;
 let currentTeamId = null;
@@ -88,8 +100,12 @@ async function loadMyTeam() {
 
     try {
 
-        pageMessage.textContent =
-            "Loading your team...";
+        if (pageMessage) {
+
+            pageMessage.textContent =
+                "Loading your team...";
+
+        }
 
 
         const {
@@ -100,8 +116,12 @@ async function loadMyTeam() {
 
         if (userError || !userData.user) {
 
-            pageMessage.textContent =
-                "Please login to view your team.";
+            if (pageMessage) {
+
+                pageMessage.textContent =
+                    "Please login to view your team.";
+
+            }
 
             return;
 
@@ -122,7 +142,10 @@ async function loadMyTeam() {
         } = await client
             .from("team_members")
             .select("team_id")
-            .eq("player_id", currentUser.id)
+            .eq(
+                "player_id",
+                currentUser.id
+            )
             .limit(1)
             .maybeSingle();
 
@@ -134,8 +157,12 @@ async function loadMyTeam() {
                 membershipError
             );
 
-            pageMessage.textContent =
-                "Unable to load team membership.";
+            if (pageMessage) {
+
+                pageMessage.textContent =
+                    "Unable to load team membership.";
+
+            }
 
             return;
 
@@ -144,8 +171,12 @@ async function loadMyTeam() {
 
         if (!membership) {
 
-            pageMessage.textContent =
-                "You are not a member of any team.";
+            if (pageMessage) {
+
+                pageMessage.textContent =
+                    "You are not a member of any team.";
+
+            }
 
             return;
 
@@ -166,7 +197,10 @@ async function loadMyTeam() {
         } = await client
             .from("teams")
             .select("*")
-            .eq("id", currentTeamId)
+            .eq(
+                "id",
+                currentTeamId
+            )
             .maybeSingle();
 
 
@@ -177,8 +211,12 @@ async function loadMyTeam() {
                 teamError
             );
 
-            pageMessage.textContent =
-                "Unable to load team.";
+            if (pageMessage) {
+
+                pageMessage.textContent =
+                    "Unable to load team.";
+
+            }
 
             return;
 
@@ -187,8 +225,12 @@ async function loadMyTeam() {
 
         if (!team) {
 
-            pageMessage.textContent =
-                "Team not found.";
+            if (pageMessage) {
+
+                pageMessage.textContent =
+                    "Team not found.";
+
+            }
 
             return;
 
@@ -199,11 +241,20 @@ async function loadMyTeam() {
            SHOW TEAM PAGE
         ===================================== */
 
-        pageMessage.style.display =
-            "none";
+        if (pageMessage) {
 
-        teamContainer.style.display =
-            "block";
+            pageMessage.style.display =
+                "none";
+
+        }
+
+
+        if (teamContainer) {
+
+            teamContainer.style.display =
+                "block";
+
+        }
 
 
         /* =====================================
@@ -222,7 +273,8 @@ async function loadMyTeam() {
 
         setText(
             "myTeamIGL",
-            team.igl || team.captain_name
+            team.igl ||
+            team.captain_name
         );
 
         setText(
@@ -239,7 +291,10 @@ async function loadMyTeam() {
             document.getElementById("myTeamLogo");
 
 
-        if (logo && team.team_logo) {
+        if (
+            logo &&
+            team.team_logo
+        ) {
 
             logo.innerHTML = `
                 <img
@@ -284,7 +339,7 @@ async function loadMyTeam() {
 
 
         /* =====================================
-           PLAYERS
+           PLAYER 1
         ===================================== */
 
         setText(
@@ -295,10 +350,15 @@ async function loadMyTeam() {
         setText(
             "p1Uid",
             team.player1_uid
-                ? "PUBG UID: " + team.player1_uid
+                ? "PUBG UID: " +
+                  team.player1_uid
                 : "PUBG UID: -"
         );
 
+
+        /* =====================================
+           PLAYER 2
+        ===================================== */
 
         setText(
             "p2Name",
@@ -308,10 +368,15 @@ async function loadMyTeam() {
         setText(
             "p2Uid",
             team.player2_uid
-                ? "PUBG UID: " + team.player2_uid
+                ? "PUBG UID: " +
+                  team.player2_uid
                 : "PUBG UID: -"
         );
 
+
+        /* =====================================
+           PLAYER 3
+        ===================================== */
 
         setText(
             "p3Name",
@@ -321,10 +386,15 @@ async function loadMyTeam() {
         setText(
             "p3Uid",
             team.player3_uid
-                ? "PUBG UID: " + team.player3_uid
+                ? "PUBG UID: " +
+                  team.player3_uid
                 : "PUBG UID: -"
         );
 
+
+        /* =====================================
+           PLAYER 4
+        ===================================== */
 
         setText(
             "p4Name",
@@ -334,37 +404,46 @@ async function loadMyTeam() {
         setText(
             "p4Uid",
             team.player4_uid
-                ? "PUBG UID: " + team.player4_uid
+                ? "PUBG UID: " +
+                  team.player4_uid
                 : "PUBG UID: -"
         );
 
 
         /* =====================================
-           SUBSTITUTES
+           SUBSTITUTE 1
         ===================================== */
 
         setText(
             "sub1Name",
-            team.sub1_name || "No Substitute"
+            team.sub1_name ||
+            "No Substitute"
         );
 
         setText(
             "sub1Uid",
             team.sub1_uid
-                ? "PUBG UID: " + team.sub1_uid
+                ? "PUBG UID: " +
+                  team.sub1_uid
                 : "PUBG UID: -"
         );
 
 
+        /* =====================================
+           SUBSTITUTE 2
+        ===================================== */
+
         setText(
             "sub2Name",
-            team.sub2_name || "No Substitute"
+            team.sub2_name ||
+            "No Substitute"
         );
 
         setText(
             "sub2Uid",
             team.sub2_uid
-                ? "PUBG UID: " + team.sub2_uid
+                ? "PUBG UID: " +
+                  team.sub2_uid
                 : "PUBG UID: -"
         );
 
@@ -375,10 +454,17 @@ async function loadMyTeam() {
 
         let rosterCount = 0;
 
-        if (team.player1_name) rosterCount++;
-        if (team.player2_name) rosterCount++;
-        if (team.player3_name) rosterCount++;
-        if (team.player4_name) rosterCount++;
+        if (team.player1_name)
+            rosterCount++;
+
+        if (team.player2_name)
+            rosterCount++;
+
+        if (team.player3_name)
+            rosterCount++;
+
+        if (team.player4_name)
+            rosterCount++;
 
 
         setText(
@@ -395,7 +481,7 @@ async function loadMyTeam() {
 
 
         /* =====================================
-           LOAD REQUEST COUNT
+           LOAD REQUESTS
         ===================================== */
 
         await loadRequestCount();
@@ -412,10 +498,17 @@ async function loadMyTeam() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "My Team error:",
+            error
+        );
 
-        pageMessage.textContent =
-            "Something went wrong while loading your team.";
+        if (pageMessage) {
+
+            pageMessage.textContent =
+                "Something went wrong while loading your team.";
+
+        }
 
     }
 
@@ -423,7 +516,7 @@ async function loadMyTeam() {
 
 
 /* =========================================
-   LOAD REQUEST COUNT
+   REQUEST COUNT
 ========================================= */
 
 async function loadRequestCount() {
@@ -443,8 +536,14 @@ async function loadRequestCount() {
                 head: true
             }
         )
-        .eq("team_id", currentTeamId)
-        .eq("status", "pending");
+        .eq(
+            "team_id",
+            currentTeamId
+        )
+        .eq(
+            "status",
+            "pending"
+        );
 
 
     if (error) {
@@ -483,39 +582,49 @@ async function loadRequests() {
     if (!currentTeamId) return;
 
 
-    requestsList.innerHTML = `
-        <div class="requests-loading">
-            Loading requests...
-        </div>
-    `;
+    if (requestsList) {
+
+        requestsList.innerHTML = `
+            <div class="requests-loading">
+                LOADING REQUESTS...
+            </div>
+        `;
+
+    }
 
 
-   const {
-    data: requests,
-    error
-} = await client
-    .from("team_join_requests")
-    .select(`
-    id,
-    player_id,
-    status,
-    created_at,
-    profiles (
-        username,
-        full_name,
-        pubguid,
-        country,
-        avatarurl
-    )
-`)
-    .eq("team_id", currentTeamId)
-    .eq("status", "pending")
-    .order(
-        "created_at",
-        {
-            ascending:false
-        }
-    );
+    const {
+        data: requests,
+        error
+    } = await client
+        .from("team_join_requests")
+        .select(`
+            id,
+            player_id,
+            status,
+            created_at,
+            profiles (
+                username,
+                full_name,
+                pubguid,
+                country,
+                avatarurl
+            )
+        `)
+        .eq(
+            "team_id",
+            currentTeamId
+        )
+        .eq(
+            "status",
+            "pending"
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
 
 
     if (error) {
@@ -525,148 +634,188 @@ async function loadRequests() {
             error
         );
 
-        requestsList.innerHTML = `
-            <div class="requests-empty">
-                Unable to load requests.
-            </div>
-        `;
+        if (requestsList) {
+
+            requestsList.innerHTML = `
+                <div class="requests-empty">
+                    UNABLE TO LOAD REQUESTS
+                </div>
+            `;
+
+        }
 
         return;
 
     }
 
 
-    if (!requests || requests.length === 0) {
+    if (
+        !requests ||
+        requests.length === 0
+    ) {
 
-        requestsList.innerHTML = `
-            <div class="requests-empty">
-                NO PENDING JOIN REQUESTS
-            </div>
-        `;
+        if (requestsList) {
+
+            requestsList.innerHTML = `
+                <div class="requests-empty">
+                    NO PENDING JOIN REQUESTS
+                </div>
+            `;
+
+        }
 
         return;
 
     }
 
 
-    requestsList.innerHTML = "";
+    if (requestsList) {
+
+        requestsList.innerHTML = "";
+
+    }
 
 
     requests.forEach(
         request => {
 
+            const profile =
+                request.profiles || {};
+
+
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             card.className =
                 "team-request-card";
 
-card.innerHTML = `
 
-    <div class="team-request-profile">
+            const avatar =
+                profile.avatarurl
+                    ? `
+                        <img
+                            src="${escapeHtml(profile.avatarurl)}"
+                            alt="Player Avatar"
+                        >
+                    `
+                    : `
+                        <span>
+                            ${escapeHtml(
+                                (
+                                    profile.username ||
+                                    "P"
+                                )
+                                .charAt(0)
+                                .toUpperCase()
+                            )}
+                        </span>
+                    `;
 
-        <div class="team-request-avatar">
 
-            ${
-                request.profiles?.avatarurl
-                ? `
-                    <img
-                        src="${escapeHtml(request.profiles.avatarurl)}"
-                        alt="Player Avatar"
+            card.innerHTML = `
+
+                <div class="team-request-profile">
+
+                    <div class="team-request-avatar">
+
+                        ${avatar}
+
+                    </div>
+
+
+                    <div class="team-request-info">
+
+                        <strong>
+                            ${escapeHtml(
+                                profile.username ||
+                                "Unknown Player"
+                            )}
+                        </strong>
+
+
+                        <span>
+                            ${escapeHtml(
+                                profile.full_name ||
+                                "Full Name Not Available"
+                            )}
+                        </span>
+
+
+                        <div class="team-request-meta">
+
+                            <small>
+                                PUBG UID:
+                                ${escapeHtml(
+                                    profile.pubguid ||
+                                    "-"
+                                )}
+                            </small>
+
+
+                            <small>
+                                COUNTRY:
+                                ${escapeHtml(
+                                    profile.country ||
+                                    "-"
+                                )}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="team-request-actions">
+
+                    <button
+                        class="view-request-profile"
+                        type="button"
+                        data-player-id="${escapeHtml(
+                            request.player_id
+                        )}"
                     >
-                  `
-                : `
-                    <span>
-                        ${escapeHtml(
-                            (
-                                request.profiles?.username ||
-                                "P"
-                            ).charAt(0).toUpperCase()
-                        )}
-                    </span>
-                  `
+                        VIEW PROFILE
+                    </button>
+
+
+                    <button
+                        class="accept-request"
+                        type="button"
+                        data-request-id="${escapeHtml(
+                            request.id
+                        )}"
+                    >
+                        ACCEPT
+                    </button>
+
+
+                    <button
+                        class="reject-request"
+                        type="button"
+                        data-request-id="${escapeHtml(
+                            request.id
+                        )}"
+                    >
+                        REJECT
+                    </button>
+
+                </div>
+
+            `;
+
+
+            if (requestsList) {
+
+                requestsList.appendChild(
+                    card
+                );
+
             }
-
-        </div>
-
-
-        <div class="team-request-info">
-
-            <strong>
-                ${escapeHtml(
-                    request.profiles?.username ||
-                    "Unknown Player"
-                )}
-            </strong>
-
-            <span>
-                ${escapeHtml(
-                    request.profiles?.full_name ||
-                    "Full Name Not Available"
-                )}
-            </span>
-
-
-            <div class="team-request-meta">
-
-                <small>
-                    PUBG UID:
-                    ${escapeHtml(
-                        request.profiles?.pubguid ||
-                        "-"
-                    )}
-                </small>
-
-                <small>
-                    COUNTRY:
-                    ${escapeHtml(
-                        request.profiles?.country ||
-                        "-"
-                    )}
-                </small>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="team-request-actions">
-
-        <button
-            class="view-request-profile"
-            data-player-id="${request.player_id}"
-            type="button"
-        >
-            VIEW PROFILE
-        </button>
-
-
-        <button
-            class="accept-request"
-            data-request-id="${request.id}"
-            type="button"
-        >
-            ACCEPT
-        </button>
-
-
-        <button
-            class="reject-request"
-            data-request-id="${request.id}"
-            type="button"
-        >
-            REJECT
-        </button>
-
-    </div>
-
-`;
-          
-
-
-            requestsList.appendChild(card);
 
         }
     );
@@ -678,53 +827,107 @@ card.innerHTML = `
 
 
 /* =========================================
-   ACCEPT / REJECT BUTTONS
+   REQUEST BUTTONS
 ========================================= */
 
 function attachRequestButtons() {
 
     document
-        .querySelectorAll(".accept-request")
-        .forEach(button => {
+        .querySelectorAll(
+            ".accept-request"
+        )
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    handleRequest(
-                        button.dataset.requestId,
-                        "accepted"
-                    );
+                        button.disabled =
+                            true;
 
-                }
-            );
+                        button.textContent =
+                            "ACCEPTING...";
 
-        });
+
+                        await handleRequest(
+                            button.dataset.requestId,
+                            "accepted"
+                        );
+
+                    }
+                );
+
+            }
+        );
 
 
     document
-        .querySelectorAll(".reject-request")
-        .forEach(button => {
+        .querySelectorAll(
+            ".reject-request"
+        )
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    handleRequest(
-                        button.dataset.requestId,
-                        "rejected"
-                    );
+                        button.disabled =
+                            true;
 
-                }
-            );
+                        button.textContent =
+                            "REJECTING...";
 
-        });
+
+                        await handleRequest(
+                            button.dataset.requestId,
+                            "rejected"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            ".view-request-profile"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const playerId =
+                            button.dataset.playerId;
+
+
+                        if (playerId) {
+
+                            window.location.href =
+                                "profile.html?id=" +
+                                encodeURIComponent(
+                                    playerId
+                                );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
 
 }
 
 
 /* =========================================
-   HANDLE REQUEST
+   ACCEPT / REJECT REQUEST
 ========================================= */
 
 async function handleRequest(
@@ -732,19 +935,27 @@ async function handleRequest(
     status
 ) {
 
-
-    // Request data fetch
     const {
         data: request,
         error: requestError
     } = await client
         .from("team_join_requests")
         .select("*")
-        .eq("id", requestId)
+        .eq(
+            "id",
+            requestId
+        )
+        .eq(
+            "team_id",
+            currentTeamId
+        )
         .single();
 
 
-    if (requestError || !request) {
+    if (
+        requestError ||
+        !request
+    ) {
 
         console.error(
             "Request fetch error:",
@@ -752,18 +963,23 @@ async function handleRequest(
         );
 
         alert(
-            "Request not found"
+            "Request not found."
         );
+
+        await loadRequests();
 
         return;
 
     }
 
 
+    /* =====================================
+       ACCEPT
+    ===================================== */
 
-    // ACCEPT PLAYER
-    if (status === "accepted") {
-
+    if (
+        status === "accepted"
+    ) {
 
         const {
             error: memberError
@@ -783,7 +999,6 @@ async function handleRequest(
             });
 
 
-
         if (memberError) {
 
             console.error(
@@ -791,38 +1006,56 @@ async function handleRequest(
                 memberError
             );
 
-            alert(
-                "Player could not be added"
-            );
+
+            if (
+                memberError.code ===
+                "23505"
+            ) {
+
+                alert(
+                    "This player is already in the team."
+                );
+
+            } else {
+
+                alert(
+                    "Player could not be added to the team."
+                );
+
+            }
+
+
+            await loadRequests();
 
             return;
 
         }
 
-
     }
 
 
-
-    // UPDATE REQUEST STATUS
+    /* =====================================
+       UPDATE REQUEST
+    ===================================== */
 
     const {
-        error:updateError
+        error: updateError
     } = await client
         .from("team_join_requests")
         .update({
-
             status: status
-
         })
         .eq(
             "id",
             requestId
+        )
+        .eq(
+            "team_id",
+            currentTeamId
         );
 
 
-
-    if(updateError){
+    if (updateError) {
 
         console.error(
             "Request update error:",
@@ -830,7 +1063,7 @@ async function handleRequest(
         );
 
         alert(
-            "Request update failed"
+            "Request could not be updated."
         );
 
         return;
@@ -838,22 +1071,29 @@ async function handleRequest(
     }
 
 
-
-    // Refresh
-
     await loadRequests();
 
     await loadRequestCount();
 
 
-    alert(
+    if (
         status === "accepted"
-        ? "Player joined your team"
-        : "Request rejected"
-    );
+    ) {
 
+        alert(
+            "Player joined your team."
+        );
+
+    } else {
+
+        alert(
+            "Request rejected."
+        );
+
+    }
 
 }
+
 
 /* =========================================
    NOTIFICATION BUTTON
@@ -866,12 +1106,19 @@ if (requestsButton) {
         async () => {
 
             if (
+                !requestsPanel ||
                 requestsPanel.style.display ===
-                "none"
+                "none" ||
+                requestsPanel.style.display === ""
             ) {
 
-                requestsPanel.style.display =
-                    "block";
+                if (requestsPanel) {
+
+                    requestsPanel.style.display =
+                        "block";
+
+                }
+
 
                 await loadRequests();
 
@@ -889,7 +1136,7 @@ if (requestsButton) {
 
 
 /* =========================================
-   CLOSE REQUEST PANEL
+   CLOSE REQUESTS
 ========================================= */
 
 if (closeRequests) {
@@ -898,8 +1145,12 @@ if (closeRequests) {
         "click",
         () => {
 
-            requestsPanel.style.display =
-                "none";
+            if (requestsPanel) {
+
+                requestsPanel.style.display =
+                    "none";
+
+            }
 
         }
     );
@@ -945,6 +1196,7 @@ function startRequestRealtime() {
 
                     await loadRequestCount();
 
+
                     if (
                         requestsPanel &&
                         requestsPanel.style.display !==
@@ -986,7 +1238,10 @@ async function loadMessages() {
     } = await client
         .from("team_messages")
         .select("*")
-        .eq("team_id", currentTeamId)
+        .eq(
+            "team_id",
+            currentTeamId
+        )
         .order(
             "created_at",
             {
@@ -1018,7 +1273,9 @@ async function loadMessages() {
    RENDER CHAT
 ========================================= */
 
-function renderMessages(messages) {
+function renderMessages(
+    messages
+) {
 
     if (!chatMessages) return;
 
@@ -1087,12 +1344,16 @@ function addMessageToChat(
 
 
     if (empty) {
+
         empty.remove();
+
     }
 
 
     const messageElement =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     messageElement.className =
@@ -1100,7 +1361,8 @@ function addMessageToChat(
 
 
     const sender =
-        message.player_id === currentUser?.id
+        message.player_id ===
+        currentUser?.id
             ? "YOU"
             : "TEAM MEMBER";
 
@@ -1112,7 +1374,9 @@ function addMessageToChat(
         </strong>
 
         <p>
-            ${escapeHtml(message.message)}
+            ${escapeHtml(
+                message.message
+            )}
         </p>
 
     `;
@@ -1124,7 +1388,9 @@ function addMessageToChat(
 
 
     if (scroll) {
+
         scrollChat();
+
     }
 
 }
@@ -1138,6 +1404,7 @@ function scrollChat() {
 
     if (!chatMessages) return;
 
+
     chatMessages.scrollTop =
         chatMessages.scrollHeight;
 
@@ -1150,7 +1417,10 @@ function scrollChat() {
 
 async function sendTeamMessage() {
 
-    if (!currentUser || !currentTeamId) {
+    if (
+        !currentUser ||
+        !currentTeamId
+    ) {
 
         alert(
             "Your team is still loading."
@@ -1168,8 +1438,12 @@ async function sendTeamMessage() {
     if (!text) return;
 
 
-    sendButton.disabled =
-        true;
+    if (sendButton) {
+
+        sendButton.disabled =
+            true;
+
+    }
 
 
     const {
@@ -1190,8 +1464,12 @@ async function sendTeamMessage() {
         });
 
 
-    sendButton.disabled =
-        false;
+    if (sendButton) {
+
+        sendButton.disabled =
+            false;
+
+    }
 
 
     if (error) {
@@ -1210,7 +1488,11 @@ async function sendTeamMessage() {
     }
 
 
-    chatInput.value = "";
+    if (chatInput) {
+
+        chatInput.value = "";
+
+    }
 
 }
 
@@ -1273,36 +1555,23 @@ function startRealtime() {
 
 
 /* =========================================
-   SEND BUTTON
+   LEAVE TEAM BUTTON
 ========================================= */
 
-if (sendButton) {
+if (leaveTeamBtn) {
 
-    sendButton.addEventListener(
+    leaveTeamBtn.addEventListener(
         "click",
-        sendTeamMessage
-    );
+        () => {
 
-}
+            if (leavePopup) {
 
+                leavePopup.style.display =
+                    "flex";
 
-/* =========================================
-   ENTER TO SEND
-========================================= */
+            } else {
 
-if (chatInput) {
-
-    chatInput.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Enter"
-            ) {
-
-                event.preventDefault();
-
-                sendTeamMessage();
+                leaveTeam();
 
             }
 
@@ -1313,39 +1582,64 @@ if (chatInput) {
 
 
 /* =========================================
-   START
-========================================= */
-/* =========================================
-   LEAVE TEAM
+   CANCEL LEAVE
 ========================================= */
 
-const leaveTeamBtn =
-    document.getElementById("leaveTeamBtn");
+if (cancelLeave) {
 
-
-if (leaveTeamBtn) {
-
-    leaveTeamBtn.addEventListener(
+    cancelLeave.addEventListener(
         "click",
         () => {
 
-         
-const confirmed = confirm(
-    "Are you really want to leave your team?"
-);
+            if (leavePopup) {
 
-if (!confirmed) {
-    return;
+                leavePopup.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
 }
 
-leaveTeam();
+
+/* =========================================
+   CONFIRM LEAVE
+========================================= */
+
+if (confirmLeave) {
+
+    confirmLeave.addEventListener(
+        "click",
+        async () => {
+
+            if (leavePopup) {
+
+                leavePopup.style.display =
+                    "none";
+
+            }
+
+
+            await leaveTeam();
+
+        }
+    );
+
+}
+
+
 /* =========================================
    LEAVE TEAM FUNCTION
 ========================================= */
 
 async function leaveTeam() {
 
-    if (!currentUser || !currentTeamId) {
+    if (
+        !currentUser ||
+        !currentTeamId
+    ) {
 
         alert(
             "Team information is not loaded."
@@ -1356,12 +1650,15 @@ async function leaveTeam() {
     }
 
 
-    leaveTeamBtn.disabled =
-        true;
+    if (leaveTeamBtn) {
 
+        leaveTeamBtn.disabled =
+            true;
 
-    leaveTeamBtn.textContent =
-        "LEAVING...";
+        leaveTeamBtn.textContent =
+            "LEAVING...";
+
+    }
 
 
     const {
@@ -1392,12 +1689,15 @@ async function leaveTeam() {
         );
 
 
-        leaveTeamBtn.disabled =
-            false;
+        if (leaveTeamBtn) {
 
+            leaveTeamBtn.disabled =
+                false;
 
-        leaveTeamBtn.textContent =
-            "LEAVE TEAM";
+            leaveTeamBtn.textContent =
+                "LEAVE TEAM";
+
+        }
 
 
         return;
@@ -1405,13 +1705,55 @@ async function leaveTeam() {
     }
 
 
-    alert(
-        "You have left the team."
-    );
-
-
     window.location.href =
         "team.html";
 
 }
+
+
+/* =========================================
+   SEND BUTTON
+========================================= */
+
+if (sendButton) {
+
+    sendButton.addEventListener(
+        "click",
+        sendTeamMessage
+    );
+
+}
+
+
+/* =========================================
+   ENTER KEY CHAT
+========================================= */
+
+if (chatInput) {
+
+    chatInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                event.preventDefault();
+
+                sendTeamMessage();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
 loadMyTeam();

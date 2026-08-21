@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Markhor Esports - Create Team</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<a class="logo" href="index.html">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</a>
+
+<nav>
+
+<a href="index.html">HOME</a>
+
+<a href="index.html#tournaments">TOURNAMENTS</a>
+
+<a href="index.html#leaderboard">LEADERBOARD</a>
+
+<a href="profile.html">PROFILE</a>
+
+<a href="team.html">TEAMS</a>
+
+</nav>
+
+</header>
+
+
+<main>
+
+<section class="profile-page">
+
+<div class="profile-page-title">
+
+<small>MARKHOR ESPORTS</small>
+
+<h1>CREATE TEAM</h1>
+
+<p>
+Register your esports organization and build your roster.
+</p>
+
+</div>
+
+
+<div class="big-player-card team-create-card">
+
+
+<div class="player-header">
+
+<div class="big-avatar">
+M
+</div>
+
+<div>
+
+<small>TEAM REGISTRATION</small>
+
+<h2>NEW TEAM</h2>
+
+<span class="online">
+
+<span></span>
+
+REGISTRATION FORM
+
+</span>
+
+</div>
+
+</div>
+
+
+<!-- TEAM INFORMATION -->
+
+<div class="team-section-title">
+
+TEAM INFORMATION
+
+</div>
+
+
+<div class="team-form">
+
+
+<div class="team-field">
+
+<label>TEAM NAME *</label>
+
+<input
+id="teamName"
+type="text"
+placeholder="Example: Royal Esports"
+maxlength="40"
+required
+>
+
+</div>
+
+
+<div class="team-field">
+
+<label>TEAM TAG *</label>
+
+<input
+id="teamTag"
+type="text"
+placeholder="Example: RYL"
+maxlength="6"
+required
+>
+
+</div>
+
+
+<div class="team-field">
+
+<label>IGL NAME *</label>
+
+<input
+id="iglName"
+type="text"
+placeholder="In Game Leader"
+maxlength="40"
+required
+>
+
+</div>
+
+
+<div class="team-field">
+
+<label>WHATSAPP NUMBER *</label>
+
+<input
+id="whatsapp"
+type="tel"
+placeholder="+92 300 1234567"
+required
+>
+
+</div>
+
+
+<div class="team-field">
+
+<label>TEAM LOGO URL</label>
+
+<input
+id="teamLogo"
+type="url"
+placeholder="https://..."
+>
+
+</div>
+
+</div>
+
+
+<!-- MAIN ROSTER -->
+
+<div class="team-section-title">
+
+MAIN ROSTER
+
+<small>4 PLAYERS REQUIRED</small>
+
+</div>
+
+
+<div class="roster-grid">
+
+
+<div class="roster-player">
+
+<h3>PLAYER 1</h3>
+
+<input
+id="player1Name"
+type="text"
+placeholder="Player Name"
+required
+>
+
+<input
+id="player1Uid"
+type="text"
+placeholder="PUBG UID"
+required
+>
+
+</div>
+
+
+<div class="roster-player">
+
+<h3>PLAYER 2</h3>
+
+<input
+id="player2Name"
+type="text"
+placeholder="Player Name"
+required
+>
+
+<input
+id="player2Uid"
+type="text"
+placeholder="PUBG UID"
+required
+>
+
+</div>
+
+
+<div class="roster-player">
+
+<h3>PLAYER 3</h3>
+
+<input
+id="player3Name"
+type="text"
+placeholder="Player Name"
+required
+>
+
+<input
+id="player3Uid"
+type="text"
+placeholder="PUBG UID"
+required
+>
+
+</div>
+
+
+<div class="roster-player">
+
+<h3>PLAYER 4</h3>
+
+<input
+id="player4Name"
+type="text"
+placeholder="Player Name"
+required
+>
+
+<input
+id="player4Uid"
+type="text"
+placeholder="PUBG UID"
+required
+>
+
+</div>
+
+</div>
+
+
+<!-- SUBSTITUTE PLAYERS -->
+
+<div class="team-section-title">
+
+SUBSTITUTE PLAYERS
+
+<small>OPTIONAL</small>
+
+</div>
+
+
+<div class="roster-grid">
+
+
+<div class="roster-player">
+
+<h3>SUBSTITUTE 1</h3>
+
+<input
+id="sub1Name"
+type="text"
+placeholder="Player Name"
+>
+
+<input
+id="sub1Uid"
+type="text"
+placeholder="PUBG UID"
+>
+
+</div>
+
+
+<div class="roster-player">
+
+<h3>SUBSTITUTE 2</h3>
+
+<input
+id="sub2Name"
+type="text"
+placeholder="Player Name"
+>
+
+<input
+id="sub2Uid"
+type="text"
+placeholder="PUBG UID"
+>
+
+</div>
+
+</div>
+
+
+<button
+class="lime full"
+id="createTeam"
+type="button">
+
+CREATE TEAM
+
+</button>
+
+
+<p id="teamMessage"></p>
+
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+<div class="logo">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</div>
+
+<p>
+© 2026 Markhor Esports. Compete. Conquer. Rise.
+</p>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="create-team.js"></script>
+
+</body>
+
+</html>

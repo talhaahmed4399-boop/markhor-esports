@@ -239,7 +239,54 @@ document.getElementById("auth").onsubmit=async(e)=>{
     if(mode==="login"){
 
         setTimeout(closeModal,800);
+const saveProfileBtn = document.getElementById("saveProfile");
 
+if(saveProfileBtn){
+
+saveProfileBtn.onclick = async()=>{
+
+    const {data} = await client.auth.getSession();
+
+    if(!data.session){
+
+        alert("Please login first");
+        return;
+
+    }
+
+
+    const userId = data.session.user.id;
+
+
+    const {error} = await client
+    .from("profiles")
+    .update({
+
+        full_name: document.getElementById("fullName").value,
+
+        pubg_uid: document.getElementById("pubgUid").value,
+
+        country: document.getElementById("country").value
+
+    })
+    .eq("id", userId);
+
+
+
+    if(error){
+
+        alert(error.message);
+
+    }
+    else{
+
+        alert("Profile saved successfully");
+
+    }
+
+};
+
+}
     }
 
 

@@ -2731,3 +2731,73 @@
     }
 
 }
+.team-management-actions {
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:25px;
+
+}
+
+
+.leave-team-btn,
+.disband-team-btn {
+
+    min-height:42px;
+
+    padding:0 20px;
+
+    border:none;
+
+    cursor:pointer;
+
+    font-size:9px;
+
+    font-weight:950;
+
+    letter-spacing:1px;
+
+    transition:.3s ease;
+
+}
+
+
+.leave-team-btn {
+
+    background:#151515;
+
+    color:#aaa;
+
+    border:1px solid rgba(255,255,255,.15);
+
+}
+
+
+.leave-team-btn:hover {
+
+    color:white;
+
+    border-color:white;
+
+}
+
+
+
+.disband-team-btn {
+
+    background:#ff3131;
+
+    color:white;
+
+}
+
+
+.disband-team-btn:hover {
+
+    box-shadow:0 0 20px rgba(255,49,49,.4);
+
+    transform:translateY(-2px);
+
+}

@@ -561,43 +561,109 @@ async function loadRequests() {
             card.className =
                 "team-request-card";
 
+card.innerHTML = `
 
-            card.innerHTML = `
+    <div class="team-request-profile">
 
-                <div class="team-request-player">
+        <div class="team-request-avatar">
 
-                    <strong>
-                        PLAYER REQUEST
-                    </strong>
-
-                    <small>
-                        PLAYER ID:
-                        ${escapeHtml(request.player_id)}
-                    </small>
-
-                </div>
-
-
-                <div class="team-request-actions">
-
-                    <button
-                        class="accept-request"
-                        data-request-id="${request.id}"
+            ${
+                request.profiles?.avatarurl
+                ? `
+                    <img
+                        src="${escapeHtml(request.profiles.avatarurl)}"
+                        alt="Player Avatar"
                     >
-                        ACCEPT
-                    </button>
+                  `
+                : `
+                    <span>
+                        ${escapeHtml(
+                            (
+                                request.profiles?.username ||
+                                "P"
+                            ).charAt(0).toUpperCase()
+                        )}
+                    </span>
+                  `
+            }
+
+        </div>
 
 
-                    <button
-                        class="reject-request"
-                        data-request-id="${request.id}"
-                    >
-                        REJECT
-                    </button>
+        <div class="team-request-info">
 
-                </div>
+            <strong>
+                ${escapeHtml(
+                    request.profiles?.username ||
+                    "Unknown Player"
+                )}
+            </strong>
 
-            `;
+            <span>
+                ${escapeHtml(
+                    request.profiles?.full_name ||
+                    "Full Name Not Available"
+                )}
+            </span>
+
+
+            <div class="team-request-meta">
+
+                <small>
+                    PUBG UID:
+                    ${escapeHtml(
+                        request.profiles?.pubguid ||
+                        "-"
+                    )}
+                </small>
+
+                <small>
+                    COUNTRY:
+                    ${escapeHtml(
+                        request.profiles?.country ||
+                        "-"
+                    )}
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="team-request-actions">
+
+        <button
+            class="view-request-profile"
+            data-player-id="${request.player_id}"
+            type="button"
+        >
+            VIEW PROFILE
+        </button>
+
+
+        <button
+            class="accept-request"
+            data-request-id="${request.id}"
+            type="button"
+        >
+            ACCEPT
+        </button>
+
+
+        <button
+            class="reject-request"
+            data-request-id="${request.id}"
+            type="button"
+        >
+            REJECT
+        </button>
+
+    </div>
+
+`;
+          
 
 
             requestsList.appendChild(card);

@@ -5,11 +5,28 @@ const client = window.supabase.createClient(
 
 
 /* =========================================
-   BASIC ELEMENTS
+   ELEMENTS
 ========================================= */
 
-const message = document.getElementById("teamPageMessage");
-const container = document.getElementById("myTeamContainer");
+const pageMessage =
+    document.getElementById("teamPageMessage");
+
+const teamContainer =
+    document.getElementById("myTeamContainer");
+
+const chatMessages =
+    document.getElementById("teamChatMessages");
+
+const chatInput =
+    document.getElementById("teamChatInput");
+
+const sendButton =
+    document.getElementById("sendTeamMessage");
+
+
+let currentUser = null;
+let currentTeamId = null;
+let chatChannel = null;
 
 
 /* =========================================
@@ -18,28 +35,45 @@ const container = document.getElementById("myTeamContainer");
 
 function setText(id, value) {
 
-    const element = document.getElementById(id);
+    const element =
+        document.getElementById(id);
 
     if (element) {
         element.textContent =
-            value || "-";
+            value ?? "-";
     }
+
 }
 
 
 /* =========================================
-   LOAD MY TEAM
+   ESCAPE MESSAGE
+========================================= */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text || "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================
+   LOAD TEAM
 ========================================= */
 
 async function loadMyTeam() {
 
     try {
 
-        message.textContent =
+        pageMessage.textContent =
             "Loading your team...";
 
-
-        /* GET CURRENT USER */
 
         const {
             data: userData,
@@ -49,14 +83,16 @@ async function loadMyTeam() {
 
         if (userError || !userData.user) {
 
-            message.textContent =
+            pageMessage.textContent =
                 "Please login to view your team.";
 
             return;
+
         }
 
 
-        const user = userData.user;
+        currentUser =
+            userData.user;
 
 
         /* =====================================
@@ -65,37 +101,42 @@ async function loadMyTeam() {
 
         const {
             data: membership,
-            error: memberError
+            error: membershipError
         } = await client
-
             .from("team_members")
-
             .select("team_id")
-
-            .eq("player_id", user.id)
-
+            .eq("player_id", currentUser.id)
             .limit(1)
             .maybeSingle();
 
 
-        if (memberError) {
+        if (membershipError) {
 
-            console.error(memberError);
+            console.error(
+                "Membership error:",
+                membershipError
+            );
 
-            message.textContent =
+            pageMessage.textContent =
                 "Unable to load team membership.";
 
             return;
+
         }
 
 
         if (!membership) {
 
-            message.textContent =
+            pageMessage.textContent =
                 "You are not a member of any team.";
 
             return;
+
         }
+
+
+        currentTeamId =
+            membership.team_id;
 
 
         /* =====================================
@@ -106,49 +147,50 @@ async function loadMyTeam() {
             data: team,
             error: teamError
         } = await client
-
             .from("teams")
-
             .select("*")
-
-            .eq("id", membership.team_id)
-
+            .eq("id", currentTeamId)
             .maybeSingle();
 
 
         if (teamError) {
 
-            console.error(teamError);
+            console.error(
+                "Team error:",
+                teamError
+            );
 
-            message.textContent =
+            pageMessage.textContent =
                 "Unable to load team.";
 
             return;
+
         }
 
 
         if (!team) {
 
-            message.textContent =
+            pageMessage.textContent =
                 "Team not found.";
 
             return;
+
         }
 
 
         /* =====================================
-           SHOW PAGE
+           SHOW TEAM PAGE
         ===================================== */
 
-        message.style.display =
+        pageMessage.style.display =
             "none";
 
-        container.style.display =
+        teamContainer.style.display =
             "block";
 
 
         /* =====================================
-           TEAM BASIC INFORMATION
+           BASIC TEAM DATA
         ===================================== */
 
         setText(
@@ -156,18 +198,15 @@ async function loadMyTeam() {
             team.name
         );
 
-
         setText(
             "myTeamTag",
             team.tag
         );
 
-
         setText(
             "myTeamIGL",
             team.igl || team.captain_name
         );
-
 
         setText(
             "myTeamWhatsapp",
@@ -185,8 +224,12 @@ async function loadMyTeam() {
 
         if (logo && team.team_logo) {
 
-            logo.innerHTML =
-                `<img src="${team.team_logo}" alt="Team Logo">`;
+            logo.innerHTML = `
+                <img
+                    src="${escapeHtml(team.team_logo)}"
+                    alt="Team Logo"
+                >
+            `;
 
         }
 
@@ -197,27 +240,25 @@ async function loadMyTeam() {
 
         setText(
             "teamRank",
-            team.rank ? "#" + team.rank : "#--"
+            team.rank
+                ? "#" + team.rank
+                : "#--"
         );
-
 
         setText(
             "teamPoints",
             team.points || 0
         );
 
-
         setText(
             "teamMatches",
             team.matches || 0
         );
 
-
         setText(
             "teamKills",
             team.kills || 0
         );
-
 
         setText(
             "teamWins",
@@ -233,7 +274,6 @@ async function loadMyTeam() {
             "p1Name",
             team.player1_name
         );
-
 
         setText(
             "p1Uid",
@@ -252,7 +292,6 @@ async function loadMyTeam() {
             team.player2_name
         );
 
-
         setText(
             "p2Uid",
             team.player2_uid
@@ -269,7 +308,6 @@ async function loadMyTeam() {
             "p3Name",
             team.player3_name
         );
-
 
         setText(
             "p3Uid",
@@ -288,7 +326,6 @@ async function loadMyTeam() {
             team.player4_name
         );
 
-
         setText(
             "p4Uid",
             team.player4_uid
@@ -306,7 +343,6 @@ async function loadMyTeam() {
             team.sub1_name || "No Substitute"
         );
 
-
         setText(
             "sub1Uid",
             team.sub1_uid
@@ -323,7 +359,6 @@ async function loadMyTeam() {
             "sub2Name",
             team.sub2_name || "No Substitute"
         );
-
 
         setText(
             "sub2Uid",
@@ -352,20 +387,24 @@ async function loadMyTeam() {
 
 
         /* =====================================
-           CHAT
+           LOAD CHAT
         ===================================== */
 
-        loadTeamMessages(
-            membership.team_id,
-            user.id
-        );
+        await loadMessages();
+
+
+        /* =====================================
+           START REALTIME
+        ===================================== */
+
+        startRealtime();
 
 
     } catch (error) {
 
         console.error(error);
 
-        message.textContent =
+        pageMessage.textContent =
             "Something went wrong while loading your team.";
 
     }
@@ -374,174 +413,212 @@ async function loadMyTeam() {
 
 
 /* =========================================
-   LOAD TEAM CHAT
+   LOAD CHAT MESSAGES
 ========================================= */
 
-async function loadTeamMessages(teamId, userId) {
+async function loadMessages() {
 
-    const chat =
-        document.getElementById(
-            "teamChatMessages"
-        );
-
-
-    if (!chat) return;
+    if (!currentTeamId) return;
 
 
     const {
         data: messages,
         error
     } = await client
-
         .from("team_messages")
-
         .select("*")
-
-        .eq("team_id", teamId)
-
-        .order(
-            "created_at",
-            {
-                ascending: true
-            }
-        );
+        .eq("team_id", currentTeamId)
+        .order("created_at", {
+            ascending: true
+        });
 
 
     if (error) {
 
         console.error(
-            "Chat error:",
+            "Chat load error:",
             error
         );
 
         return;
-    }
-
-
-    if (!messages || messages.length === 0) {
-
-        return;
 
     }
 
 
-    chat.innerHTML = "";
-
-
-    messages.forEach(msg => {
-
-        const item =
-            document.createElement("div");
-
-
-        item.className =
-            "team-chat-message";
-
-
-        item.innerHTML = `
-
-            <strong>
-                ${msg.player_id === userId
-                    ? "You"
-                    : "Team Member"}
-            </strong>
-
-            <p>
-                ${escapeHtml(msg.message)}
-            </p>
-
-        `;
-
-
-        chat.appendChild(item);
-
-    });
-
-
-    chat.scrollTop =
-        chat.scrollHeight;
+    renderMessages(messages || []);
 
 }
 
 
 /* =========================================
-   SEND TEAM MESSAGE
+   RENDER CHAT
+========================================= */
+
+function renderMessages(messages) {
+
+    if (!chatMessages) return;
+
+
+    if (!messages.length) {
+
+        chatMessages.innerHTML = `
+            <div class="chat-empty">
+
+                <div class="chat-empty-icon">
+                    💬
+                </div>
+
+                <strong>
+                    TEAM CHAT
+                </strong>
+
+                <p>
+                    Your team messages will appear here.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    chatMessages.innerHTML = "";
+
+
+    messages.forEach(
+        message => {
+
+            addMessageToChat(
+                message,
+                false
+            );
+
+        }
+    );
+
+
+    scrollChat();
+
+}
+
+
+/* =========================================
+   ADD MESSAGE
+========================================= */
+
+function addMessageToChat(
+    message,
+    scroll = true
+) {
+
+    if (!chatMessages) return;
+
+
+    const empty =
+        chatMessages.querySelector(
+            ".chat-empty"
+        );
+
+
+    if (empty) {
+        empty.remove();
+    }
+
+
+    const messageElement =
+        document.createElement("div");
+
+
+    messageElement.className =
+        "team-chat-message";
+
+
+    const sender =
+        message.player_id === currentUser?.id
+            ? "YOU"
+            : "TEAM MEMBER";
+
+
+    messageElement.innerHTML = `
+
+        <strong>
+            ${sender}
+        </strong>
+
+        <p>
+            ${escapeHtml(message.message)}
+        </p>
+
+    `;
+
+
+    chatMessages.appendChild(
+        messageElement
+    );
+
+
+    if (scroll) {
+        scrollChat();
+    }
+
+}
+
+
+/* =========================================
+   SCROLL CHAT
+========================================= */
+
+function scrollChat() {
+
+    if (!chatMessages) return;
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+}
+
+
+/* =========================================
+   SEND MESSAGE
 ========================================= */
 
 async function sendTeamMessage() {
 
-    const input =
-        document.getElementById(
-            "teamChatInput"
+    if (!currentUser || !currentTeamId) {
+
+        alert(
+            "Your team is still loading."
         );
 
+        return;
 
-    if (!input) return;
+    }
 
 
     const text =
-        input.value.trim();
+        chatInput.value.trim();
 
 
     if (!text) return;
 
 
-    const {
-        data: userData
-    } = await client.auth.getUser();
-
-
-    if (!userData.user) {
-
-        alert(
-            "Please login first."
-        );
-
-        return;
-    }
-
-
-    const user =
-        userData.user;
-
-
-    const {
-        data: membership
-    } = await client
-
-        .from("team_members")
-
-        .select("team_id")
-
-        .eq("player_id", user.id)
-
-        .limit(1)
-        .maybeSingle();
-
-
-    if (!membership) {
-
-        alert(
-            "You are not in a team."
-        );
-
-        return;
-    }
+    sendButton.disabled =
+        true;
 
 
     const {
         error
     } = await client
-
         .from("team_messages")
-
         .insert({
 
             team_id:
-                membership.team_id,
+                currentTeamId,
 
             player_id:
-                user.id,
+                currentUser.id,
 
             message:
                 text
@@ -549,42 +626,84 @@ async function sendTeamMessage() {
         });
 
 
+    sendButton.disabled =
+        false;
+
+
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Send message error:",
+            error
+        );
 
         alert(
             "Message could not be sent."
         );
 
         return;
+
     }
 
 
-    input.value = "";
-
-
-    await loadTeamMessages(
-        membership.team_id,
-        user.id
-    );
+    chatInput.value = "";
 
 }
 
 
 /* =========================================
-   HTML ESCAPE
+   REALTIME
 ========================================= */
 
-function escapeHtml(text) {
+function startRealtime() {
 
-    const div =
-        document.createElement("div");
+    if (!currentTeamId) return;
 
-    div.textContent =
-        text;
 
-    return div.innerHTML;
+    if (chatChannel) {
+
+        client.removeChannel(
+            chatChannel
+        );
+
+    }
+
+
+    chatChannel =
+        client
+            .channel(
+                "team-chat-" +
+                currentTeamId
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event: "INSERT",
+                    schema: "public",
+                    table: "team_messages",
+                    filter:
+                        "team_id=eq." +
+                        currentTeamId
+                },
+                payload => {
+
+                    addMessageToChat(
+                        payload.new,
+                        true
+                    );
+
+                }
+            )
+            .subscribe(
+                status => {
+
+                    console.log(
+                        "Team chat:",
+                        status
+                    );
+
+                }
+            );
 
 }
 
@@ -592,12 +711,6 @@ function escapeHtml(text) {
 /* =========================================
    SEND BUTTON
 ========================================= */
-
-const sendButton =
-    document.getElementById(
-        "sendTeamMessage"
-    );
-
 
 if (sendButton) {
 
@@ -609,19 +722,15 @@ if (sendButton) {
 }
 
 
-/* ENTER TO SEND */
-
-const chatInput =
-    document.getElementById(
-        "teamChatInput"
-    );
-
+/* =========================================
+   ENTER KEY
+========================================= */
 
 if (chatInput) {
 
     chatInput.addEventListener(
         "keydown",
-        function(event) {
+        event => {
 
             if (
                 event.key === "Enter"

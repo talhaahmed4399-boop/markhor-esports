@@ -5,8 +5,7 @@
 
 <meta charset="utf-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Markhor Esports - Teams</title>
 
@@ -14,7 +13,9 @@ content="width=device-width,initial-scale=1">
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -28,6 +29,7 @@ MARKHOR
 </span>
 
 </a>
+
 
 <nav>
 
@@ -46,9 +48,11 @@ MARKHOR
 </header>
 
 
+
 <main>
 
 <section class="profile-page">
+
 
 <div class="profile-page-title">
 
@@ -56,69 +60,151 @@ MARKHOR
 
 <h1>TEAM CENTER</h1>
 
-<p>
-Build your team or find an esports organization to join.
+<p id="teamDescription">
+Checking your team status...
 </p>
 
 </div>
 
 
-<div class="team-choice-grid">
+
+<div id="teamLoading"
+class="team-loading">
+
+Loading...
+
+</div>
 
 
-<a
-href="create-team.html"
-class="team-choice-card"
+
+
+<div 
+id="noTeamOptions"
+class="team-choice-grid"
+style="display:none;"
 >
+
+
+
+<a href="create-team.html"
+class="team-choice-card">
+
 
 <div class="team-choice-icon">
 +
 </div>
 
-<small>TEAM MANAGEMENT</small>
 
-<h2>CREATE TEAM</h2>
+<small>
+TEAM MANAGEMENT
+</small>
+
+
+<h2>
+CREATE TEAM
+</h2>
+
 
 <p>
 Register your esports team and become its captain.
 </p>
 
+
 <span>
 CREATE YOUR TEAM →
 </span>
 
+
 </a>
 
 
-<a
-href="join-team.html"
-class="team-choice-card"
->
+
+
+<a href="join-team.html"
+class="team-choice-card">
+
 
 <div class="team-choice-icon">
 ↗
 </div>
 
-<small>TEAM DISCOVERY</small>
 
-<h2>JOIN TEAM</h2>
+<small>
+TEAM DISCOVERY
+</small>
+
+
+<h2>
+JOIN TEAM
+</h2>
+
 
 <p>
 Browse registered teams and send a request to join.
 </p>
 
+
 <span>
 FIND A TEAM →
 </span>
+
 
 </a>
 
 
 </div>
 
+
+
+
+
+<div
+id="myTeamOption"
+class="team-choice-grid"
+style="display:none;"
+>
+
+
+<a href="my-team.html"
+class="team-choice-card">
+
+
+<div class="team-choice-icon">
+✓
+</div>
+
+
+<small>
+YOUR ORGANIZATION
+</small>
+
+
+<h2 id="myTeamTitle">
+MY TEAM
+</h2>
+
+
+<p id="myTeamText">
+Manage your roster, ranking and team chat.
+</p>
+
+
+<span>
+OPEN TEAM PAGE →
+</span>
+
+
+</a>
+
+
+</div>
+
+
+
 </section>
 
 </main>
+
 
 
 <footer>
@@ -134,11 +220,23 @@ MARKHOR
 
 </div>
 
+
 <p>
 © 2026 Markhor Esports. Compete. Conquer. Rise.
 </p>
 
+
 </footer>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="team.js"></script>
+
 
 </body>
 

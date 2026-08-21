@@ -496,17 +496,18 @@ async function loadRequests() {
 } = await client
     .from("team_join_requests")
     .select(`
-        id,
-        player_id,
-        status,
-        profiles (
-            username,
-            full_name,
-            pubguid,
-            country,
-            avatarurl
-        )
-    `)
+    id,
+    player_id,
+    status,
+    created_at,
+    profiles (
+        username,
+        full_name,
+        pubguid,
+        country,
+        avatarurl
+    )
+`)
     .eq("team_id", currentTeamId)
     .eq("status", "pending")
     .order(

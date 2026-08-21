@@ -182,6 +182,31 @@ async function loadMyTeam() {
         currentTeamId =
             membership.team_id;
 
+        const disbandTeamBtn =
+document.getElementById("disbandTeamBtn");
+
+
+if(membership.role === "captain"){
+
+    if(leaveTeamBtn)
+        leaveTeamBtn.style.display="none";
+
+
+    if(disbandTeamBtn)
+        disbandTeamBtn.style.display="block";
+
+}
+else{
+
+    if(leaveTeamBtn)
+        leaveTeamBtn.style.display="block";
+
+
+    if(disbandTeamBtn)
+        disbandTeamBtn.style.display="none";
+
+}
+
 
         /* =====================================
            LOAD TEAM

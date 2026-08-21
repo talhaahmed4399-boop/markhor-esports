@@ -604,3 +604,643 @@
     }
 
 }
+/* =========================================================
+   MARKHOR ESPORTS
+   PROFESSIONAL TEAM SYSTEM UI
+   ========================================================= */
+
+:root {
+    --neon: #c8ff00;
+    --neon-soft: rgba(200, 255, 0, 0.18);
+    --black: #070707;
+    --panel: #101010;
+    --panel-2: #151515;
+    --border: rgba(255,255,255,0.10);
+    --text: #f5f5f5;
+    --muted: #8d8d8d;
+}
+
+
+/* =========================================================
+   TEAM CENTER
+   ========================================================= */
+
+.team-choice-grid {
+    max-width: 1050px;
+    margin: 55px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+}
+
+
+.team-choice-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 330px;
+    padding: 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-decoration: none;
+    color: var(--text);
+    background:
+        linear-gradient(145deg, #151515, #090909);
+    border: 1px solid var(--border);
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+
+.team-choice-card::before {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: -80px;
+    top: -80px;
+    background: var(--neon);
+    opacity: .06;
+    filter: blur(35px);
+    border-radius: 50%;
+    transition: .4s ease;
+}
+
+
+.team-choice-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--neon);
+    box-shadow:
+        0 0 25px rgba(200,255,0,.10),
+        0 0 70px rgba(200,255,0,.05);
+}
+
+
+.team-choice-card:hover::before {
+    opacity: .16;
+    transform: scale(1.3);
+}
+
+
+.team-choice-icon {
+    position: absolute;
+    top: 35px;
+    right: 38px;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--neon);
+    color: var(--neon);
+    font-size: 32px;
+    font-weight: 800;
+    box-shadow: 0 0 20px rgba(200,255,0,.10);
+}
+
+
+.team-choice-card small {
+    color: var(--neon);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+
+.team-choice-card h2 {
+    margin: 10px 0;
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+
+.team-choice-card p {
+    max-width: 430px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin: 0 0 25px;
+}
+
+
+.team-choice-card span {
+    color: var(--neon);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   CREATE TEAM CARD
+   ========================================================= */
+
+.team-create-card {
+    max-width: 1050px;
+    margin: 45px auto 0;
+    background:
+        linear-gradient(145deg, #131313, #090909);
+    border: 1px solid var(--border);
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.35);
+}
+
+
+.team-create-card:hover {
+    border-color: rgba(200,255,0,.25);
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+.team-section-title {
+    position: relative;
+    margin: 45px 0 22px;
+    padding-bottom: 13px;
+    color: var(--neon);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    border-bottom: 1px solid var(--border);
+}
+
+
+.team-section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 85px;
+    height: 2px;
+    background: var(--neon);
+    box-shadow: 0 0 12px var(--neon);
+}
+
+
+.team-section-title small {
+    float: right;
+    color: #666;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   TEAM FORM
+   ========================================================= */
+
+.team-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+
+.team-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+
+.team-field label {
+    color: #aaa;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+
+.team-field input,
+.roster-player input,
+.join-tools input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 17px;
+    border: 1px solid rgba(255,255,255,.10);
+    outline: none;
+    background: #080808;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+
+.team-field input::placeholder,
+.roster-player input::placeholder,
+.join-tools input::placeholder {
+    color: #555;
+}
+
+
+.team-field input:focus,
+.roster-player input:focus,
+.join-tools input:focus {
+    border-color: var(--neon);
+    background: #0c0c0c;
+    box-shadow:
+        0 0 0 3px rgba(200,255,0,.05),
+        0 0 18px rgba(200,255,0,.08);
+}
+
+
+/* =========================================================
+   ROSTER
+   ========================================================= */
+
+.roster-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+
+.roster-player {
+    padding: 22px;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    transition: .3s ease;
+}
+
+
+.roster-player:hover {
+    border-color: rgba(200,255,0,.30);
+    transform: translateY(-2px);
+}
+
+
+.roster-player h3 {
+    margin: 0 0 16px;
+    color: white;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+
+.roster-player input {
+    margin-bottom: 10px;
+}
+
+
+.roster-player input:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   CREATE BUTTON
+   ========================================================= */
+
+#createTeam {
+    margin-top: 42px;
+    min-height: 58px;
+    font-size: 13px;
+    font-weight: 950;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border: none;
+    transition: .3s ease;
+}
+
+
+#createTeam:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 0 20px rgba(200,255,0,.30),
+        0 10px 30px rgba(0,0,0,.30);
+}
+
+
+#createTeam:active {
+    transform: translateY(0);
+}
+
+
+#createTeam:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* =========================================================
+   SUCCESS / ERROR MESSAGE
+   ========================================================= */
+
+#teamMessage,
+#joinMessage {
+    margin: 18px 0 0;
+    padding: 14px 16px;
+    color: var(--neon);
+    background: rgba(200,255,0,.04);
+    border-left: 2px solid var(--neon);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+
+/* =========================================================
+   JOIN TEAM PAGE
+   ========================================================= */
+
+.join-tools {
+    max-width: 1050px;
+    margin: 35px auto 25px;
+    display: grid;
+    grid-template-columns: 1fr 150px;
+    gap: 12px;
+}
+
+
+.join-tools input {
+    min-height: 52px;
+}
+
+
+#refreshTeams {
+    min-height: 52px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   TEAM CARDS
+   ========================================================= */
+
+.teams-list {
+    max-width: 1050px;
+    margin: 25px auto 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+
+.join-team-card {
+    position: relative;
+    padding: 26px;
+    background:
+        linear-gradient(145deg, #141414, #090909);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+}
+
+
+.join-team-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--neon);
+    opacity: .35;
+    box-shadow: 0 0 18px var(--neon);
+}
+
+
+.join-team-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(200,255,0,.35);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.35),
+        0 0 25px rgba(200,255,0,.05);
+}
+
+
+.join-team-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+
+.join-team-logo-wrap {
+    width: 76px;
+    height: 76px;
+    flex-shrink: 0;
+}
+
+
+.join-team-logo-wrap img,
+.join-team-logo {
+    width: 76px;
+    height: 76px;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #050505;
+    border: 1px solid rgba(200,255,0,.35);
+    color: var(--neon);
+    font-size: 21px;
+    font-weight: 950;
+    letter-spacing: 1px;
+}
+
+
+.join-team-title {
+    min-width: 0;
+}
+
+
+.join-team-title small {
+    color: var(--neon);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+
+.join-team-title h2 {
+    margin: 5px 0;
+    color: white;
+    font-size: 24px;
+    font-weight: 950;
+    text-transform: uppercase;
+}
+
+
+.join-team-title span {
+    color: #777;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+
+.join-team-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+
+.join-team-info div {
+    padding: 13px;
+    background: #080808;
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+
+.join-team-info small {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+
+.join-team-info strong {
+    color: #ddd;
+    font-size: 12px;
+}
+
+
+.requestJoinBtn {
+    min-height: 52px;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: 1.5px;
+    transition: .3s ease;
+}
+
+
+.requestJoinBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 22px rgba(200,255,0,.25);
+}
+
+
+.requestJoinBtn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+.team-loading {
+    grid-column: 1 / -1;
+    padding: 50px;
+    text-align: center;
+    color: #777;
+    border: 1px solid var(--border);
+    background: #0b0b0b;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   PROFILE HEADER IMPROVEMENT
+   ========================================================= */
+
+.profile-page-title small {
+    color: var(--neon);
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+
+.profile-page-title h1 {
+    font-weight: 950;
+    letter-spacing: -1px;
+    text-shadow:
+        0 0 25px rgba(200,255,0,.08);
+}
+
+
+.profile-page-title p {
+    color: #777;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .team-choice-grid,
+    .teams-list,
+    .team-form,
+    .roster-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .team-choice-card {
+        min-height: 280px;
+        padding: 30px;
+    }
+
+
+    .team-create-card {
+        margin-top: 30px;
+    }
+
+
+    .join-tools {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .team-choice-card {
+        padding: 25px;
+        min-height: 250px;
+    }
+
+
+    .team-choice-icon {
+        width: 52px;
+        height: 52px;
+        top: 25px;
+        right: 25px;
+        font-size: 25px;
+    }
+
+
+    .team-choice-card h2 {
+        font-size: 30px;
+    }
+
+
+    .join-team-card {
+        padding: 20px;
+    }
+
+
+    .join-team-logo-wrap,
+    .join-team-logo-wrap img,
+    .join-team-logo {
+        width: 62px;
+        height: 62px;
+    }
+
+}

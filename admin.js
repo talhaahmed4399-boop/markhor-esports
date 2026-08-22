@@ -409,14 +409,14 @@ async function loadRegistrations() {
                     : "-";
 
 
-            html += `
-                <div class="admin-team-card">
+         html +=
+    '<div class="admin-team-card">' +
 
-                    <div class="admin-team-number">
-                        ${String(index + 1).padStart(2, "0")}
-                    </div>
+        '<div class="admin-team-number">' +
+            String(index + 1).padStart(2, "0") +
+        '</div>' +
 
-                    ${logo}
+        logo +
 
                     <div class="admin-team-info">
 

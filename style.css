@@ -2980,3 +2980,426 @@
     transform:translateY(-3px);
 
 }
+/* =========================================
+   MARKHOR TOURNAMENT CARDS
+   PROFESSIONAL NEON ESPORTS STYLE
+========================================= */
+
+#dynamicTournaments {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(280px, 1fr)
+    );
+    gap: 28px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+
+/* TOURNAMENT CARD */
+
+#dynamicTournaments article {
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18, 25, 28, .98),
+            rgba(7, 11, 13, .98)
+        );
+
+    border: 1px solid rgba(190, 255, 0, .25);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 0 transparent,
+        0 0 25px rgba(190, 255, 0, .08);
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+
+/* HOVER */
+
+#dynamicTournaments article:hover {
+
+    transform:
+        translateY(-8px);
+
+    border-color:
+        rgba(190, 255, 0, .8);
+
+    box-shadow:
+        0 0 15px rgba(190, 255, 0, .25),
+        0 0 45px rgba(190, 255, 0, .12);
+}
+
+
+/* TOP COVER */
+
+#dynamicTournaments .cover {
+
+    position: relative;
+
+    min-height: 150px;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 22px;
+
+    font-family:
+        "Arial Black",
+        Arial,
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    color: #dfff6a;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(200,255,0,.22),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #172018,
+            #080b0a
+        );
+
+    border-bottom:
+        1px solid rgba(190,255,0,.2);
+
+}
+
+
+/* GLOW LINE */
+
+#dynamicTournaments .cover::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #cfff00,
+            transparent
+        );
+
+    box-shadow:
+        0 0 12px #cfff00;
+
+}
+
+
+/* CARD BODY */
+
+#dynamicTournaments .body {
+
+    padding: 24px;
+}
+
+
+/* GAME TYPE */
+
+#dynamicTournaments .body > small {
+
+    font-family:
+        "Arial Black",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    color: rgba(255,255,255,.55);
+}
+
+
+/* TOURNAMENT NAME */
+
+#dynamicTournaments h3 {
+
+    margin:
+        10px 0 22px;
+
+    font-family:
+        "Arial Black",
+        Impact,
+        Arial,
+        sans-serif;
+
+    font-size:
+        clamp(22px, 3vw, 30px);
+
+    line-height: 1.05;
+
+    letter-spacing:
+        .5px;
+
+    text-transform:
+        uppercase;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.25),
+        0 0 20px rgba(190,255,0,.12);
+
+}
+
+
+/* META */
+
+#dynamicTournaments .meta {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+
+}
+
+
+/* META ITEM */
+
+#dynamicTournaments .meta span {
+
+    display: flex;
+
+    flex-direction:
+        column;
+
+    gap: 5px;
+
+    padding: 12px 8px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:
+        10px;
+
+    text-align:
+        center;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        1px;
+
+    color:
+        rgba(255,255,255,.45);
+
+}
+
+
+/* META VALUE */
+
+#dynamicTournaments .meta strong {
+
+    color:
+        #dfff6a;
+
+    font-family:
+        "Arial Black",
+        Arial,
+        sans-serif;
+
+    font-size:
+        13px;
+
+    letter-spacing:
+        .5px;
+
+    text-shadow:
+        0 0 8px rgba(190,255,0,.4);
+
+}
+
+
+/* REGISTER BUTTON */
+
+#dynamicTournaments .tournament-register-btn {
+
+    width: 100%;
+
+    min-height: 50px;
+
+    border:
+        1px solid #cfff00;
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(190,255,0,.06);
+
+    color:
+        #dfff6a;
+
+    font-family:
+        "Arial Black",
+        Arial,
+        sans-serif;
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        2px;
+
+    cursor:
+        pointer;
+
+    transition:
+        all .3s ease;
+
+    text-shadow:
+        0 0 8px rgba(190,255,0,.5);
+
+    box-shadow:
+        inset 0 0 15px rgba(190,255,0,.03);
+}
+
+
+/* REGISTER HOVER */
+
+#dynamicTournaments .tournament-register-btn:hover {
+
+    background:
+        #cfff00;
+
+    color:
+        #071006;
+
+    box-shadow:
+        0 0 10px #cfff00,
+        0 0 30px rgba(190,255,0,.45);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* VIEW BUTTON */
+
+#dynamicTournaments .tournament-view-btn {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 10px;
+
+    border:
+        1px solid rgba(255,255,255,.18);
+
+    border-radius:
+        10px;
+
+    color:
+        rgba(255,255,255,.8);
+
+    text-decoration:
+        none;
+
+    font-family:
+        "Arial Black",
+        Arial,
+        sans-serif;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        1.5px;
+
+    transition:
+        all .3s ease;
+
+}
+
+
+#dynamicTournaments .tournament-view-btn:hover {
+
+    border-color:
+        rgba(190,255,0,.6);
+
+    color:
+        #dfff6a;
+
+    box-shadow:
+        0 0 15px rgba(190,255,0,.12);
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    #dynamicTournaments {
+        grid-template-columns:
+            1fr;
+
+        gap: 20px;
+    }
+
+
+    #dynamicTournaments .meta {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+
+    #dynamicTournaments .body {
+
+        padding: 20px;
+
+    }
+
+}

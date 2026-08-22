@@ -3607,3 +3607,132 @@
     }
 
 }
+/* =========================================
+   PREMIUM TOURNAMENT INFO / META
+========================================= */
+
+#dynamicTournaments .meta span {
+    position: relative;
+
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 6px;
+
+    border: 1px solid rgba(215,255,40,.18);
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(215,255,40,.055),
+            rgba(255,255,255,.015)
+        );
+
+    box-shadow:
+        inset 0 0 15px rgba(215,255,40,.025);
+
+    transition: .3s ease;
+}
+
+
+/* LABEL */
+
+#dynamicTournaments .meta span {
+
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.8px;
+
+    text-transform: uppercase;
+
+    color:
+        rgba(255,255,255,.48);
+}
+
+
+/* VALUE */
+
+#dynamicTournaments .meta span strong {
+
+    margin-top: 5px;
+
+    font-family:
+        "Arial Black",
+        Impact,
+        Arial,
+        sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    letter-spacing: .8px;
+
+    color:
+        #e5ff73;
+
+    text-shadow:
+        0 0 6px rgba(215,255,40,.65),
+        0 0 14px rgba(215,255,40,.25);
+}
+
+
+/* HOVER */
+
+#dynamicTournaments .meta span:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(215,255,40,.65);
+
+    background:
+        rgba(215,255,40,.07);
+
+    box-shadow:
+        0 0 12px rgba(215,255,40,.12),
+        inset 0 0 18px rgba(215,255,40,.04);
+}
+
+
+/* INFO GLOW */
+
+#dynamicTournaments .meta span::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 20%;
+
+    right: 20%;
+
+    bottom: 0;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(215,255,40,.7),
+            transparent
+        );
+
+    box-shadow:
+        0 0 7px rgba(215,255,40,.5);
+}

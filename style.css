@@ -5432,3 +5432,24 @@
     cursor: not-allowed;
     filter: grayscale(1);
 }
+.tournament-poster {
+    display: block;
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    margin: 0 auto 35px;
+    border-radius: 12px;
+    border: 1px solid rgba(215,255,40,.25);
+    box-shadow:
+        0 0 30px rgba(215,255,40,.08),
+        0 20px 60px rgba(0,0,0,.45);
+}
+
+@media (max-width: 700px) {
+
+    .tournament-poster {
+        margin-bottom: 25px;
+        border-radius: 7px;
+    }
+
+}

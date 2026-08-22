@@ -396,14 +396,14 @@ async function loadRegistrations() {
                             alt="${teamName}"
                             class="admin-team-logo"
                         >
-                    `
-                    : `
+                    
+                
                         <div class="admin-team-logo-placeholder">
                             ${teamName
                                 .charAt(0)
                                 .toUpperCase()}
                         </div>
-                    `;
+            
 
 
             const date =

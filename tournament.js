@@ -344,28 +344,45 @@ function resetRegisterButton() {
 
 async function loadRegisteredTeams() {
 
+    console.log("LOADING REGISTERED TEAMS...");
+
     const {
         data,
         error
-    } =
-        await tournamentClient
-        .from(
-            "tournament_registrations"
-        )
+    } = await tournamentClient
+        .from("tournament_registrations")
         .select(`
             id,
             team_id,
-            status
+            status,
+            created_at,
+            teams (
+                id,
+                name,
+                tag,
+                logo_url
+            )
         `)
         .eq(
             "tournament_id",
             TOURNAMENT_ID
+        )
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
         );
 
 
     console.log(
-        "REGISTERED TEAMS:",
+        "REGISTERED TEAM DATA:",
         data
+    );
+
+    console.log(
+        "REGISTERED TEAM ERROR:",
+        error
     );
 
 
@@ -397,9 +414,124 @@ async function loadRegisteredTeams() {
 
     }
 
+
+    const list =
+        document.getElementById(
+            "registeredTeamsList"
+        );
+
+
+    if (!list) {
+
+        console.error(
+            "registeredTeamsList NOT FOUND"
+        );
+
+        return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+        list.innerHTML = `
+
+            <div class="loading-teams">
+
+                NO TEAMS REGISTERED YET
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    data.forEach(
+        (registration, index) => {
+
+            const team =
+                registration.teams;
+
+
+            if (!team) {
+
+                console.warn(
+                    "TEAM DATA NOT FOUND:",
+                    registration
+                );
+
+                return;
+
+            }
+
+
+            const logo =
+                team.logo_url
+                ?
+
+                `<img
+                    src="${team.logo_url}"
+                    alt="${team.name}"
+                >`
+
+                :
+
+                `<span class="team-logo-text">
+                    ${team.tag || "TEAM"}
+                </span>`;
+
+
+            list.innerHTML += `
+
+                <div class="registered-team-card">
+
+                    <div class="registered-team-number">
+
+                        ${(index + 1)
+                            .toString()
+                            .padStart(2, "0")}
+
+                    </div>
+
+
+                    <div class="registered-team-logo">
+
+                        ${logo}
+
+                    </div>
+
+
+                    <div class="registered-team-info">
+
+                        <strong>
+                            ${team.name}
+                        </strong>
+
+                        <small>
+                            ${team.tag || ""}
+                        </small>
+
+                    </div>
+
+
+                    <div class="registered-team-status">
+
+                        REGISTERED ✓
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
 }
-
-
 // =========================================
 // START
 // =========================================

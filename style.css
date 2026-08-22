@@ -6013,3 +6013,89 @@
     }
 
 }
+/* =========================================
+   ANNOUNCEMENT ADMIN
+========================================= */
+
+.announcement-admin-panel {
+    padding: 25px;
+    margin-top: 20px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+}
+
+.announcement-admin-panel textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 120px;
+}
+
+.announcement-admin-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 18px;
+}
+
+#announcementMessageStatus {
+    margin-top: 12px;
+    color: #dfff38;
+    font-size: 11px;
+}
+
+.admin-announcement-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.admin-announcement-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 8px;
+    background: rgba(255,255,255,.02);
+}
+
+.admin-announcement-card small {
+    color: #dfff38;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.admin-announcement-card h3 {
+    margin: 7px 0;
+    color: white;
+    font-size: 16px;
+}
+
+.admin-announcement-card p {
+    margin: 0 0 8px;
+    color: rgba(255,255,255,.5);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.admin-announcement-card span {
+    font-size: 9px;
+    color: #dfff38;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 600px) {
+
+    .announcement-admin-row {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-announcement-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}

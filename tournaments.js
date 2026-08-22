@@ -99,13 +99,19 @@ async function loadTournaments() {
 
                 </div>
 
-                <a
-                    class="outline full"
-                    href="tournament.html"
-                >
-                    VIEW TOURNAMENT →
-                </a>
+              <button
+    class="tournament-register-btn"
+    onclick="registerTournament('${tournament.id}')"
+>
+    REGISTER TEAM →
+</button>
 
+<a
+    class="tournament-view-btn"
+    href="tournament.html?id=${tournament.id}"
+>
+    VIEW TOURNAMENT →
+</a>
             </div>
 
         </article>

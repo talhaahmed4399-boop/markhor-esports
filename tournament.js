@@ -5,7 +5,7 @@ const tournamentClient = window.supabase.createClient(
 
 
 // APNA TOURNAMENT ID YAHAN LAGANA
-const TOURNAMENT_ID = "YOUR_TOURNAMENT_ID";
+const TOURNAMENT_ID = "12315134-ab7a-4705-baf6-92897fa09b50";
 
 
 const registerBtn =

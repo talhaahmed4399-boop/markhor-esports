@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Markhor Esports | Admin Panel</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body class="admin-page">
+
+
+<header>
+
+<a class="logo" href="index.html">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</a>
+
+
+<nav>
+
+<a href="index.html">HOME</a>
+
+<a href="tournament.html">
+TOURNAMENT
+</a>
+
+<a href="team.html">
+TEAMS
+</a>
+
+</nav>
+
+<button
+id="adminLogout"
+class="outline"
+type="button"
+>
+LOGOUT
+</button>
+
+</header>
+
+
+
+<main class="admin-container">
+
+
+<!-- ACCESS CHECK -->
+
+<section
+id="adminLoading"
+class="admin-loading"
+>
+
+CHECKING ADMIN ACCESS...
+
+</section>
+
+
+
+<!-- ADMIN PANEL -->
+
+<section
+id="adminPanel"
+style="display:none;"
+>
+
+
+<div class="admin-heading">
+
+<div>
+
+<small>MARKHOR ESPORTS</small>
+
+<h1>
+ADMIN PANEL
+</h1>
+
+<p>
+Tournament management dashboard.
+</p>
+
+</div>
+
+
+<div class="admin-badge">
+
+ADMIN ACCESS ✓
+
+</div>
+
+</div>
+
+
+
+<!-- DASHBOARD STATS -->
+
+<section class="admin-stats">
+
+
+<div class="admin-stat">
+
+<small>
+TOURNAMENTS
+</small>
+
+<strong id="totalTournaments">
+0
+</strong>
+
+</div>
+
+
+<div class="admin-stat">
+
+<small>
+REGISTERED TEAMS
+</small>
+
+<strong id="totalRegistrations">
+0
+</strong>
+
+</div>
+
+
+<div class="admin-stat">
+
+<small>
+MAX TEAM SLOTS
+</small>
+
+<strong id="totalSlots">
+0
+</strong>
+
+</div>
+
+
+<div class="admin-stat">
+
+<small>
+CURRENT USER
+</small>
+
+<strong>
+ADMIN
+</strong>
+
+</div>
+
+
+</section>
+
+
+
+<!-- TOURNAMENTS -->
+
+<section class="admin-section">
+
+<div class="admin-section-heading">
+
+<div>
+
+<small>
+MANAGEMENT
+</small>
+
+<h2>
+TOURNAMENTS
+</h2>
+
+</div>
+
+</div>
+
+
+<div
+id="adminTournaments"
+class="admin-tournament-list"
+>
+
+LOADING TOURNAMENTS...
+
+</div>
+
+</section>
+
+
+
+<!-- REGISTERED TEAMS -->
+
+<section class="admin-section">
+
+<div class="admin-section-heading">
+
+<div>
+
+<small>
+MARKHOR BATTLEFIELD S1
+</small>
+
+<h2>
+REGISTERED TEAMS
+</h2>
+
+</div>
+
+<strong
+id="adminTeamCount"
+>
+0
+</strong>
+
+</div>
+
+
+<div
+id="adminTeams"
+class="admin-team-list"
+>
+
+LOADING TEAMS...
+
+</div>
+
+</section>
+
+
+
+<!-- GROUPS -->
+
+<section class="admin-section">
+
+<div class="admin-section-heading">
+
+<div>
+
+<small>
+TOURNAMENT STRUCTURE
+</small>
+
+<h2>
+GROUPS
+</h2>
+
+</div>
+
+</div>
+
+
+<div
+id="adminGroups"
+class="admin-groups"
+>
+
+LOADING GROUPS...
+
+</div>
+
+</section>
+
+
+</section>
+
+</main>
+
+
+
+<footer>
+
+<div class="logo">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</div>
+
+<p>
+© 2026 Markhor Esports.
+Admin Panel.
+</p>
+
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="config.js"></script>
+
+<script src="admin.js"></script>
+
+</body>
+
+</html>

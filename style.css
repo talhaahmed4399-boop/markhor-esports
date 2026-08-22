@@ -5052,3 +5052,319 @@
     }
 
 }
+/* =========================================
+   ADMIN PANEL
+========================================= */
+
+.admin-page {
+    min-height: 100vh;
+}
+
+.admin-container {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+    padding: 70px 0;
+}
+
+.admin-loading {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    letter-spacing: 2px;
+}
+
+.admin-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.admin-heading h1 {
+    margin: 8px 0;
+    font-size: clamp(36px, 6vw, 70px);
+    font-family: "Arial Black", Arial, sans-serif;
+    letter-spacing: -2px;
+}
+
+.admin-heading p {
+    color: rgba(255,255,255,.5);
+}
+
+.admin-badge {
+    padding: 10px 15px;
+    border: 1px solid rgba(215,255,40,.4);
+    border-radius: 6px;
+    color: #dfff38;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(215,255,40,.5);
+}
+
+.admin-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 50px;
+}
+
+.admin-stat {
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+}
+
+.admin-stat small {
+    display: block;
+    color: rgba(255,255,255,.4);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.admin-stat strong {
+    display: block;
+    margin-top: 10px;
+    color: #fff;
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 28px;
+}
+
+.admin-section {
+    margin-bottom: 50px;
+}
+
+.admin-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.admin-section-heading small {
+    color: rgba(255,255,255,.35);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.admin-section-heading h2 {
+    margin: 6px 0 0;
+    font-family: "Arial Black", Arial, sans-serif;
+}
+
+.admin-section-heading > strong {
+    color: #dfff38;
+    font-size: 24px;
+}
+
+.admin-tournament-list,
+.admin-team-list,
+.admin-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-tournament,
+.admin-team {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 9px;
+    background: rgba(255,255,255,.025);
+}
+
+.admin-tournament:hover,
+.admin-team:hover {
+    border-color: rgba(215,255,40,.3);
+}
+
+.admin-tournament {
+    justify-content: space-between;
+}
+
+.admin-tournament small {
+    color: #dfff38;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.admin-tournament h3 {
+    margin: 5px 0 0;
+}
+
+.admin-tournament-meta {
+    display: flex;
+    gap: 30px;
+}
+
+.admin-tournament-meta span {
+    color: rgba(255,255,255,.4);
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.admin-tournament-meta strong {
+    display: block;
+    color: #fff;
+    margin-top: 5px;
+}
+
+.admin-team-number {
+    width: 30px;
+    color: rgba(255,255,255,.3);
+}
+
+.admin-team-logo {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid rgba(215,255,40,.25);
+    border-radius: 7px;
+}
+
+.admin-team-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.admin-team-logo span {
+    color: #dfff38;
+    font-size: 9px;
+}
+
+.admin-team-info {
+    flex: 1;
+}
+
+.admin-team-info strong {
+    display: block;
+}
+
+.admin-team-info small {
+    display: block;
+    margin-top: 4px;
+    color: rgba(255,255,255,.35);
+    letter-spacing: 2px;
+}
+
+.admin-team-group {
+    min-width: 80px;
+    color: #dfff38;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.admin-team-status {
+    color: rgba(255,255,255,.5);
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.admin-groups {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.admin-group {
+    padding: 18px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+}
+
+.admin-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.admin-group-header strong {
+    color: #fff;
+    font-family: "Arial Black", Arial, sans-serif;
+}
+
+.admin-group-header span {
+    color: #dfff38;
+    font-size: 10px;
+}
+
+.admin-group-teams {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-group-teams > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.admin-group-teams strong {
+    font-size: 11px;
+}
+
+.admin-group-teams small {
+    color: rgba(255,255,255,.35);
+    font-size: 9px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+
+    .admin-container {
+        padding: 40px 0;
+    }
+
+    .admin-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-tournament {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-tournament-meta {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .admin-team {
+        gap: 10px;
+    }
+
+    .admin-team-status {
+        display: none;
+    }
+
+    .admin-groups {
+        grid-template-columns: 1fr;
+    }
+
+}

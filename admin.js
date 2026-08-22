@@ -388,21 +388,16 @@ async function loadRegistrations() {
             }
 
 
-            const logo =
-                team.logo_url
-                    ? `
-                        <img
-                            src="${team.logo_url}"
-                            alt="${teamName}"
-                            class="admin-team-logo"
-                        >
-                    
-                
-                        <div class="admin-team-logo-placeholder">
-                            ${teamName
-                                .charAt(0)
-                                .toUpperCase()}
-                        </div>
+           const logo =
+    team.logo_url
+        ? '<img src="' +
+          team.logo_url +
+          '" alt="' +
+          teamName +
+          '" class="admin-team-logo">'
+        : '<div class="admin-team-logo-placeholder">' +
+          teamName.charAt(0).toUpperCase() +
+          '</div>';
             
 
 

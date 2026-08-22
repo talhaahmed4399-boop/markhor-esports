@@ -515,7 +515,144 @@ SAVE SCORE </button>
 </div>
 
 </section>
+<!-- =========================================
+     ANNOUNCEMENTS
+========================================= -->
 
+<section class="admin-section">
+
+    <div class="admin-section-heading">
+
+        <div>
+
+            <small>
+                MARKHOR ESPORTS
+            </small>
+
+            <h2>
+                ANNOUNCEMENTS
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="announcement-admin-panel">
+
+
+        <div class="control-field">
+
+            <label>
+                ANNOUNCEMENT TITLE
+            </label>
+
+            <input
+                id="announcementTitle"
+                type="text"
+                placeholder="Registration is now open!"
+            >
+
+        </div>
+
+
+        <div class="control-field">
+
+            <label>
+                MESSAGE
+            </label>
+
+            <textarea
+                id="announcementMessage"
+                rows="5"
+                placeholder="Write your announcement..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="announcement-admin-row">
+
+
+            <div class="control-field">
+
+                <label>
+                    TYPE
+                </label>
+
+                <select id="announcementType">
+
+                    <option value="info">
+                        INFO
+                    </option>
+
+                    <option value="success">
+                        SUCCESS
+                    </option>
+
+                    <option value="warning">
+                        WARNING
+                    </option>
+
+                    <option value="important">
+                        IMPORTANT
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="control-field">
+
+                <label>
+                    STATUS
+                </label>
+
+                <select id="announcementPublished">
+
+                    <option value="true">
+                        PUBLISHED
+                    </option>
+
+                    <option value="false">
+                        DRAFT
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            id="publishAnnouncement"
+            class="lime"
+            type="button"
+        >
+            PUBLISH ANNOUNCEMENT
+        </button>
+
+
+        <p id="announcementMessageStatus"></p>
+
+
+    </div>
+
+
+    <div
+        id="adminAnnouncements"
+        class="admin-announcement-list"
+    >
+        LOADING ANNOUNCEMENTS...
+    </div>
+
+
+</section>
+
+    
 </section>
 
 </main>

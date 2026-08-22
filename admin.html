@@ -195,8 +195,97 @@ TOURNAMENTS
 id="adminTournaments"
 class="admin-tournament-list"
 >
-
 LOADING TOURNAMENTS...
+</div>
+
+<div
+id="tournamentControls"
+class="tournament-controls"
+style="display:none;"
+>
+
+<div class="control-field">
+
+<label>
+REGISTRATION
+</label>
+
+<button
+id="registrationToggle"
+type="button"
+class="lime"
+>
+LOADING...
+</button>
+
+</div>
+
+
+<div class="control-field">
+
+<label>
+MAX TEAMS
+</label>
+
+<input
+id="maxTeamsInput"
+type="number"
+min="1"
+max="256"
+>
+
+</div>
+
+
+<div class="control-field">
+
+<label>
+PRIZE POOL PKR
+</label>
+
+<input
+id="prizePoolInput"
+type="number"
+min="0"
+>
+
+</div>
+
+
+<div class="control-field">
+
+<label>
+TOURNAMENT STATUS
+</label>
+
+<select id="tournamentStatusInput">
+
+<option value="upcoming">
+UPCOMING
+</option>
+
+<option value="live">
+LIVE
+</option>
+
+<option value="completed">
+COMPLETED
+</option>
+
+</select>
+
+</div>
+
+
+<button
+id="saveTournamentChanges"
+class="lime"
+type="button"
+>
+SAVE CHANGES
+</button>
+
+<p id="tournamentSaveMessage"></p>
 
 </div>
 

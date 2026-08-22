@@ -358,7 +358,139 @@ GROUPS
 id="adminGroups"
 class="admin-groups"
 >
+<section class="admin-section">
 
+    <div class="admin-section-heading">
+
+        <div>
+
+            <small>
+                MARKHOR BATTLEFIELD S1
+            </small>
+
+            <h2>
+                SCORE ENTRY
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="score-entry-panel">
+
+        <div class="control-field">
+
+            <label>
+                SELECT TEAM
+            </label>
+
+            <select id="scoreTeamSelect">
+
+                <option value="">
+                    SELECT TEAM
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="score-entry-grid">
+
+            <div class="control-field">
+
+                <label>
+                    MATCHES PLAYED
+                </label>
+
+                <input
+                    id="scoreMatches"
+                    type="number"
+                    min="0"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="control-field">
+
+                <label>
+                    WINS
+                </label>
+
+                <input
+                    id="scoreWins"
+                    type="number"
+                    min="0"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="control-field">
+
+                <label>
+                    PLACEMENT POINTS
+                </label>
+
+                <input
+                    id="scorePlacement"
+                    type="number"
+                    min="0"
+                    value="0"
+                >
+
+            </div>
+
+
+            <div class="control-field">
+
+                <label>
+                    KILL POINTS
+                </label>
+
+                <input
+                    id="scoreKills"
+                    type="number"
+                    min="0"
+                    value="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="score-total-preview">
+
+            <small>
+                TOTAL POINTS
+            </small>
+
+            <strong id="scoreTotalPreview">
+                0
+            </strong>
+
+        </div>
+
+
+        <button
+            id="saveTeamScore"
+            class="lime"
+            type="button"
+        >
+            SAVE SCORE
+        </button>
+
+
+        <p id="scoreSaveMessage"></p>
+
+    </div>
+
+</section>
 LOADING GROUPS...
 
 </div>

@@ -5368,3 +5368,62 @@
     }
 
 }
+.tournament-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+}
+
+.control-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.control-field label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.45);
+}
+
+.control-field input,
+.control-field select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    color: #fff;
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 6px;
+    outline: none;
+}
+
+.control-field input:focus,
+.control-field select:focus {
+    border-color: #dfff38;
+}
+
+#saveTournamentChanges {
+    width: fit-content;
+    padding: 13px 22px;
+}
+
+#tournamentSaveMessage {
+    margin: 0;
+    color: #dfff38;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 700px) {
+
+    .tournament-controls {
+        grid-template-columns: 1fr;
+    }
+
+}

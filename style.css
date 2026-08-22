@@ -5453,3 +5453,96 @@
     }
 
 }
+/* =========================================
+   ADMIN REGISTERED TEAMS
+========================================= */
+
+.admin-team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-team-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 18px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.025);
+    border-radius: 8px;
+    transition: .2s ease;
+}
+
+.admin-team-card:hover {
+    border-color: rgba(220,255,50,.35);
+    transform: translateX(3px);
+}
+
+.admin-team-number {
+    width: 32px;
+    font-size: 11px;
+    color: rgba(255,255,255,.35);
+}
+
+.admin-team-logo,
+.admin-team-logo-placeholder {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(220,255,50,.25);
+}
+
+.admin-team-logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(220,255,50,.08);
+    color: #dfff38;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.admin-team-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-team-info h3 {
+    margin: 0;
+    font-size: 16px;
+    letter-spacing: .5px;
+}
+
+.admin-team-info small,
+.admin-team-info span {
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,.45);
+}
+
+.admin-team-status {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: #dfff38;
+    border: 1px solid rgba(220,255,50,.25);
+    padding: 7px 10px;
+    border-radius: 4px;
+}
+
+@media (max-width: 650px) {
+
+    .admin-team-card {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .admin-team-status {
+        display: none;
+    }
+
+}

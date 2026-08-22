@@ -749,3 +749,75 @@ async function loadRegisteredTeams() {
 // =========================================
 
 loadRegisteredTeams();
+// =========================================
+// REGISTRATION STATUS CHECK
+// =========================================
+
+async function checkTournamentRegistration() {
+
+    const registerButton =
+        document.getElementById(
+            "registerTournamentBtn"
+        );
+
+    if (!registerButton) {
+        return;
+    }
+
+
+    const {
+        data,
+        error
+    } = await tournamentClient
+        .from("tournaments")
+        .select(
+            "registration_status,max_teams"
+        )
+        .eq(
+            "id",
+            TOURNAMENT_ID
+        )
+        .single();
+
+
+    if (error) {
+
+        console.error(
+            "REGISTRATION STATUS ERROR:",
+            error
+        );
+
+        return;
+    }
+
+
+    if (
+        data.registration_status !==
+        "open"
+    ) {
+
+        registerButton.disabled = true;
+
+        registerButton.textContent =
+            "REGISTRATION CLOSED";
+
+        registerButton.classList.add(
+            "registration-closed"
+        );
+
+        return;
+    }
+
+
+    registerButton.disabled = false;
+
+    registerButton.textContent =
+        "REGISTER NOW →";
+
+    registerButton.classList.remove(
+        "registration-closed"
+    );
+}
+
+
+checkTournamentRegistration();

@@ -90,19 +90,18 @@ async function checkAdmin() {
 
 function showAccessDenied(message) {
 
-    const loading = $("adminLoading");
+    const loading = document.getElementById("adminLoading");
 
-    if (!loading) return;
+    if (!loading) {
+        return;
+    }
 
-    loading.innerHTML = `
-        <div>
-            <h2>${message}</h2>
-            <p>You do not have permission to access this page.</p>
-            <a href="index.html" class="lime">
-                BACK TO WEBSITE
-            </a>
-        </div>
-    `;
+    loading.innerHTML =
+        "<div>" +
+        "<h2>" + message + "</h2>" +
+        "<p>You do not have permission to access this page.</p>" +
+        '<a href="index.html" class="lime">BACK TO WEBSITE</a>' +
+        "</div>";
 }
 
 

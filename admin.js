@@ -1749,6 +1749,7 @@ async function deleteAnnouncement(id) {
 
 }
 
+)
 
 // =========================================
 // LOAD ANNOUNCEMENTS

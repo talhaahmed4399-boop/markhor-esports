@@ -1744,12 +1744,8 @@ async function deleteAnnouncement(id) {
         return;
     }
 
-
-    await loadAdminAnnouncements();
-
 }
 
-);
 
 // =========================================
 // LOAD ANNOUNCEMENTS

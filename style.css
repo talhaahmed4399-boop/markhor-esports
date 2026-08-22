@@ -5725,3 +5725,233 @@
     }
 
 }
+/* =========================================
+   DEDICATED LEADERBOARD
+========================================= */
+
+.leaderboard-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 70px 30px;
+}
+
+.leaderboard-hero {
+    position: relative;
+    padding: 60px 0 45px;
+    text-align: center;
+}
+
+.leaderboard-hero small {
+    color: #dfff38;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.leaderboard-hero h1 {
+    margin: 15px 0;
+    font-size: clamp(42px, 7vw, 82px);
+    line-height: .95;
+    letter-spacing: -2px;
+}
+
+.leaderboard-hero h1 span {
+    display: block;
+    color: #dfff38;
+    text-shadow:
+        0 0 25px rgba(223,255,56,.25);
+}
+
+.leaderboard-hero p {
+    max-width: 600px;
+    margin: 25px auto;
+    color: rgba(255,255,255,.5);
+    line-height: 1.8;
+}
+
+.leaderboard-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 10px;
+    padding: 9px 15px;
+    border: 1px solid rgba(223,255,56,.3);
+    border-radius: 5px;
+    color: #dfff38;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.leaderboard-live span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #dfff38;
+    box-shadow:
+        0 0 12px rgba(223,255,56,.8);
+}
+
+.leaderboard-container {
+    margin-top: 30px;
+}
+
+.leaderboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.leaderboard-header small {
+    color: #dfff38;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.leaderboard-header h2 {
+    margin: 7px 0 0;
+    font-size: 28px;
+}
+
+.leaderboard-updated {
+    color: #dfff38;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.leaderboard-table-wrap {
+    overflow-x: auto;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+}
+
+.leaderboard-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+}
+
+.leaderboard-table th {
+    padding: 17px 20px;
+    text-align: left;
+    background: rgba(223,255,56,.04);
+    color: rgba(255,255,255,.4);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.leaderboard-table td {
+    padding: 17px 20px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    color: rgba(255,255,255,.72);
+    font-size: 12px;
+}
+
+.leaderboard-table tbody tr {
+    transition: .2s ease;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: rgba(223,255,56,.035);
+}
+
+.leaderboard-rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: rgba(255,255,255,.04);
+    color: white;
+    font-weight: 900;
+}
+
+.rank-first {
+    background: rgba(223,255,56,.12);
+    color: #dfff38;
+    box-shadow:
+        0 0 18px rgba(223,255,56,.1);
+}
+
+.rank-second {
+    color: #ddd;
+}
+
+.rank-third {
+    color: #c98d62;
+}
+
+.leaderboard-team-cell {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.leaderboard-team-logo {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 7px;
+    object-fit: cover;
+    border: 1px solid rgba(223,255,56,.2);
+}
+
+.leaderboard-logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(223,255,56,.06);
+    color: #dfff38;
+    font-weight: 900;
+    font-size: 17px;
+}
+
+.leaderboard-team-cell strong {
+    display: block;
+    color: white;
+    font-size: 13px;
+}
+
+.leaderboard-team-cell small {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255,255,255,.35);
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.leaderboard-total {
+    color: #dfff38;
+    font-size: 17px;
+    text-shadow:
+        0 0 13px rgba(223,255,56,.25);
+}
+
+.leaderboard-loading {
+    padding: 50px !important;
+    text-align: center !important;
+    color: rgba(255,255,255,.35) !important;
+    letter-spacing: 1.5px;
+}
+
+@media (max-width: 700px) {
+
+    .leaderboard-page {
+        padding: 40px 15px;
+    }
+
+    .leaderboard-hero {
+        padding: 40px 0 30px;
+    }
+
+    .leaderboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}

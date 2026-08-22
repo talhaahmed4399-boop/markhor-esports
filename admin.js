@@ -1468,3 +1468,303 @@ if (saveTeamScore) {
 // =========================================
 
 loadScoreTeams();
+// =========================================
+// ANNOUNCEMENTS MANAGER
+// =========================================
+
+async function loadAdminAnnouncements() {
+
+    const container =
+        document.getElementById("adminAnnouncements");
+
+    if (!container) return;
+
+
+    const {
+        data,
+        error
+    } = await adminClient
+        .from("announcements")
+        .select("*")
+        .order("created_at", {
+            ascending: false
+        });
+
+
+    console.log(
+        "ADMIN ANNOUNCEMENTS:",
+        data
+    );
+
+
+    if (error) {
+
+        console.error(
+            "ANNOUNCEMENT LOAD ERROR:",
+            error
+        );
+
+        container.innerHTML =
+            "UNABLE TO LOAD ANNOUNCEMENTS";
+
+        return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML =
+            "NO ANNOUNCEMENTS YET";
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    data.forEach(
+        announcement => {
+
+            const status =
+                announcement.published
+                    ? "PUBLISHED"
+                    : "DRAFT";
+
+
+            container.innerHTML += `
+
+                <div class="admin-announcement-card">
+
+                    <div>
+
+                        <small>
+                            ${announcement.type || "INFO"}
+                        </small>
+
+                        <h3>
+                            ${announcement.title}
+                        </h3>
+
+                        <p>
+                            ${announcement.message}
+                        </p>
+
+                        <span>
+                            ${status}
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="outline"
+                        type="button"
+                        onclick="deleteAnnouncement('${announcement.id}')"
+                    >
+                        DELETE
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+}
+
+
+// =========================================
+// CREATE ANNOUNCEMENT
+// =========================================
+
+const publishAnnouncement =
+    document.getElementById(
+        "publishAnnouncement"
+    );
+
+
+if (publishAnnouncement) {
+
+    publishAnnouncement.addEventListener(
+        "click",
+        async function() {
+
+            const title =
+                document.getElementById(
+                    "announcementTitle"
+                ).value.trim();
+
+
+            const message =
+                document.getElementById(
+                    "announcementMessage"
+                ).value.trim();
+
+
+            const type =
+                document.getElementById(
+                    "announcementType"
+                ).value;
+
+
+            const published =
+                document.getElementById(
+                    "announcementPublished"
+                ).value === "true";
+
+
+            const status =
+                document.getElementById(
+                    "announcementMessageStatus"
+                );
+
+
+            if (!title) {
+
+                status.textContent =
+                    "PLEASE ENTER A TITLE";
+
+                return;
+            }
+
+
+            if (!message) {
+
+                status.textContent =
+                    "PLEASE ENTER A MESSAGE";
+
+                return;
+            }
+
+
+            publishAnnouncement.disabled =
+                true;
+
+
+            status.textContent =
+                "PUBLISHING...";
+
+
+            const {
+                error
+            } = await adminClient
+                .from("announcements")
+                .insert({
+
+                    title:
+                        title,
+
+                    message:
+                        message,
+
+                    type:
+                        type,
+
+                    published:
+                        published
+
+                });
+
+
+            publishAnnouncement.disabled =
+                false;
+
+
+            if (error) {
+
+                console.error(
+                    "ANNOUNCEMENT SAVE ERROR:",
+                    error
+                );
+
+                status.textContent =
+                    "FAILED TO PUBLISH ANNOUNCEMENT";
+
+                return;
+            }
+
+
+            status.textContent =
+                "ANNOUNCEMENT PUBLISHED ✓";
+
+
+            document.getElementById(
+                "announcementTitle"
+            ).value = "";
+
+
+            document.getElementById(
+                "announcementMessage"
+            ).value = "";
+
+
+            document.getElementById(
+                "announcementType"
+            ).value = "info";
+
+
+            document.getElementById(
+                "announcementPublished"
+            ).value = "true";
+
+
+            await loadAdminAnnouncements();
+
+        }
+    );
+
+}
+
+
+// =========================================
+// DELETE ANNOUNCEMENT
+// =========================================
+
+async function deleteAnnouncement(id) {
+
+    const confirmed =
+        confirm(
+            "Delete this announcement?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    const {
+        error
+    } = await adminClient
+        .from("announcements")
+        .delete()
+        .eq(
+            "id",
+            id
+        );
+
+
+    if (error) {
+
+        console.error(
+            "ANNOUNCEMENT DELETE ERROR:",
+            error
+        );
+
+        alert(
+            "FAILED TO DELETE ANNOUNCEMENT"
+        );
+
+        return;
+    }
+
+
+    await loadAdminAnnouncements();
+
+}
+
+
+// =========================================
+// LOAD ANNOUNCEMENTS
+// =========================================
+
+loadAdminAnnouncements();

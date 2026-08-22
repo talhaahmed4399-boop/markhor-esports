@@ -242,7 +242,91 @@ async function registerTeam() {
 
         return;
     }
+// =========================================
+// FIND NEXT GROUP
+// =========================================
 
+const {
+    data: registrations,
+    error: countError
+} = await tournamentClient
+    .from("tournament_registrations")
+    .select("id")
+    .eq(
+        "tournament_id",
+        TOURNAMENT_ID
+    );
+
+
+if (countError) {
+
+    console.error(
+        "GROUP COUNT ERROR:",
+        countError
+    );
+
+    alert(
+        "Unable to assign tournament group."
+    );
+
+    resetRegisterButton();
+
+    return;
+}
+
+
+// =========================================
+// CHECK 256 TEAM LIMIT
+// =========================================
+
+if (
+    registrations &&
+    registrations.length >= 256
+) {
+
+    alert(
+        "Tournament registration is full. 256 teams have already registered."
+    );
+
+    resetRegisterButton();
+
+    return;
+}
+
+
+// =========================================
+// AUTOMATIC GROUP
+// =========================================
+
+const teamNumber =
+    (registrations?.length || 0) + 1;
+
+
+const groupIndex =
+    Math.floor(
+        (teamNumber - 1) / 16
+    );
+
+
+const groupLetter =
+    String.fromCharCode(
+        65 + groupIndex
+    );
+
+
+const groupName =
+    "Group " + groupLetter;
+
+
+console.log(
+    "TEAM NUMBER:",
+    teamNumber
+);
+
+console.log(
+    "ASSIGNED GROUP:",
+    groupName
+);
 
     // =====================================
     // REGISTER

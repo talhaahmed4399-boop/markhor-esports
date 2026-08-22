@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>Markhor Esports | Leaderboard</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<a
+    class="logo"
+    href="index.html"
+>
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</a>
+
+
+<nav>
+
+<a href="index.html">
+HOME
+</a>
+
+<a href="index.html#tournaments">
+TOURNAMENTS
+</a>
+
+<a
+    href="leaderboard.html"
+    class="active"
+>
+LEADERBOARD
+</a>
+
+<a href="profile.html">
+PROFILE
+</a>
+
+<a href="team.html">
+TEAMS
+</a>
+
+</nav>
+
+</header>
+
+
+
+<main class="leaderboard-page">
+
+
+<section class="leaderboard-hero">
+
+<small>
+MARKHOR ESPORTS
+</small>
+
+<h1>
+LIVE
+<span>LEADERBOARD</span>
+</h1>
+
+<p>
+Track the latest tournament rankings,
+team performance and total points.
+</p>
+
+
+<div class="leaderboard-live">
+
+<span></span>
+
+LIVE RANKINGS
+
+</div>
+
+</section>
+
+
+
+<section class="leaderboard-container">
+
+
+<div class="leaderboard-header">
+
+<div>
+
+<small>
+MARKHOR BATTLEFIELD S1
+</small>
+
+<h2>
+TEAM RANKINGS
+</h2>
+
+</div>
+
+
+<div
+    id="leaderboardUpdated"
+    class="leaderboard-updated"
+>
+LIVE
+</div>
+
+</div>
+
+
+
+<div class="leaderboard-table-wrap">
+
+
+<table class="leaderboard-table">
+
+
+<thead>
+
+<tr>
+
+<th>
+RANK
+</th>
+
+<th>
+TEAM
+</th>
+
+<th>
+MATCHES
+</th>
+
+<th>
+WINS
+</th>
+
+<th>
+PLACEMENT
+</th>
+
+<th>
+KILLS
+</th>
+
+<th>
+TOTAL
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+    id="leaderboardBody"
+>
+
+<tr>
+
+<td
+    colspan="7"
+    class="leaderboard-loading"
+>
+LOADING RANKINGS...
+</td>
+
+</tr>
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+<div class="logo">
+
+<b>M</b>
+
+<span>
+MARKHOR
+<small>ESPORTS</small>
+</span>
+
+</div>
+
+
+<p>
+© 2026 Markhor Esports.
+Compete. Conquer. Rise.
+</p>
+
+</footer>
+
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script src="config.js"></script>
+
+<script src="leaderboard.js"></script>
+
+</body>
+
+</html>

@@ -1,196 +1,27 @@
-/* =========================================
-   MARKHOR ESPORTS
-   TOURNAMENT REGISTRATION SYSTEM
-========================================= */
-
-
-/* SUPABASE */
-
-const client = window.supabase.createClient(
+const tournamentClient = window.supabase.createClient(
     window.MARKHOR_CONFIG.supabaseUrl,
     window.MARKHOR_CONFIG.supabasePublishableKey
 );
 
 
-
-const registerBtn =
-document.getElementById(
-    "registerTournamentBtn"
-);
+const tournamentBox =
+document.getElementById("dynamicTournaments");
 
 
-
-let currentUser = null;
-
-let tournament = null;
+async function loadTournaments(){
 
 
-
-/* =========================================
-   LOAD USER
-========================================= */
-
-async function getUser(){
+    if(!tournamentBox)
+    return;
 
 
     const {
         data,
         error
     } =
-    await client.auth.getUser();
-
-
-
-    if(error || !data.user){
-
-        alert(
-            "Please login first."
-        );
-
-        return null;
-
-    }
-
-
-    currentUser =
-    data.user;
-
-
-    return currentUser;
-
-}
-
-
-
-
-/* =========================================
-   GET TOURNAMENT
-========================================= */
-
-
-async function getTournament(){
-
-
-    const {
-        data,
-        error
-    }
-    =
-    await client
+    await tournamentClient
     .from("tournaments")
     .select("*")
-    .eq(
-        "name",
-        "MARKHOR BATTLEFIELD SEASON 1"
-    )
-    .single();
-
-
-
-    if(error){
-
-        console.error(error);
-
-        return;
-
-    }
-
-
-    tournament =
-    data;
-
-
-}
-
-
-
-
-
-/* =========================================
-   GET MY TEAM
-========================================= */
-
-
-async function getMyTeam(){
-
-
-    const {
-
-        data,
-
-        error
-
-    }
-    =
-    await client
-    .from("team_members")
-    .select(`
-        team_id,
-        role,
-        teams(
-            id,
-            name,
-            tag
-        )
-    `)
-    .eq(
-        "player_id",
-        currentUser.id
-    )
-    .eq(
-        "role",
-        "captain"
-    )
-    .maybeSingle();
-
-
-
-    if(error){
-
-        console.error(error);
-
-        return null;
-
-    }
-
-
-    return data;
-
-
-}
-
-
-
-
-
-
-/* =========================================
-   FIND GROUP
-========================================= */
-
-
-async function getNextGroup(){
-
-
-    const {
-
-        data,
-
-        error
-
-    }
-    =
-    await client
-    .from(
-        "tournament_registrations"
-    )
-    .select(
-        "group_name,group_position"
-    )
-    .eq(
-        "tournament_id",
-        tournament.id
-    )
     .order(
         "created_at",
         {
@@ -199,233 +30,118 @@ async function getNextGroup(){
     );
 
 
-
     if(error){
 
         console.error(error);
-
-        return null;
-
-    }
-
-
-
-    let position =
-    data.length + 1;
-
-
-
-    let groupIndex =
-    Math.floor(
-        (position - 1) / 16
-    );
-
-
-
-    let slot =
-    ((position - 1) % 16) + 1;
-
-
-
-    let letters =
-    "ABCDEFGHIJKLMNOP";
-
-
-
-    return {
-
-        group_name:
-        "GROUP " +
-        letters[groupIndex],
-
-        group_position:
-        slot
-
-    };
-
-
-}
-
-
-
-
-
-/* =========================================
-   REGISTER TEAM
-========================================= */
-
-
-async function registerTeam(){
-
-
-
-    await getTournament();
-
-
-
-    const user =
-    await getUser();
-
-
-
-    if(!user)
-    return;
-
-
-
-    const team =
-    await getMyTeam();
-
-
-
-    if(!team){
-
-        alert(
-            "Only team captains can register."
-        );
-
         return;
 
     }
 
 
 
-
-    /* CHECK DUPLICATE */
-
-
-    const {
-        data:exist
-    }
-    =
-    await client
-    .from(
-        "tournament_registrations"
-    )
-    .select("id")
-    .eq(
-        "tournament_id",
-        tournament.id
-    )
-    .eq(
-        "team_id",
-        team.team_id
-    )
-    .maybeSingle();
+    tournamentBox.innerHTML = "";
 
 
 
-    if(exist){
-
-        alert(
-            "Your team is already registered."
-        );
-
-        return;
-
-    }
+    data.forEach(tournament => {
 
 
+        tournamentBox.innerHTML += `
 
 
-    /* GET GROUP */
+        <article>
 
 
-    const group =
-    await getNextGroup();
+        <div class="cover c1">
+
+        ${tournament.registration_status.toUpperCase()}
+
+        </div>
 
 
 
-    if(!group){
-
-        alert(
-            "Unable to create group."
-        );
-
-        return;
-
-    }
+        <div class="body">
 
 
+        <small>
+        PUBG MOBILE • SQUAD
+        </small>
 
 
-    /* INSERT */
+        <h3>
+        ${tournament.name}
+        </h3>
 
 
-    const {
-        error
-    }
-    =
-    await client
-    .from(
-        "tournament_registrations"
-    )
-    .insert({
 
-        tournament_id:
-        tournament.id,
+        <div class="meta">
 
-        team_id:
-        team.team_id,
 
-        registered_by:
-        currentUser.id,
+        <span>
+        PRIZE
 
-        status:
-        "approved",
+        <strong>
+        ₨${tournament.prize_pool}
+        </strong>
 
-        group_name:
-        group.group_name,
+        </span>
 
-        group_position:
-        group.group_position
+
+
+        <span>
+
+        TEAMS
+
+        <strong>
+
+        ${tournament.max_teams}
+
+        </strong>
+
+        </span>
+
+
+
+        <span>
+
+        STATUS
+
+        <strong>
+
+        ${tournament.tournament_status}
+
+        </strong>
+
+        </span>
+
+
+        </div>
+
+
+
+        <a 
+        class="outline full"
+        href="tournament.html">
+
+        VIEW TOURNAMENT →
+
+        </a>
+
+
+        </div>
+
+
+        </article>
+
+
+        `;
+
 
     });
 
 
-
-
-    if(error){
-
-        console.error(
-            error
-        );
-
-        alert(
-            "Registration failed."
-        );
-
-        return;
-
-    }
-
-
-
-    alert(
-        "Team registered successfully!"
-    );
-
-
-
-    window.location.href =
-    "tournament-groups.html";
-
-
 }
 
 
 
-
-/* =========================================
-   BUTTON
-========================================= */
-
-
-if(registerBtn){
-
-    registerBtn.addEventListener(
-        "click",
-        registerTeam
-    );
-
-}
+loadTournaments();

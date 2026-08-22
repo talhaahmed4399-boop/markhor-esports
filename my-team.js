@@ -412,20 +412,28 @@ async function loadMyTeam() {
             );
 
 
-        if (
-            teamLogo &&
-            team.logo_url
-        ) {
+        if (teamLogo) {
 
-            teamLogo.innerHTML = `
-                <img
-                    src="${escapeHtml(team.logo_url)}"
-                    alt="${escapeHtml(team.name)}"
-                >
-            `;
+    if (team.logo_url) {
 
-        }
+        teamLogo.innerHTML = `
+            <img
+                src="${escapeHtml(team.logo_url)}"
+                alt="${escapeHtml(team.name)}"
+            >
+        `;
 
+    } else {
+
+        teamLogo.innerHTML = `
+            <div class="team-logo-placeholder">
+                M
+            </div>
+        `;
+
+    }
+
+}
 
         /* =====================================
            PLAYERS

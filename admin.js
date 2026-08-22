@@ -481,692 +481,40 @@ async function loadRegistrations() {
             let statusClass =
                 "registered";
 
-
-            if (
-                currentStatus ===
-                "approved"
-            ) {
-
-                statusClass =
-                    "approved";
-
-            } else if (
-                currentStatus ===
-                "rejected"
-            ) {
-
-                statusClass =
-                    "rejected";
-            }
-
-
-            const logoHTML =
-                team.logo_url
-
-                ?
-
-                `
-                    <img
-                        src="${team.logo_url}"
-                        alt="${teamName}"
-                        class="admin-team-logo"
-                    >
-                `
-
-                :
-
-                `
-                    <div
-                        class="admin-team-logo-placeholder"
-                    >
-                        ${teamName
-                            .charAt(0)
-                            .toUpperCase()}
-                    </div>
-                `;
-
-
-            const registeredDate =
-                registration.created_at
-                    ? new Date(
-                        registration.created_at
-                    ).toLocaleDateString()
-                    : "-";
-
-
-            html += `
-
-                <div
-                    class="admin-team-card"
-                >
-
-                    <div
-                        class="admin-team-number"
-                    >
-                        ${String(
-                            index + 1
-                        ).padStart(
-                            2,
-                            "0"
-                        )}
-                    </div>
-
-
-                    ${logoHTML}
-
-
-                    <div
-                        class="admin-team-info"
-                    >
-
-                        <h3>
-                            ${teamName}
-                        </h3>
-
-
-                        <small>
-                            TAG:
-                            ${teamTag}
-                        </small>
-
-
-                        <span>
-                            GROUP:
-                            ${group}
-                        </span>
-
-
-                        <span>
-                            REGISTERED:
-                            ${registeredDate}
-                        </span>
-
-                    </div>
-
-
-                    <div
-                        class="admin-team-actions"
-                    >
-
-                        <span
-                            class="
-                                admin-registration-status
-                                ${statusClass}
-                            "
-                        >
-                            ${String(
-                                currentStatus
-                            ).toUpperCase()}
-                        </span>
-
-
-                        <button
-                            type="button"
-                            class="admin-approve-btn"
-                            onclick="
-                                updateRegistrationStatus(
-                                    '${registration.id}',
-                                    'approved'
-                                )
-                            "
-                        >
-                            APPROVE
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="admin-reject-btn"
-                            onclick="
-                                updateRegistrationStatus(
-                                    '${registration.id}',
-                                    'rejected'
-                                )
-                            "
-                        >
-                            REJECT
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-        }
-    );
-
-
-    box.innerHTML =
-        html;
-
-
-    loadGroups(data);
-}
-
-
-// =========================================
-// UPDATE REGISTRATION STATUS
-// =========================================
-
-async function updateRegistrationStatus(
-    registrationId,
-    newStatus
-) {
-
-    console.log(
-        "UPDATING REGISTRATION:",
-        registrationId,
-        newStatus
-    );
-
-
-    const {
-        error
-    } =
-        await adminClient
-        .from(
-            "tournament_registrations"
-        )
-        .update({
-            status: newStatus
-        })
-        .eq(
-            "id",
-            registrationId
-        );
-
-
-    if (error) {
-
-        console.error(
-            "STATUS UPDATE ERROR:",
-            error
-        );
-
-        alert(
-            "Unable to update registration."
-        );
-
-        return;
-    }
-
-
-    console.log(
-        "REGISTRATION STATUS UPDATED:",
-        newStatus
-    );
-
-
-    await loadRegistrations();
-}
-
-
-// =========================================
-// LOAD GROUPS
-// =========================================
-
-function loadGroups(
-    registrations
-) {
-
-    const box =
-        document.getElementById(
-            "adminGroups"
-        );
-
-
-    const groups = {};
-
-
-    for (
-        let i = 0;
-        i < 16;
-        i++
-    ) {
-
-        const letter =
-            String.fromCharCode(
-                65 + i
-            );
-
-
-        groups[
-            "Group " + letter
-        ] = [];
-    }
-
-
-    registrations.forEach(
-        registration => {
-
-            if (
-                registration.group_name &&
-                groups[
-                    registration.group_name
-                ]
-            ) {
-
-                groups[
-                    registration.group_name
-                ].push(
-                    registration
-                );
-            }
-
-        }
-    );
-
-
-    let html = "";
-
-
-    Object.keys(
-        groups
-    ).forEach(
-        groupName => {
-
-            const teams =
-                groups[groupName];
-
-
-            if (
-                teams.length === 0
-            ) {
-
-                return;
-            }
-
-
-            html += `
-
-                <div
-                    class="admin-group"
-                >
-
-                    <div
-                        class="admin-group-header"
-                    >
-
-                        <strong>
-                            ${groupName}
-                        </strong>
-
-                        <span>
-                            ${teams.length} / 16
-                        </span>
-
-                    </div>
-
-
-                    <div
-                        class="admin-group-teams"
-                    >
-
-            `;
-
-
-            teams.forEach(
-                registration => {
-
-                    const team =
-                        registration.teams;
-
-
-                    if (!team) {
-                        return;
-                    }
-
-
-                    html += `
-
-                        <div>
-
-                            <strong>
-                                ${team.name}
-                            </strong>
-
-                            <small>
-                                ${team.tag || ""}
-                            </small>
-
-                        </div>
-
-                    `;
-                }
-            );
-
-
-            html += `
-
-                    </div>
-
-                </div>
-
-            `;
-        }
-    );
-
-
-    if (!html) {
-
-        html =
-            "NO GROUPS CREATED YET";
-    }
-
-
-    box.innerHTML =
-        html;
-}
-
-
-// =========================================
-// REGISTRATION BUTTON
-// =========================================
-
-function updateRegistrationButton(
-    status
-) {
-
-    const button =
-        document.getElementById(
-            "registrationToggle"
-        );
-
-
-    if (!button) {
-        return;
-    }
-
-
-    if (
-        String(status)
-            .toLowerCase() ===
-        "open"
-    ) {
-
-        button.textContent =
-            "REGISTRATION OPEN ✓";
-
-
-        button.className =
-            "lime";
-
-    } else {
-
-        button.textContent =
-            "REGISTRATION CLOSED";
-
-
-        button.className =
-            "outline";
-    }
-}
-
-
-// =========================================
-// TOGGLE REGISTRATION
-// =========================================
-
-const registrationToggle =
-    document.getElementById(
-        "registrationToggle"
-    );
-
-
-if (registrationToggle) {
-
-    registrationToggle.addEventListener(
-        "click",
-        async function() {
-
-            const button =
-                this;
-
-
-            const isOpen =
-                button.textContent
-                    .includes("OPEN");
-
-
-            const newStatus =
-                isOpen
-                    ? "closed"
-                    : "open";
-
-
-            button.disabled =
-                true;
-
-
-            const {
-                error
-            } =
-                await adminClient
-                .from("tournaments")
-                .update({
-                    registration_status:
-                        newStatus
-                })
-                .eq(
-                    "id",
-                    TOURNAMENT_ID
-                );
-
-
-            button.disabled =
-                false;
-
-
-            if (error) {
-
-                console.error(
-                    "REGISTRATION STATUS ERROR:",
-                    error
-                );
-
-                alert(
-                    "Unable to update registration."
-                );
-
-                return;
-            }
-
-
-            updateRegistrationButton(
-                newStatus
-            );
-
-
-            console.log(
-                "REGISTRATION STATUS:",
-                newStatus
-            );
-
-        }
-    );
-}
-
-
-// =========================================
-// SAVE TOURNAMENT SETTINGS
-// =========================================
-
-const saveTournamentChanges =
-    document.getElementById(
-        "saveTournamentChanges"
-    );
-
-
-if (saveTournamentChanges) {
-
-    saveTournamentChanges.addEventListener(
-        "click",
-        async function() {
-
-            const maxTeams =
-                Number(
-                    document.getElementById(
-                        "maxTeamsInput"
-                    ).value
-                );
-
-
-            const prizePool =
-                Number(
-                    document.getElementById(
-                        "prizePoolInput"
-                    ).value
-                );
-
-
-            const status =
-                document.getElementById(
-                    "tournamentStatusInput"
-                ).value;
-
-
-            if (
-                maxTeams < 1 ||
-                maxTeams > 256
-            ) {
-
-                alert(
-                    "Max teams must be between 1 and 256."
-                );
-
-                return;
-            }
-
-
-            const message =
-                document.getElementById(
-                    "tournamentSaveMessage"
-                );
-
-
-            message.textContent =
-                "SAVING...";
-
-
-            const {
-                error
-            } =
-                await adminClient
-                .from("tournaments")
-                .update({
-
-                    max_teams:
-                        maxTeams,
-
-                    prize_pool:
-                        prizePool,
-
-                    status:
-                        status
-
-                })
-                .eq(
-                    "id",
-                    TOURNAMENT_ID
-                );
-
-
-            if (error) {
-
-                console.error(
-                    "TOURNAMENT SAVE ERROR:",
-                    error
-                );
-
-                message.textContent =
-                    "SAVE FAILED";
-
-                return;
-            }
-
-
-            message.textContent =
-                "CHANGES SAVED ✓";
-
-
-            await loadTournaments();
-        }
-    );
-}
-
-
-// =========================================
-// LOGOUT
-// =========================================
-
-const logoutBtn =
-    document.getElementById(
-        "adminLogout"
-    );
-
-
-if (logoutBtn) {
-
-    logoutBtn.addEventListener(
-        "click",
-        async () => {
-
-            await adminClient.auth.signOut();
-
-
-            window.location.href =
-                "index.html";
-        }
-    );
-}
-
-
-// =========================================
-// START ADMIN PANEL
-// =========================================
-
-checkAdmin();
+           ```javascript
 // =========================================
 // SCORE ENTRY
 // =========================================
 
 let adminRegisteredTeams = [];
 
-
 async function loadScoreTeams() {
 
     const select =
-        document.getElementById(
-            "scoreTeamSelect"
-        );
+        document.getElementById("scoreTeamSelect");
 
-    if (!select) {
-        return;
-    }
+    if (!select) return;
 
 
-    const {
-        data,
-        error
-    } =
+    const { data, error } =
         await adminClient
-        .from("tournament_registrations")
-        .select(`
-            team_id,
-            teams (
-                id,
-                name,
-                tag
+            .from("tournament_registrations")
+            .select(`
+                team_id,
+                teams (
+                    id,
+                    name,
+                    tag
+                )
+            `)
+            .eq(
+                "tournament_id",
+                TOURNAMENT_ID
             )
-        `)
-        .eq(
-            "tournament_id",
-            TOURNAMENT_ID
-        )
-        .neq(
-            "status",
-            "rejected"
-        );
+            .neq(
+                "status",
+                "rejected"
+            );
 
 
     console.log(
@@ -1190,11 +538,8 @@ async function loadScoreTeams() {
         data || [];
 
 
-    select.innerHTML = `
-        <option value="">
-            SELECT TEAM
-        </option>
-    `;
+    select.innerHTML =
+        `<option value="">SELECT TEAM</option>`;
 
 
     adminRegisteredTeams.forEach(
@@ -1205,19 +550,17 @@ async function loadScoreTeams() {
             }
 
 
-            select.innerHTML += `
+            const team =
+                registration.teams;
 
-                <option
-                    value="${registration.team_id}"
-                >
-                    ${registration.teams.name}
-                    ${registration.teams.tag
-                        ? " [" +
-                          registration.teams.tag +
-                          "]"
+
+            select.innerHTML += `
+                <option value="${registration.team_id}">
+                    ${team.name}
+                    ${team.tag
+                        ? " [" + team.tag + "]"
                         : ""}
                 </option>
-
             `;
         }
     );
@@ -1237,12 +580,14 @@ function calculateScoreTotal() {
             )?.value || 0
         );
 
+
     const placement =
         Number(
             document.getElementById(
                 "scorePlacement"
             )?.value || 0
         );
+
 
     const kills =
         Number(
@@ -1265,9 +610,7 @@ function calculateScoreTotal() {
 
 
     if (preview) {
-
-        preview.textContent =
-            total;
+        preview.textContent = total;
     }
 
 
@@ -1287,9 +630,7 @@ function calculateScoreTotal() {
     id => {
 
         const input =
-            document.getElementById(
-                id
-            );
+            document.getElementById(id);
 
 
         if (input) {
@@ -1388,43 +729,41 @@ if (saveTeamScore) {
                 "SAVING SCORE...";
 
 
-            const {
-                error
-            } =
+            const { error } =
                 await adminClient
-                .from("tournament_scores")
-                .upsert({
+                    .from("tournament_scores")
+                    .upsert(
+                        {
+                            tournament_id:
+                                TOURNAMENT_ID,
 
-                    tournament_id:
-                        TOURNAMENT_ID,
+                            team_id:
+                                teamId,
 
-                    team_id:
-                        teamId,
+                            matches_played:
+                                matches,
 
-                    matches_played:
-                        matches,
+                            wins:
+                                wins,
 
-                    wins:
-                        wins,
+                            placement_points:
+                                placement,
 
-                    placement_points:
-                        placement,
+                            kill_points:
+                                kills,
 
-                    kill_points:
-                        kills,
+                            total_points:
+                                total,
 
-                    total_points:
-                        total,
-
-                    updated_at:
-                        new Date().toISOString()
-
-                }, {
-
-                    onConflict:
-                        "tournament_id,team_id"
-
-                });
+                            updated_at:
+                                new Date()
+                                    .toISOString()
+                        },
+                        {
+                            onConflict:
+                                "tournament_id,team_id"
+                        }
+                    );
 
 
             saveTeamScore.disabled =
@@ -1454,42 +793,37 @@ if (saveTeamScore) {
                 teamId
             );
 
-
-            await loadScoreTeams();
-
-              }
+        }
     );
 
 }
 
 
 // =========================================
-// START SCORE TEAM LIST
-// =========================================
-
-loadScoreTeams();
-```javascript
-// =========================================
-// ANNOUNCEMENTS MANAGER
+// ANNOUNCEMENTS
 // =========================================
 
 async function loadAdminAnnouncements() {
 
     const container =
-        document.getElementById("adminAnnouncements");
+        document.getElementById(
+            "adminAnnouncements"
+        );
+
 
     if (!container) return;
 
 
-    const {
-        data,
-        error
-    } = await adminClient
-        .from("announcements")
-        .select("*")
-        .order("created_at", {
-            ascending: false
-        });
+    const { data, error } =
+        await adminClient
+            .from("announcements")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
 
     console.log(
@@ -1641,22 +975,19 @@ if (publishAnnouncement) {
                 "PUBLISHING...";
 
 
-            const {
-                error
-            } = await adminClient
-                .from("announcements")
-                .insert({
+            const { error } =
+                await adminClient
+                    .from("announcements")
+                    .insert({
+                        title:
+                            title,
 
-                    title:
-                        title,
+                        content:
+                            content,
 
-                    content:
-                        content,
-
-                    published:
-                        published
-
-                });
+                        published:
+                            published
+                    });
 
 
             publishAnnouncement.disabled =
@@ -1719,15 +1050,14 @@ async function deleteAnnouncement(id) {
     if (!confirmed) return;
 
 
-    const {
-        error
-    } = await adminClient
-        .from("announcements")
-        .delete()
-        .eq(
-            "id",
-            id
-        );
+    const { error } =
+        await adminClient
+            .from("announcements")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
 
 
     if (error) {
@@ -1744,10 +1074,19 @@ async function deleteAnnouncement(id) {
         return;
     }
 
+
+    await loadAdminAnnouncements();
+
+}
+
+
 // =========================================
-// LOAD ANNOUNCEMENTS
+// START SCORE + ANNOUNCEMENTS
 // =========================================
+
+loadScoreTeams();
 
 loadAdminAnnouncements();
 ```
-
+         
+        

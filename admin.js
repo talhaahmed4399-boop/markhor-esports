@@ -1126,3 +1126,343 @@ if (logoutBtn) {
 // =========================================
 
 checkAdmin();
+// =========================================
+// SCORE ENTRY
+// =========================================
+
+let adminRegisteredTeams = [];
+
+
+async function loadScoreTeams() {
+
+    const select =
+        document.getElementById(
+            "scoreTeamSelect"
+        );
+
+    if (!select) {
+        return;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await adminClient
+        .from("tournament_registrations")
+        .select(`
+            team_id,
+            teams (
+                id,
+                name,
+                tag
+            )
+        `)
+        .eq(
+            "tournament_id",
+            TOURNAMENT_ID
+        )
+        .neq(
+            "status",
+            "rejected"
+        );
+
+
+    console.log(
+        "SCORE TEAMS:",
+        data
+    );
+
+
+    if (error) {
+
+        console.error(
+            "SCORE TEAM ERROR:",
+            error
+        );
+
+        return;
+    }
+
+
+    adminRegisteredTeams =
+        data || [];
+
+
+    select.innerHTML = `
+        <option value="">
+            SELECT TEAM
+        </option>
+    `;
+
+
+    adminRegisteredTeams.forEach(
+        registration => {
+
+            if (!registration.teams) {
+                return;
+            }
+
+
+            select.innerHTML += `
+
+                <option
+                    value="${registration.team_id}"
+                >
+                    ${registration.teams.name}
+                    ${registration.teams.tag
+                        ? " [" +
+                          registration.teams.tag +
+                          "]"
+                        : ""}
+                </option>
+
+            `;
+        }
+    );
+}
+
+
+// =========================================
+// SCORE TOTAL
+// =========================================
+
+function calculateScoreTotal() {
+
+    const wins =
+        Number(
+            document.getElementById(
+                "scoreWins"
+            )?.value || 0
+        );
+
+    const placement =
+        Number(
+            document.getElementById(
+                "scorePlacement"
+            )?.value || 0
+        );
+
+    const kills =
+        Number(
+            document.getElementById(
+                "scoreKills"
+            )?.value || 0
+        );
+
+
+    const total =
+        wins +
+        placement +
+        kills;
+
+
+    const preview =
+        document.getElementById(
+            "scoreTotalPreview"
+        );
+
+
+    if (preview) {
+
+        preview.textContent =
+            total;
+    }
+
+
+    return total;
+}
+
+
+// =========================================
+// SCORE INPUT LISTENERS
+// =========================================
+
+[
+    "scoreWins",
+    "scorePlacement",
+    "scoreKills"
+].forEach(
+    id => {
+
+        const input =
+            document.getElementById(
+                id
+            );
+
+
+        if (input) {
+
+            input.addEventListener(
+                "input",
+                calculateScoreTotal
+            );
+
+        }
+
+    }
+);
+
+
+// =========================================
+// SAVE SCORE
+// =========================================
+
+const saveTeamScore =
+    document.getElementById(
+        "saveTeamScore"
+    );
+
+
+if (saveTeamScore) {
+
+    saveTeamScore.addEventListener(
+        "click",
+        async function() {
+
+            const teamId =
+                document.getElementById(
+                    "scoreTeamSelect"
+                ).value;
+
+
+            const matches =
+                Number(
+                    document.getElementById(
+                        "scoreMatches"
+                    ).value || 0
+                );
+
+
+            const wins =
+                Number(
+                    document.getElementById(
+                        "scoreWins"
+                    ).value || 0
+                );
+
+
+            const placement =
+                Number(
+                    document.getElementById(
+                        "scorePlacement"
+                    ).value || 0
+                );
+
+
+            const kills =
+                Number(
+                    document.getElementById(
+                        "scoreKills"
+                    ).value || 0
+                );
+
+
+            const total =
+                wins +
+                placement +
+                kills;
+
+
+            const message =
+                document.getElementById(
+                    "scoreSaveMessage"
+                );
+
+
+            if (!teamId) {
+
+                message.textContent =
+                    "PLEASE SELECT A TEAM";
+
+                return;
+            }
+
+
+            saveTeamScore.disabled =
+                true;
+
+
+            message.textContent =
+                "SAVING SCORE...";
+
+
+            const {
+                error
+            } =
+                await adminClient
+                .from("tournament_scores")
+                .upsert({
+
+                    tournament_id:
+                        TOURNAMENT_ID,
+
+                    team_id:
+                        teamId,
+
+                    matches_played:
+                        matches,
+
+                    wins:
+                        wins,
+
+                    placement_points:
+                        placement,
+
+                    kill_points:
+                        kills,
+
+                    total_points:
+                        total,
+
+                    updated_at:
+                        new Date().toISOString()
+
+                }, {
+
+                    onConflict:
+                        "tournament_id,team_id"
+
+                });
+
+
+            saveTeamScore.disabled =
+                false;
+
+
+            if (error) {
+
+                console.error(
+                    "SCORE SAVE ERROR:",
+                    error
+                );
+
+                message.textContent =
+                    "SCORE SAVE FAILED";
+
+                return;
+            }
+
+
+            message.textContent =
+                "SCORE SAVED ✓";
+
+
+            console.log(
+                "SCORE SAVED:",
+                teamId
+            );
+
+
+            await loadScoreTeams();
+
+        }
+    );
+
+
+// =========================================
+// START SCORE TEAM LIST
+// =========================================
+
+loadScoreTeams();

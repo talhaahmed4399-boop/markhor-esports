@@ -1468,6 +1468,7 @@ if (saveTeamScore) {
 // =========================================
 
 loadScoreTeams();
+```javascript
 // =========================================
 // ANNOUNCEMENTS MANAGER
 // =========================================
@@ -1539,7 +1540,7 @@ async function loadAdminAnnouncements() {
                     <div>
 
                         <small>
-                            ${announcement.type || "INFO"}
+                            ANNOUNCEMENT
                         </small>
 
                         <h3>
@@ -1547,7 +1548,7 @@ async function loadAdminAnnouncements() {
                         </h3>
 
                         <p>
-                            ${announcement.message}
+                            ${announcement.content}
                         </p>
 
                         <span>
@@ -1596,16 +1597,10 @@ if (publishAnnouncement) {
                 ).value.trim();
 
 
-            const message =
+            const content =
                 document.getElementById(
                     "announcementMessage"
                 ).value.trim();
-
-
-            const type =
-                document.getElementById(
-                    "announcementType"
-                ).value;
 
 
             const published =
@@ -1629,7 +1624,7 @@ if (publishAnnouncement) {
             }
 
 
-            if (!message) {
+            if (!content) {
 
                 status.textContent =
                     "PLEASE ENTER A MESSAGE";
@@ -1655,11 +1650,8 @@ if (publishAnnouncement) {
                     title:
                         title,
 
-                    message:
-                        message,
-
-                    type:
-                        type,
+                    content:
+                        content,
 
                     published:
                         published
@@ -1697,11 +1689,6 @@ if (publishAnnouncement) {
             document.getElementById(
                 "announcementMessage"
             ).value = "";
-
-
-            document.getElementById(
-                "announcementType"
-            ).value = "info";
 
 
             document.getElementById(
@@ -1768,3 +1755,5 @@ async function deleteAnnouncement(id) {
 // =========================================
 
 loadAdminAnnouncements();
+```
+

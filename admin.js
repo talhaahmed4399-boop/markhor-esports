@@ -174,38 +174,41 @@ async function loadTournaments() {
             tournament.tournament_status ||
             "upcoming";
 
-        html += `
-            <div class="admin-tournament">
+        html +=
+    '<div class="admin-tournament">' +
 
-                <div>
-                    <small>
-                        ${String(status).toUpperCase()}
-                    </small>
+        '<div>' +
 
-                    <h3>
-                        ${tournament.name || "UNTITLED TOURNAMENT"}
-                    </h3>
-                </div>
+            '<small>' +
+                String(status).toUpperCase() +
+            '</small>' +
 
-                <div class="admin-tournament-meta">
+            '<h3>' +
+                (tournament.name || "UNTITLED TOURNAMENT") +
+            '</h3>' +
 
-                    <span>
-                        PRIZE
-                        <strong>
-                            ₨${tournament.prize_pool || 0}
-                        </strong>
-                    </span>
+        '</div>' +
 
-                    <span>
-                        TEAMS
-                        <strong>
-                            ${tournament.max_teams || 0}
-                        </strong>
-                    </span>
+        '<div class="admin-tournament-meta">' +
 
-                </div>
+            '<span>' +
+                'PRIZE ' +
+                '<strong>₨' +
+                    (tournament.prize_pool || 0) +
+                '</strong>' +
+            '</span>' +
 
-            </div>
+            '<span>' +
+                'TEAMS ' +
+                '<strong>' +
+                    (tournament.max_teams || 0) +
+                '</strong>' +
+            '</span>' +
+
+        '</div>' +
+
+    '</div>';
+    
         `;
     });
 

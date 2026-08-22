@@ -5605,3 +5605,123 @@
 .admin-reject-btn:hover {
     background: rgba(255,98,98,.1);
 }
+.tournament-rules-section {
+    margin-top: 70px;
+    padding: 35px 0;
+}
+
+.tournament-rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.tournament-rule-card {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    padding: 25px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.012)
+        );
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: .25s ease;
+}
+
+.tournament-rule-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: #dfff38;
+    box-shadow: 0 0 18px rgba(223,255,56,.45);
+}
+
+.tournament-rule-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(223,255,56,.3);
+    box-shadow:
+        0 0 25px rgba(223,255,56,.06);
+}
+
+.rule-number {
+    min-width: 38px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #dfff38;
+    text-shadow:
+        0 0 12px rgba(223,255,56,.5);
+}
+
+.tournament-rule-card h3 {
+    margin: 0 0 10px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+}
+
+.tournament-rule-card p {
+    margin: 0;
+    color: rgba(255,255,255,.55);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.tournament-important-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 25px;
+    padding: 28px 30px;
+    border: 1px solid rgba(223,255,56,.22);
+    background: rgba(223,255,56,.035);
+    border-radius: 10px;
+}
+
+.tournament-important-box small {
+    color: #dfff38;
+    letter-spacing: 2px;
+    font-weight: 800;
+}
+
+.tournament-important-box h3 {
+    margin: 8px 0 0;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-shadow:
+        0 0 15px rgba(223,255,56,.25);
+}
+
+.tournament-important-box p {
+    max-width: 520px;
+    margin: 0;
+    color: rgba(255,255,255,.55);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+
+    .tournament-rules-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tournament-important-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tournament-rule-card {
+        padding: 20px;
+    }
+
+}

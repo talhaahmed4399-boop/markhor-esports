@@ -5427,3 +5427,8 @@
     }
 
 }
+.registration-closed {
+    opacity: .45;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}

@@ -355,11 +355,11 @@ console.log(
             registered_by:
                 user.id,
 
-            status:
-                "registered"
-                
-         group_name:
-                groupName
+     status:
+         "registered",
+
+group_name:
+      groupName
 
     
         })

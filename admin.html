@@ -1,26 +1,35 @@
 <!doctype html>
+
 <html lang="en">
 
 <head>
 
 <meta charset="utf-8">
 
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1"
+
+>
 
 <title>Markhor Esports | Admin Panel</title>
 
-<link rel="stylesheet" href="style.css">
+<link
+    rel="stylesheet"
+    href="style.css"
+>
 
 </head>
 
-
 <body class="admin-page">
-
 
 <header>
 
-<a class="logo" href="index.html">
+<a
+class="logo"
+href="index.html"
+
+>
 
 <b>M</b>
 
@@ -31,10 +40,11 @@ MARKHOR
 
 </a>
 
-
 <nav>
 
-<a href="index.html">HOME</a>
+<a href="index.html">
+HOME
+</a>
 
 <a href="tournament.html">
 TOURNAMENT
@@ -44,49 +54,58 @@ TOURNAMENT
 TEAMS
 </a>
 
+<a href="leaderboard.html">
+LEADERBOARD
+</a>
+
 </nav>
 
 <button
 id="adminLogout"
 class="outline"
 type="button"
+
 >
-LOGOUT
-</button>
+
+LOGOUT </button>
 
 </header>
 
-
-
 <main class="admin-container">
 
-
-<!-- ACCESS CHECK -->
+<!-- =========================================
+     ACCESS CHECK
+========================================= -->
 
 <section
-id="adminLoading"
-class="admin-loading"
+    id="adminLoading"
+    class="admin-loading"
 >
 
 CHECKING ADMIN ACCESS...
 
 </section>
 
-
-
-<!-- ADMIN PANEL -->
+<!-- =========================================
+     ADMIN PANEL
+========================================= -->
 
 <section
-id="adminPanel"
-style="display:none;"
+    id="adminPanel"
+    style="display:none;"
 >
 
+<!-- =========================================
+     ADMIN HEADER
+========================================= -->
 
 <div class="admin-heading">
 
 <div>
 
-<small>MARKHOR ESPORTS</small>
+<small>
+MARKHOR ESPORTS
+</small>
 
 <h1>
 ADMIN PANEL
@@ -98,21 +117,17 @@ Tournament management dashboard.
 
 </div>
 
-
 <div class="admin-badge">
-
 ADMIN ACCESS ✓
-
 </div>
 
 </div>
 
-
-
-<!-- DASHBOARD STATS -->
+<!-- =========================================
+     DASHBOARD STATS
+========================================= -->
 
 <section class="admin-stats">
-
 
 <div class="admin-stat">
 
@@ -126,7 +141,6 @@ TOURNAMENTS
 
 </div>
 
-
 <div class="admin-stat">
 
 <small>
@@ -138,7 +152,6 @@ REGISTERED TEAMS
 </strong>
 
 </div>
-
 
 <div class="admin-stat">
 
@@ -152,7 +165,6 @@ MAX TEAM SLOTS
 
 </div>
 
-
 <div class="admin-stat">
 
 <small>
@@ -165,12 +177,11 @@ ADMIN
 
 </div>
 
-
 </section>
 
-
-
-<!-- TOURNAMENTS -->
+<!-- =========================================
+     TOURNAMENT MANAGEMENT
+========================================= -->
 
 <section class="admin-section">
 
@@ -190,18 +201,17 @@ TOURNAMENTS
 
 </div>
 
-
 <div
-id="adminTournaments"
-class="admin-tournament-list"
+    id="adminTournaments"
+    class="admin-tournament-list"
 >
 LOADING TOURNAMENTS...
 </div>
 
 <div
-id="tournamentControls"
-class="tournament-controls"
-style="display:none;"
+    id="tournamentControls"
+    class="tournament-controls"
+    style="display:none;"
 >
 
 <div class="control-field">
@@ -214,12 +224,12 @@ REGISTRATION
 id="registrationToggle"
 type="button"
 class="lime"
+
 >
-LOADING...
-</button>
+
+LOADING... </button>
 
 </div>
-
 
 <div class="control-field">
 
@@ -232,10 +242,10 @@ id="maxTeamsInput"
 type="number"
 min="1"
 max="256"
+
 >
 
 </div>
-
 
 <div class="control-field">
 
@@ -247,10 +257,10 @@ PRIZE POOL PKR
 id="prizePoolInput"
 type="number"
 min="0"
+
 >
 
 </div>
-
 
 <div class="control-field">
 
@@ -276,14 +286,14 @@ COMPLETED
 
 </div>
 
-
 <button
 id="saveTournamentChanges"
 class="lime"
 type="button"
+
 >
-SAVE CHANGES
-</button>
+
+SAVE CHANGES </button>
 
 <p id="tournamentSaveMessage"></p>
 
@@ -291,9 +301,9 @@ SAVE CHANGES
 
 </section>
 
-
-
-<!-- REGISTERED TEAMS -->
+<!-- =========================================
+     REGISTERED TEAMS
+========================================= -->
 
 <section class="admin-section">
 
@@ -311,18 +321,15 @@ REGISTERED TEAMS
 
 </div>
 
-<strong
-id="adminTeamCount"
->
+<strong id="adminTeamCount">
 0
 </strong>
 
 </div>
 
-
 <div
-id="adminTeams"
-class="admin-team-list"
+    id="adminTeams"
+    class="admin-team-list"
 >
 
 LOADING TEAMS...
@@ -331,9 +338,9 @@ LOADING TEAMS...
 
 </section>
 
-
-
-<!-- GROUPS -->
+<!-- =========================================
+     GROUPS
+========================================= -->
 
 <section class="admin-section">
 
@@ -353,156 +360,165 @@ GROUPS
 
 </div>
 
-
 <div
-id="adminGroups"
-class="admin-groups"
+    id="adminGroups"
+    class="admin-groups"
 >
-<section class="admin-section">
 
-    <div class="admin-section-heading">
-
-        <div>
-
-            <small>
-                MARKHOR BATTLEFIELD S1
-            </small>
-
-            <h2>
-                SCORE ENTRY
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <div class="score-entry-panel">
-
-        <div class="control-field">
-
-            <label>
-                SELECT TEAM
-            </label>
-
-            <select id="scoreTeamSelect">
-
-                <option value="">
-                    SELECT TEAM
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div class="score-entry-grid">
-
-            <div class="control-field">
-
-                <label>
-                    MATCHES PLAYED
-                </label>
-
-                <input
-                    id="scoreMatches"
-                    type="number"
-                    min="0"
-                    value="0"
-                >
-
-            </div>
-
-
-            <div class="control-field">
-
-                <label>
-                    WINS
-                </label>
-
-                <input
-                    id="scoreWins"
-                    type="number"
-                    min="0"
-                    value="0"
-                >
-
-            </div>
-
-
-            <div class="control-field">
-
-                <label>
-                    PLACEMENT POINTS
-                </label>
-
-                <input
-                    id="scorePlacement"
-                    type="number"
-                    min="0"
-                    value="0"
-                >
-
-            </div>
-
-
-            <div class="control-field">
-
-                <label>
-                    KILL POINTS
-                </label>
-
-                <input
-                    id="scoreKills"
-                    type="number"
-                    min="0"
-                    value="0"
-                >
-
-            </div>
-
-        </div>
-
-
-        <div class="score-total-preview">
-
-            <small>
-                TOTAL POINTS
-            </small>
-
-            <strong id="scoreTotalPreview">
-                0
-            </strong>
-
-        </div>
-
-
-        <button
-            id="saveTeamScore"
-            class="lime"
-            type="button"
-        >
-            SAVE SCORE
-        </button>
-
-
-        <p id="scoreSaveMessage"></p>
-
-    </div>
-
-</section>
 LOADING GROUPS...
 
 </div>
 
 </section>
 
+<!-- =========================================
+     SCORE ENTRY
+========================================= -->
+
+<section class="admin-section">
+
+<div class="admin-section-heading">
+
+<div>
+
+<small>
+MARKHOR BATTLEFIELD S1
+</small>
+
+<h2>
+SCORE ENTRY
+</h2>
+
+</div>
+
+<div class="admin-badge">
+LIVE SCORES
+</div>
+
+</div>
+
+<div class="score-entry-panel">
+
+<!-- TEAM -->
+
+<div class="control-field">
+
+<label>
+SELECT TEAM
+</label>
+
+<select id="scoreTeamSelect">
+
+<option value="">
+SELECT TEAM
+</option>
+
+</select>
+
+</div>
+
+<!-- SCORE INPUTS -->
+
+<div class="score-entry-grid">
+
+<div class="control-field">
+
+<label>
+MATCHES PLAYED
+</label>
+
+<input
+id="scoreMatches"
+type="number"
+min="0"
+value="0"
+
+>
+
+</div>
+
+<div class="control-field">
+
+<label>
+WINS
+</label>
+
+<input
+id="scoreWins"
+type="number"
+min="0"
+value="0"
+
+>
+
+</div>
+
+<div class="control-field">
+
+<label>
+PLACEMENT POINTS
+</label>
+
+<input
+id="scorePlacement"
+type="number"
+min="0"
+value="0"
+
+>
+
+</div>
+
+<div class="control-field">
+
+<label>
+KILL POINTS
+</label>
+
+<input
+id="scoreKills"
+type="number"
+min="0"
+value="0"
+
+>
+
+</div>
+
+</div>
+
+<!-- TOTAL -->
+
+<div class="score-total-preview">
+
+<small>
+TOTAL POINTS
+</small>
+
+<strong id="scoreTotalPreview">
+0
+</strong>
+
+</div>
+
+<button
+id="saveTeamScore"
+class="lime"
+type="button"
+
+>
+
+SAVE SCORE </button>
+
+<p id="scoreSaveMessage"></p>
+
+</div>
+
+</section>
 
 </section>
 
 </main>
-
-
 
 <footer>
 
@@ -524,13 +540,17 @@ Admin Panel.
 
 </footer>
 
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
 
+<script
+    src="config.js"
+></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="config.js"></script>
-
-<script src="admin.js"></script>
+<script
+    src="admin.js"
+></script>
 
 </body>
 

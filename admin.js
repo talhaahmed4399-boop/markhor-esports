@@ -287,7 +287,36 @@ async function loadTournaments() {
                 tournament.id ===
                 TOURNAMENT_ID
         );
+if (battlefield) {
 
+    document.getElementById(
+        "tournamentControls"
+    ).style.display = "grid";
+
+
+    document.getElementById(
+        "maxTeamsInput"
+    ).value =
+        battlefield.max_teams || 0;
+
+
+    document.getElementById(
+        "prizePoolInput"
+    ).value =
+        battlefield.prize_pool || 0;
+
+
+    document.getElementById(
+        "tournamentStatusInput"
+    ).value =
+        battlefield.status || "upcoming";
+
+
+    updateRegistrationButton(
+        battlefield.registration_status
+    );
+
+}
 
     if (battlefield) {
 
@@ -680,3 +709,199 @@ if (logoutBtn) {
 // =========================================
 
 checkAdmin();
+// =========================================
+// REGISTRATION BUTTON
+// =========================================
+
+function updateRegistrationButton(
+    status
+) {
+
+    const button =
+        document.getElementById(
+            "registrationToggle"
+        );
+
+
+    if (
+        String(status).toLowerCase()
+        === "open"
+    ) {
+
+        button.textContent =
+            "REGISTRATION OPEN ✓";
+
+        button.className =
+            "lime";
+
+    } else {
+
+        button.textContent =
+            "REGISTRATION CLOSED";
+
+        button.className =
+            "outline";
+
+    }
+
+}
+
+
+// =========================================
+// TOGGLE REGISTRATION
+// =========================================
+
+document
+.getElementById(
+    "registrationToggle"
+)
+.addEventListener(
+    "click",
+    async function() {
+
+        const button = this;
+
+
+        const isOpen =
+            button.textContent
+            .includes("OPEN");
+
+
+        const newStatus =
+            isOpen
+                ? "closed"
+                : "open";
+
+
+        const {
+            error
+        } =
+        await adminClient
+        .from("tournaments")
+        .update({
+            registration_status:
+                newStatus
+        })
+        .eq(
+            "id",
+            TOURNAMENT_ID
+        );
+
+
+        if (error) {
+
+            console.error(error);
+
+            alert(
+                "Unable to update registration."
+            );
+
+            return;
+
+        }
+
+
+        updateRegistrationButton(
+            newStatus
+        );
+
+    }
+);
+
+
+// =========================================
+// SAVE TOURNAMENT SETTINGS
+// =========================================
+
+document
+.getElementById(
+    "saveTournamentChanges"
+)
+.addEventListener(
+    "click",
+    async function() {
+
+        const maxTeams =
+            Number(
+                document.getElementById(
+                    "maxTeamsInput"
+                ).value
+            );
+
+
+        const prizePool =
+            Number(
+                document.getElementById(
+                    "prizePoolInput"
+                ).value
+            );
+
+
+        const status =
+            document.getElementById(
+                "tournamentStatusInput"
+            ).value;
+
+
+        if (
+            maxTeams < 1 ||
+            maxTeams > 256
+        ) {
+
+            alert(
+                "Max teams must be between 1 and 256."
+            );
+
+            return;
+
+        }
+
+
+        const {
+            error
+        } =
+        await adminClient
+        .from("tournaments")
+        .update({
+
+            max_teams:
+                maxTeams,
+
+            prize_pool:
+                prizePool,
+
+            status:
+                status
+
+        })
+        .eq(
+            "id",
+            TOURNAMENT_ID
+        );
+
+
+        const message =
+            document.getElementById(
+                "tournamentSaveMessage"
+            );
+
+
+        if (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "SAVE FAILED";
+
+            return;
+
+        }
+
+
+        message.textContent =
+            "CHANGES SAVED ✓";
+
+        loadTournaments();
+
+    }
+);

@@ -1457,8 +1457,10 @@ if (saveTeamScore) {
 
             await loadScoreTeams();
 
-        }
+              }
     );
+
+}
 
 
 // =========================================

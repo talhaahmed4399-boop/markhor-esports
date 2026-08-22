@@ -5955,3 +5955,61 @@
     }
 
 }
+.score-entry-panel {
+    padding: 25px;
+    margin-top: 20px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    background: rgba(255,255,255,.025);
+}
+
+.score-entry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 18px;
+}
+
+.score-total-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+    padding: 18px 20px;
+    border: 1px solid rgba(223,255,56,.2);
+    border-radius: 7px;
+    background: rgba(223,255,56,.035);
+}
+
+.score-total-preview small {
+    color: rgba(255,255,255,.45);
+    letter-spacing: 1.5px;
+}
+
+.score-total-preview strong {
+    color: #dfff38;
+    font-size: 26px;
+    text-shadow: 0 0 15px rgba(223,255,56,.3);
+}
+
+#scoreSaveMessage {
+    margin-top: 12px;
+    color: #dfff38;
+    font-size: 11px;
+}
+
+@media (max-width: 800px) {
+
+    .score-entry-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .score-entry-grid {
+        grid-template-columns: 1fr;
+    }
+
+}

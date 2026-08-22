@@ -905,3 +905,163 @@ document
 
     }
 );
+// =========================================
+// REGISTERED TEAMS - ADMIN
+// =========================================
+
+async function loadAdminTeams() {
+
+    const teamsBox =
+        document.getElementById("adminTeams");
+
+    const teamCount =
+        document.getElementById("adminTeamCount");
+
+    if (!teamsBox) return;
+
+    const {
+        data,
+        error
+    } = await adminClient
+        .from("tournament_registrations")
+        .select("*")
+        .eq(
+            "tournament_id",
+            TOURNAMENT_ID
+        )
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
+
+    console.log(
+        "ADMIN REGISTERED TEAMS:",
+        data
+    );
+
+    console.log(
+        "ADMIN TEAMS ERROR:",
+        error
+    );
+
+
+    if (error) {
+
+        console.error(error);
+
+        teamsBox.innerHTML =
+            "<p>UNABLE TO LOAD TEAMS</p>";
+
+        return;
+    }
+
+
+    if (!data || data.length === 0) {
+
+        teamCount.textContent = "0";
+
+        teamsBox.innerHTML =
+            "<p>NO REGISTERED TEAMS</p>";
+
+        return;
+    }
+
+
+    teamCount.textContent =
+        data.length;
+
+
+    teamsBox.innerHTML = "";
+
+
+    data.forEach(
+        (registration, index) => {
+
+            const teamName =
+                registration.team_name ||
+                "UNKNOWN TEAM";
+
+            const captain =
+                registration.captain_name ||
+                registration.captain_email ||
+                "UNKNOWN";
+
+
+            const logo =
+                registration.team_logo ||
+                registration.logo_url ||
+                "";
+
+
+            const group =
+                registration.group_name ||
+                "NOT ASSIGNED";
+
+
+            const logoHTML =
+                logo
+                    ? `<img
+                        src="${logo}"
+                        alt="${teamName}"
+                        class="admin-team-logo"
+                       >`
+                    : `<div
+                        class="admin-team-logo-placeholder"
+                       >
+                        ${teamName
+                            .charAt(0)
+                            .toUpperCase()}
+                       </div>`;
+
+
+            teamsBox.innerHTML += `
+
+            <div
+                class="admin-team-card"
+            >
+
+                <div class="admin-team-number">
+                    ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                ${logoHTML}
+
+                <div class="admin-team-info">
+
+                    <h3>
+                        ${teamName}
+                    </h3>
+
+                    <small>
+                        CAPTAIN:
+                        ${captain}
+                    </small>
+
+                    <span>
+                        GROUP:
+                        ${group}
+                    </span>
+
+                </div>
+
+                <div
+                    class="admin-team-status"
+                >
+                    REGISTERED
+                </div>
+
+            </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+// Load admin teams
+loadAdminTeams();

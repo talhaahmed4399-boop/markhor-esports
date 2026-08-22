@@ -344,7 +344,7 @@ function resetRegisterButton() {
 
 async function loadRegisteredTeams() {
 
-    console.log("LOADING REGISTERED TEAMS...");
+    console.log("LOADING GROUPS...");
 
     const {
         data,
@@ -354,6 +354,7 @@ async function loadRegisteredTeams() {
         .select(`
             id,
             team_id,
+            group_name,
             status,
             created_at,
             teams (
@@ -376,12 +377,12 @@ async function loadRegisteredTeams() {
 
 
     console.log(
-        "REGISTERED TEAM DATA:",
+        "GROUP DATA:",
         data
     );
 
     console.log(
-        "REGISTERED TEAM ERROR:",
+        "GROUP ERROR:",
         error
     );
 
@@ -389,7 +390,7 @@ async function loadRegisteredTeams() {
     if (error) {
 
         console.error(
-            "REGISTERED TEAMS ERROR:",
+            "GROUP LOAD ERROR:",
             error
         );
 
@@ -447,80 +448,198 @@ async function loadRegisteredTeams() {
     }
 
 
+    // =====================================
+    // GROUPS A - P
+    // =====================================
+
+    const groups = {};
+
+    for (
+        let i = 0;
+        i < 16;
+        i++
+    ) {
+
+        const letter =
+            String.fromCharCode(
+                65 + i
+            );
+
+        groups[
+            "Group " + letter
+        ] = [];
+
+    }
+
+
+    // =====================================
+    // PUT TEAMS INTO GROUPS
+    // =====================================
+
+    data.forEach(
+        registration => {
+
+            const group =
+                registration.group_name;
+
+
+            if (
+                group &&
+                groups[group]
+            ) {
+
+                groups[group].push(
+                    registration
+                );
+
+            }
+
+        }
+    );
+
+
     list.innerHTML = "";
 
 
-    data.forEach(
-        (registration, index) => {
+    // =====================================
+    // DISPLAY GROUPS
+    // =====================================
 
-            const team =
-                registration.teams;
+    Object.keys(groups).forEach(
+        groupName => {
+
+            const teams =
+                groups[groupName];
 
 
-            if (!team) {
+            // Hide empty groups
 
-                console.warn(
-                    "TEAM DATA NOT FOUND:",
-                    registration
-                );
+            if (
+                teams.length === 0
+            ) {
 
                 return;
 
             }
 
 
-            const logo =
-                team.logo_url
-                ?
+            let groupHTML = `
 
-                `<img
-                    src="${team.logo_url}"
-                    alt="${team.name}"
-                >`
+                <div class="tournament-group">
 
-                :
+                    <div class="group-header">
 
-                `<span class="team-logo-text">
-                    ${team.tag || "TEAM"}
-                </span>`;
+                        <div>
 
+                            <small>
+                                MARKHOR BATTLEFIELD S1
+                            </small>
 
-            list.innerHTML += `
+                            <h3>
+                                ${groupName}
+                            </h3>
 
-                <div class="registered-team-card">
-
-                    <div class="registered-team-number">
-
-                        ${(index + 1)
-                            .toString()
-                            .padStart(2, "0")}
-
-                    </div>
-
-
-                    <div class="registered-team-logo">
-
-                        ${logo}
-
-                    </div>
-
-
-                    <div class="registered-team-info">
+                        </div>
 
                         <strong>
-                            ${team.name}
+                            ${teams.length} / 16
                         </strong>
-
-                        <small>
-                            ${team.tag || ""}
-                        </small>
 
                     </div>
 
 
-                    <div class="registered-team-status">
+                    <div class="group-teams">
 
-                        REGISTERED ✓
+            `;
+
+
+            teams.forEach(
+                (
+                    registration,
+                    index
+                ) => {
+
+                    const team =
+                        registration.teams;
+
+
+                    if (!team) {
+                        return;
+                    }
+
+
+                    const logo =
+                        team.logo_url
+
+                        ?
+
+                        `
+                        <img
+                            src="${team.logo_url}"
+                            alt="${team.name}"
+                        >
+                        `
+
+                        :
+
+                        `
+                        <span class="team-logo-text">
+                            ${team.tag || "TEAM"}
+                        </span>
+                        `;
+
+
+                    groupHTML += `
+
+                        <div class="registered-team-card">
+
+                            <div class="registered-team-number">
+
+                                ${String(
+                                    index + 1
+                                ).padStart(
+                                    2,
+                                    "0"
+                                )}
+
+                            </div>
+
+
+                            <div class="registered-team-logo">
+
+                                ${logo}
+
+                            </div>
+
+
+                            <div class="registered-team-info">
+
+                                <strong>
+                                    ${team.name}
+                                </strong>
+
+                                <small>
+                                    ${team.tag || ""}
+                                </small>
+
+                            </div>
+
+
+                            <div class="registered-team-status">
+
+                                REGISTERED ✓
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+            groupHTML += `
 
                     </div>
 
@@ -528,10 +647,15 @@ async function loadRegisteredTeams() {
 
             `;
 
+
+            list.innerHTML +=
+                groupHTML;
+
         }
     );
 
 }
+
 // =========================================
 // START
 // =========================================

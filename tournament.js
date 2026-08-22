@@ -357,7 +357,11 @@ console.log(
 
             status:
                 "registered"
+                
+         group_name:
+                groupName
 
+    
         })
         .select();
 

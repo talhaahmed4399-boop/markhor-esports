@@ -6099,3 +6099,135 @@
     }
 
 }
+/* =========================================
+   TOURNAMENT RESULTS
+========================================= */
+
+#adminResults {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+
+/* RESULT CARD */
+
+#adminResults .admin-team-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 22px;
+    background: linear-gradient(
+        135deg,
+        #111,
+        #181818
+    );
+    border: 1px solid rgba(255,255,255,.08);
+    border-left: 4px solid #b7ff00;
+    border-radius: 10px;
+    transition: .25s ease;
+    overflow: hidden;
+}
+
+
+#adminResults .admin-team-card:hover {
+    transform: translateX(5px);
+    border-color: rgba(183,255,0,.45);
+}
+
+
+/* POSITION */
+
+#adminResults .admin-team-card h3 {
+    margin: 0;
+    min-width: 250px;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+
+/* PRIZE */
+
+#adminResults .admin-team-card p {
+    margin: 0;
+    margin-left: auto;
+    font-size: 13px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+#adminResults .admin-team-card p::first-letter {
+    color: #b7ff00;
+}
+
+
+/* TOP 3 */
+
+#adminResults .admin-team-card:nth-child(1) {
+    border-left-color: #ffd700;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,215,0,.10),
+            #151515
+        );
+}
+
+
+#adminResults .admin-team-card:nth-child(2) {
+    border-left-color: #c0c0c0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(192,192,192,.08),
+            #151515
+        );
+}
+
+
+#adminResults .admin-team-card:nth-child(3) {
+    border-left-color: #cd7f32;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(205,127,50,.08),
+            #151515
+        );
+}
+
+
+/* POSITION NUMBER */
+
+#adminResults .admin-team-card h3::first-line {
+    font-weight: 900;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    #adminResults .admin-team-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 16px;
+    }
+
+
+    #adminResults .admin-team-card h3 {
+        min-width: auto;
+        font-size: 15px;
+    }
+
+
+    #adminResults .admin-team-card p {
+        margin-left: 0;
+    }
+
+}

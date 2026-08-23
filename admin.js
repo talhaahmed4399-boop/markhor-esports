@@ -603,42 +603,43 @@ function loadGroups(registrations) {
         '<div class="admin-group-teams">';
         
 
-teams.forEach(
-    registration => {
+    teams.forEach(
+        registration => {
 
-        const team =
-            registration.teams;
+            const team =
+                registration.teams;
 
-        if (!team) return;
+            if (!team) {
+                return;
+            }
+
+            html +=
+                '<div>' +
+
+                    '<strong>' +
+                        team.name +
+                    '</strong>' +
+
+                    '<small>' +
+                        (team.tag || "") +
+                    '</small>' +
+
+                '</div>';
+
+        }
+    );
 
 
-        html +=
-            '<div>' +
-
-                '<strong>' +
-                    team.name +
-                '</strong>' +
-
-                '<small>' +
-                    (team.tag || "") +
-                '</small>' +
-
-            '</div>';
-
-    }
-);
-
-
-html +=
+    html +=
         '</div>' +
     '</div>';
 
+});
 
-    box.innerHTML =
-        html ||
-        "NO GROUPS CREATED YET";
-}
 
+box.innerHTML =
+    html ||
+    "NO GROUPS CREATED YET";
 
 // =========================================
 // REGISTRATION OPEN / CLOSED

@@ -1367,9 +1367,9 @@ async function deleteAnnouncement(id) {
             "Delete this announcement?"
         );
 
-
-    if (!confirmed) return;
-
+    if (!confirmed) {
+        return;
+    }
 
     const {
         error
@@ -1380,7 +1380,6 @@ async function deleteAnnouncement(id) {
             "id",
             id
         );
-
 
     if (error) {
 
@@ -1396,7 +1395,6 @@ async function deleteAnnouncement(id) {
         return;
     }
 
-
     await loadAdminAnnouncements();
 }
 
@@ -1407,7 +1405,6 @@ async function deleteAnnouncement(id) {
 
 const logoutBtn =
     $("adminLogout");
-
 
 if (logoutBtn) {
 

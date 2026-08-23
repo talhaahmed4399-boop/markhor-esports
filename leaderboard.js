@@ -256,14 +256,13 @@ async function loadLeaderboard() {
                     </td>
 
 
-                    <td>
-                        ${score.placement_points || 0}
-                    </td>
+                <td>
+    ${score.kill_points || 0}
+</td>
 
-
-                    <td>
-                        ${score.kill_points || 0}
-                    </td>
+<td>
+    ${score.placement_points || 0}
+</td>
 
 
                     <td>

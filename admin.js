@@ -1760,7 +1760,302 @@ if (logoutBtn) {
     );
 }
 
+// =========================================
+// TOURNAMENT RESULTS
+// =========================================
 
+
+async function loadResultTeams(){
+
+    const select =
+        $("resultTeamSelect");
+
+
+    if(!select){
+        return;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+    await adminClient
+    .from("tournament_registrations")
+    .select(`
+        team_id,
+        teams(
+            name,
+            tag
+        )
+    `)
+    .eq(
+        "tournament_id",
+        TOURNAMENT_ID
+    )
+    .neq(
+        "status",
+        "rejected"
+    );
+
+
+    if(error){
+
+        console.error(
+            "RESULT TEAM ERROR",
+            error
+        );
+
+        return;
+    }
+
+
+    select.innerHTML =
+    `
+    <option value="">
+        SELECT TEAM
+    </option>
+    `;
+
+
+    data.forEach(
+        registration=>{
+
+
+            if(!registration.teams){
+                return;
+            }
+
+
+            select.innerHTML +=
+
+            `
+            <option value="${registration.team_id}">
+
+            ${registration.teams.name}
+
+            ${
+                registration.teams.tag
+                ?
+                "["+registration.teams.tag+"]"
+                :
+                ""
+            }
+
+            </option>
+            `;
+
+
+        }
+    );
+
+}
+
+
+
+async function saveTournamentResult(){
+
+    const teamId =
+        $("resultTeamSelect").value;
+
+
+    const position =
+        Number(
+            $("resultPosition").value
+        );
+
+
+    const prize =
+        Number(
+            $("resultPrize").value || 0
+        );
+
+
+    const message =
+        $("resultSaveMessage");
+
+
+    if(!teamId){
+
+        message.textContent =
+        "PLEASE SELECT TEAM";
+
+        return;
+
+    }
+
+
+    message.textContent =
+    "SAVING...";
+
+
+    const {
+        error
+    } =
+
+    await adminClient
+    .from("tournament_results")
+    .upsert({
+
+        tournament_id:
+            TOURNAMENT_ID,
+
+        team_id:
+            teamId,
+
+        position:
+            position,
+
+        prize_amount:
+            prize
+
+    },{
+        onConflict:
+        "tournament_id,position"
+    });
+
+
+
+    if(error){
+
+        console.error(
+            "RESULT SAVE ERROR",
+            error
+        );
+
+
+        message.textContent =
+        "RESULT SAVE FAILED";
+
+
+        return;
+
+    }
+
+
+    message.textContent =
+    "RESULT SAVED ✓";
+
+
+    await loadTournamentResults();
+
+}
+
+
+
+async function loadTournamentResults(){
+
+    const box =
+        $("adminResults");
+
+
+    if(!box){
+        return;
+    }
+
+
+    const {
+        data,
+        error
+    } =
+
+    await adminClient
+    .from("tournament_results")
+    .select(`
+        position,
+        prize_amount,
+        teams(
+            name,
+            tag
+        )
+    `)
+    .eq(
+        "tournament_id",
+        TOURNAMENT_ID
+    )
+    .order(
+        "position",
+        {
+            ascending:true
+        }
+    );
+
+
+    if(error){
+
+        console.error(
+            "RESULT LOAD ERROR",
+            error
+        );
+
+        return;
+    }
+
+
+    if(!data.length){
+
+        box.innerHTML =
+        "NO RESULTS YET";
+
+        return;
+
+    }
+
+
+    box.innerHTML="";
+
+
+    data.forEach(
+        result=>{
+
+
+        box.innerHTML +=
+
+        `
+        <div class="admin-team-card">
+
+            <h3>
+            #${result.position}
+            ${result.teams?.name || ""}
+            </h3>
+
+            <p>
+            PRIZE:
+            ₨${result.prize_amount}
+            </p>
+
+        </div>
+        `;
+
+
+        }
+    );
+
+}
+
+
+
+// BUTTON
+
+const saveTournamentResultBtn =
+    $("saveTournamentResult");
+
+
+if(saveTournamentResultBtn){
+
+    saveTournamentResultBtn.addEventListener(
+        "click",
+        saveTournamentResult
+    );
+
+}
+
+
+// LOAD
+
+loadResultTeams();
+
+loadTournamentResults();
 // =========================================
 // START
 // =========================================

@@ -1206,46 +1206,44 @@ async function loadAdminAnnouncements() {
                     ? "PUBLISHED"
                     : "DRAFT";
 
+container.innerHTML +=
+    '<div class="admin-announcement-card">' +
 
-            container.innerHTML += `
-                <div class="admin-announcement-card">
+        '<div>' +
 
-                    <div>
+            '<small>' +
+                'ANNOUNCEMENT' +
+            '</small>' +
 
-                        <small>
-                            ANNOUNCEMENT
-                        </small>
+            '<h3>' +
+                (announcement.title || "") +
+            '</h3>' +
 
-                        <h3>
-                            ${announcement.title}
-                        </h3>
+            '<p>' +
+                (announcement.content || "") +
+            '</p>' +
 
-                        <p>
-                            ${announcement.content}
-                        </p>
+            '<span>' +
+                status +
+            '</span>' +
 
-                        <span>
-                            ${status}
-                        </span>
+        '</div>' +
 
-                    </div>
+        '<button ' +
+            'class="outline" ' +
+            'type="button" ' +
+            'onclick="deleteAnnouncement(\'' +
+                announcement.id +
+            '\')">' +
+            'DELETE' +
+        '</button>' +
 
+    '</div>';
 
-                    <button
-                        class="outline"
-                        type="button"
-                        onclick="deleteAnnouncement(
-                            '${announcement.id}'
-                        )"
-                    >
-                        DELETE
-                    </button>
-
-                </div>
-            `;
+    
         }
     );
-}
+
 
 
 // =========================================

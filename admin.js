@@ -1325,9 +1325,13 @@ if (saveTeamScore) {
             if (result.error) {
 
                 console.error(
-                    "SCORE SAVE ERROR:",
-                    result.error
-                );
+    "SCORE SAVE ERROR:",
+    JSON.stringify(error, null, 2)
+);
+
+alert(
+    JSON.stringify(error, null, 2)
+);
 
                 message.textContent =
                     "SCORE SAVE FAILED";

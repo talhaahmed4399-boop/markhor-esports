@@ -910,7 +910,7 @@ async function loadScoreTeams() {
         <option value="">
             SELECT TEAM
         </option>
-    `;
+    
 
 
     adminRegisteredTeams.forEach(

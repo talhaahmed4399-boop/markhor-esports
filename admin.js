@@ -1400,8 +1400,6 @@ async function deleteAnnouncement(id) {
     
      }
     
-  );
-    
 }
 
 // =========================================

@@ -592,57 +592,54 @@ function loadGroups(registrations) {
             if (!teams.length) return;
 
 
-            html += `
-                <div class="admin-group">
+           html +=
+    '<div class="admin-group">' +
 
-                    <div class="admin-group-header">
+        '<div class="admin-group-header">' +
 
-                        <strong>
-                            ${groupName}
-                        </strong>
+            '<strong>' +
+                groupName +
+            '</strong>' +
 
-                        <span>
-                            ${teams.length} / 16
-                        </span>
+            '<span>' +
+                teams.length +
+                ' / 16' +
+            '</span>' +
 
-                    </div>
+        '</div>' +
 
-                    <div class="admin-group-teams">
-            `;
+        '<div class="admin-group-teams">';
+        
 
+teams.forEach(
+    registration => {
 
-            teams.forEach(
-                registration => {
+        const team =
+            registration.teams;
 
-                    const team =
-                        registration.teams;
-
-                    if (!team) return;
-
-
-                    html += `
-                        <div>
-
-                            <strong>
-                                ${team.name}
-                            </strong>
-
-                            <small>
-                                ${team.tag || ""}
-                            </small>
-
-                        </div>
-                    `;
-                }
-            );
+        if (!team) return;
 
 
-            html += `
-                    </div>
-                </div>
-            `;
-        }
-    );
+        html +=
+            '<div>' +
+
+                '<strong>' +
+                    team.name +
+                '</strong>' +
+
+                '<small>' +
+                    (team.tag || "") +
+                '</small>' +
+
+            '</div>';
+
+    }
+);
+
+
+html +=
+        '</div>' +
+    '</div>';
 
 
     box.innerHTML =

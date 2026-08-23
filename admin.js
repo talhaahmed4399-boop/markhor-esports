@@ -1237,7 +1237,7 @@ container.innerHTML +=
         }
     );
 
-
+}
 
 // =========================================
 // CREATE ANNOUNCEMENT

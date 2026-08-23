@@ -407,9 +407,7 @@ async function loadRegistrations() {
                         registration.created_at
                     ).toLocaleDateString()
                     : "-";
-
-
-         html +=
+html +=
     '<div class="admin-team-card">' +
 
         '<div class="admin-team-number">' +
@@ -418,67 +416,60 @@ async function loadRegistrations() {
 
         logo +
 
-                    <div class="admin-team-info">
+        '<div class="admin-team-info">' +
 
-                        <h3>
-                            ${teamName}
-                        </h3>
+            '<h3>' +
+                teamName +
+            '</h3>' +
 
-                        <small>
-                            TAG: ${teamTag}
-                        </small>
+            '<small>' +
+                'TAG: ' +
+                teamTag +
+            '</small>' +
 
-                        <span>
-                            GROUP: ${group}
-                        </span>
+            '<span>' +
+                'GROUP: ' +
+                group +
+            '</span>' +
 
-                        <span>
-                            REGISTERED: ${date}
-                        </span>
+            '<span>' +
+                'REGISTERED: ' +
+                date +
+            '</span>' +
 
-                    </div>
+        '</div>' +
 
-                    <div class="admin-team-actions">
+        '<div class="admin-team-actions">' +
 
-                        <span
-                            class="
-                                admin-registration-status
-                                ${statusClass}
-                            "
-                        >
-                            ${String(status).toUpperCase()}
-                        </span>
+            '<span class="admin-registration-status ' +
+                statusClass +
+            '">' +
+                String(status).toUpperCase() +
+            '</span>' +
 
-                        <button
-                            type="button"
-                            class="admin-approve-btn"
-                            onclick="updateRegistrationStatus(
-                                '${registration.id}',
-                                'approved'
-                            )"
-                        >
-                            APPROVE
-                        </button>
+            '<button ' +
+                'type="button" ' +
+                'class="admin-approve-btn" ' +
+                'onclick="updateRegistrationStatus(\'' +
+                    registration.id +
+                '\', \'approved\')">' +
+                'APPROVE' +
+            '</button>' +
 
-                        <button
-                            type="button"
-                            class="admin-reject-btn"
-                            onclick="updateRegistrationStatus(
-                                '${registration.id}',
-                                'rejected'
-                            )"
-                        >
-                            REJECT
-                        </button>
+            '<button ' +
+                'type="button" ' +
+                'class="admin-reject-btn" ' +
+                'onclick="updateRegistrationStatus(\'' +
+                    registration.id +
+                '\', \'rejected\')">' +
+                'REJECT' +
+            '</button>' +
 
-                    </div>
+        '</div>' +
 
-                </div>
-            `;
-        }
-    );
+    '</div>';
 
-
+      
     box.innerHTML = html;
 
     loadGroups(data);

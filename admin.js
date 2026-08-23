@@ -1919,9 +1919,13 @@ async function saveTournamentResult(){
     if(error){
 
         console.error(
-            "RESULT SAVE ERROR",
-            error
-        );
+    "RESULT SAVE ERROR:",
+    JSON.stringify(error, null, 2)
+);
+
+alert(
+    JSON.stringify(error, null, 2)
+);
 
 
         message.textContent =

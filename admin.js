@@ -445,35 +445,28 @@ html +=
             '">' +
                 String(status).toUpperCase() +
             '</span>' +
+    
+'<button type="button" class="admin-approve-btn" ' +
+'onclick="updateRegistrationStatus(&quot;' +
+registration.id +
+'&quot;, &quot;approved&quot;)">' +
+'APPROVE' +
+'</button>' +
 
-            '<button ' +
-                'type="button" ' +
-                'class="admin-approve-btn" ' +
-                'onclick="updateRegistrationStatus(\'' +
-                    registration.id +
-                '\', \'approved\')">' +
-                'APPROVE' +
-            '</button>' +
+'<button type="button" class="admin-reject-btn" ' +
+'onclick="updateRegistrationStatus(&quot;' +
+registration.id +
+'&quot;, &quot;rejected&quot;)">' +
+'REJECT' +
+'</button>' +
 
-            '<button ' +
-                'type="button" ' +
-                'class="admin-reject-btn" ' +
-                'onclick="updateRegistrationStatus(\'' +
-                    registration.id +
-                '\', \'rejected\')">' +
-                'REJECT' +
-            '</button>' +
+'</div>' +
 
-        '</div>' +
+'</div>';
 
-    '</div>';
+box.innerHTML = html;
 
-      
-    box.innerHTML = html;
-
-    loadGroups(data);
-}
-
+loadGroups(data);
 
 // =========================================
 // APPROVE / REJECT

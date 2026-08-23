@@ -370,7 +370,140 @@ LOADING GROUPS...
 </div>
 
 </section>
+    
+<!-- TOURNAMENT RESULTS --> 
+ 
+<section class="admin-section"> 
+ 
+    <div class="admin-section-heading"> 
+ 
+        <div> 
+ 
+            <small> 
+                MARKHOR BATTLEFIELD S1 
+            </small> 
+ 
+            <h2> 
+                TOURNAMENT RESULTS 
+            </h2> 
+ 
+        </div> 
+ 
+    </div> 
+ 
+ 
+    <div class="score-entry-panel"> 
+ 
+        <div class="control-field"> 
+ 
+            <label> 
+                POSITION 
+            </label> 
+ 
+            <select id="resultPosition"> 
+ 
+                <option value="1"> 
+                    1ST PLACE 
+                </option> 
+ 
+                <option value="2"> 
+                    2ND PLACE 
+                </option> 
+ 
+                <option value="3"> 
+                    3RD PLACE 
+                </option> 
+                
+                 <option value="4">
+                     4TH PLACE
+                 </option>
 
+                 <option value="5">
+                      5TH PLACE
+                 </option>
+
+                <option value="6">
+                    6TH PLACE
+                </option>
+
+               <option value="7">
+                   7TH PLACE
+                </option>
+
+              <option value="8">
+                8TH PLACE
+              </option>
+
+            <option value="9">
+                  9TH PLACE
+            </option>
+
+               <option value="10">
+                 10TH PLACE
+              </option>
+                
+            </select> 
+ 
+        </div> 
+ 
+ 
+        <div class="control-field"> 
+ 
+            <label> 
+                SELECT TEAM 
+            </label> 
+ 
+            <select id="resultTeamSelect"> 
+ 
+                <option value=""> 
+                    SELECT TEAM 
+                </option> 
+ 
+            </select> 
+ 
+        </div> 
+ 
+ 
+        <div class="control-field"> 
+ 
+            <label> 
+                PRIZE AMOUNT PKR 
+            </label> 
+ 
+            <input 
+                id="resultPrize" 
+                type="number" 
+                min="0" 
+                value="0" 
+            > 
+ 
+        </div> 
+ 
+ 
+        <button 
+            id="saveTournamentResult" 
+            class="lime" 
+            type="button" 
+        > 
+            SAVE RESULT 
+        </button> 
+ 
+ 
+        <p id="resultSaveMessage"></p> 
+ 
+    </div> 
+ 
+ 
+    <div 
+        id="adminResults" 
+        class="admin-team-list" 
+    > 
+ 
+        NO RESULTS YET 
+ 
+    </div> 
+ 
+</section>
 <!-- =========================================
      SCORE ENTRY
 ========================================= -->

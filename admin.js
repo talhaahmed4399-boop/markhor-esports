@@ -1,5 +1,6 @@
 // =========================================
 // MARKHOR ESPORTS ADMIN PANEL
+// CLEAN ADMIN.JS
 // =========================================
 
 console.log("MARKHOR ADMIN PANEL STARTED");
@@ -9,10 +10,11 @@ console.log("MARKHOR ADMIN PANEL STARTED");
 // SUPABASE
 // =========================================
 
-const adminClient = window.supabase.createClient(
-    window.MARKHOR_CONFIG.supabaseUrl,
-    window.MARKHOR_CONFIG.supabasePublishableKey
-);
+const adminClient =
+    window.supabase.createClient(
+        window.MARKHOR_CONFIG.supabaseUrl,
+        window.MARKHOR_CONFIG.supabasePublishableKey
+    );
 
 
 // =========================================
@@ -34,9 +36,14 @@ function $(id) {
     return document.getElementById(id);
 }
 
+
 function setText(id, value) {
-    const el = $(id);
-    if (el) el.textContent = value;
+
+    const element = $(id);
+
+    if (element) {
+        element.textContent = value;
+    }
 }
 
 
@@ -48,36 +55,67 @@ async function checkAdmin() {
 
     console.log("CHECKING ADMIN...");
 
-    const {
-        data: { user },
-        error
-    } = await adminClient.auth.getUser();
+    const result =
+        await adminClient.auth.getUser();
 
-    if (error) {
-        console.error("AUTH ERROR:", error);
-        showAccessDenied("AUTHENTICATION ERROR");
+    const user =
+        result.data &&
+        result.data.user;
+
+    if (result.error) {
+
+        console.error(
+            "AUTH ERROR:",
+            result.error
+        );
+
+        showAccessDenied(
+            "AUTHENTICATION ERROR"
+        );
+
         return;
     }
+
 
     if (!user) {
-        showAccessDenied("PLEASE LOGIN FIRST");
+
+        showAccessDenied(
+            "PLEASE LOGIN FIRST"
+        );
+
         return;
     }
 
-    console.log("CURRENT USER:", user.id);
+
+    console.log(
+        "CURRENT USER:",
+        user.id
+    );
+
 
     if (user.id !== ADMIN_ID) {
-        showAccessDenied("ADMIN ACCESS DENIED");
+
+        showAccessDenied(
+            "ADMIN ACCESS DENIED"
+        );
+
         return;
     }
 
+
     if ($("adminLoading")) {
-        $("adminLoading").style.display = "none";
+
+        $("adminLoading").style.display =
+            "none";
     }
 
+
     if ($("adminPanel")) {
-        $("adminPanel").style.display = "block";
+
+        $("adminPanel").style.display =
+            "block";
     }
+
 
     await loadDashboard();
 
@@ -87,19 +125,35 @@ async function checkAdmin() {
 }
 
 
+// =========================================
+// ACCESS DENIED
+// =========================================
+
 function showAccessDenied(message) {
 
-    const loading = document.getElementById("adminLoading");
+    const loading =
+        $("adminLoading");
 
     if (!loading) {
         return;
     }
 
+
     loading.innerHTML =
         "<div>" +
-        "<h2>" + message + "</h2>" +
-        "<p>You do not have permission to access this page.</p>" +
-        '<a href="index.html" class="lime">BACK TO WEBSITE</a>' +
+
+            "<h2>" +
+                message +
+            "</h2>" +
+
+            "<p>" +
+                "You do not have permission to access this page." +
+            "</p>" +
+
+            '<a href="index.html" class="lime">' +
+                "BACK TO WEBSITE" +
+            "</a>" +
+
         "</div>";
 }
 
@@ -122,101 +176,144 @@ async function loadDashboard() {
 
 async function loadTournaments() {
 
-    const box = $("adminTournaments");
+    const box =
+        $("adminTournaments");
 
-    if (!box) return;
+    if (!box) {
+        return;
+    }
 
-    const {
-        data,
-        error
-    } = await adminClient
-        .from("tournaments")
-        .select("*")
-        .order("created_at", {
-            ascending: false
-        });
 
-    console.log("ADMIN TOURNAMENTS:", data);
+    const result =
+        await adminClient
+            .from("tournaments")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
-    if (error) {
+
+    const data =
+        result.data || [];
+
+
+    if (result.error) {
 
         console.error(
             "TOURNAMENT ERROR:",
-            error
+            result.error
         );
 
-        box.innerHTML =
+        box.textContent =
             "TOURNAMENT LOAD ERROR";
 
         return;
     }
+
+
+    console.log(
+        "ADMIN TOURNAMENTS:",
+        data
+    );
+
 
     setText(
         "totalTournaments",
         data.length
     );
 
+
     if (!data.length) {
 
-        box.innerHTML =
+        box.textContent =
             "NO TOURNAMENTS FOUND";
 
         return;
     }
 
+
     let html = "";
 
-    data.forEach(tournament => {
 
-        const status =
-            tournament.status ||
-            tournament.tournament_status ||
-            "upcoming";
+    data.forEach(
+        function(tournament) {
 
-        html +=
-    '<div class="admin-tournament">' +
+            const status =
+                tournament.status ||
+                tournament.tournament_status ||
+                "upcoming";
 
-        '<div>' +
 
-            '<small>' +
-                String(status).toUpperCase() +
-            '</small>' +
+            html +=
+                '<div class="admin-tournament">' +
 
-            '<h3>' +
-                (tournament.name || "UNTITLED TOURNAMENT") +
-            '</h3>' +
+                    '<div>' +
 
-        '</div>' +
+                        '<small>' +
+                            String(
+                                status
+                            ).toUpperCase() +
+                        '</small>' +
 
-        '<div class="admin-tournament-meta">' +
+                        '<h3>' +
+                            (
+                                tournament.name ||
+                                "UNTITLED TOURNAMENT"
+                            ) +
+                        '</h3>' +
 
-            '<span>' +
-                'PRIZE ' +
-                '<strong>₨' +
-                    (tournament.prize_pool || 0) +
-                '</strong>' +
-            '</span>' +
+                    '</div>' +
 
-            '<span>' +
-                'TEAMS ' +
-                '<strong>' +
-                    (tournament.max_teams || 0) +
-                '</strong>' +
-            '</span>' +
+                    '<div class="admin-tournament-meta">' +
 
-        '</div>' +
+                        '<span>' +
+                            'PRIZE ' +
 
-    '</div>';
-    
-    });
+                            '<strong>' +
+                                '₨' +
+                                (
+                                    tournament.prize_pool ||
+                                    0
+                                ) +
+                            '</strong>' +
 
-    box.innerHTML = html;
+                        '</span>' +
+
+                        '<span>' +
+                            'TEAMS ' +
+
+                            '<strong>' +
+                                (
+                                    tournament.max_teams ||
+                                    0
+                                ) +
+                            '</strong>' +
+
+                        '</span>' +
+
+                    '</div>' +
+
+                '</div>';
+        }
+    );
+
+
+    box.innerHTML =
+        html;
 
 
     const tournament =
         data.find(
-            item => item.id === TOURNAMENT_ID
+            function(item) {
+
+                return item.id ===
+                    TOURNAMENT_ID;
+            }
         );
+
 
     if (!tournament) {
 
@@ -229,24 +326,28 @@ async function loadTournaments() {
 
 
     if ($("tournamentControls")) {
+
         $("tournamentControls").style.display =
             "grid";
     }
 
 
     if ($("maxTeamsInput")) {
+
         $("maxTeamsInput").value =
             tournament.max_teams || 0;
     }
 
 
     if ($("prizePoolInput")) {
+
         $("prizePoolInput").value =
             tournament.prize_pool || 0;
     }
 
 
     if ($("tournamentStatusInput")) {
+
         $("tournamentStatusInput").value =
             tournament.status ||
             tournament.tournament_status ||
@@ -272,62 +373,72 @@ async function loadTournaments() {
 
 async function loadRegistrations() {
 
-    const box = $("adminTeams");
+    const box =
+        $("adminTeams");
 
-    if (!box) return;
+    if (!box) {
+        return;
+    }
 
-    const {
-        data,
-        error
-    } = await adminClient
-        .from("tournament_registrations")
-        .select(`
-            id,
-            tournament_id,
-            team_id,
-            group_name,
-            status,
-            created_at,
-            teams (
+
+    const result =
+        await adminClient
+            .from("tournament_registrations")
+            .select(`
                 id,
-                name,
-                tag,
-                logo_url
+                tournament_id,
+                team_id,
+                group_name,
+                status,
+                created_at,
+                teams (
+                    id,
+                    name,
+                    tag,
+                    logo_url
+                )
+            `)
+            .eq(
+                "tournament_id",
+                TOURNAMENT_ID
             )
-        `)
-        .eq(
-            "tournament_id",
-            TOURNAMENT_ID
-        )
-        .order(
-            "created_at",
-            {
-                ascending: true
-            }
+            .order(
+                "created_at",
+                {
+                    ascending: true
+                }
+            );
+
+
+    const data =
+        result.data || [];
+
+
+    if (result.error) {
+
+        console.error(
+            "REGISTRATION ERROR:",
+            result.error
         );
+
+        box.textContent =
+            "REGISTRATION LOAD ERROR";
+
+        return;
+    }
+
 
     console.log(
         "ADMIN REGISTRATIONS:",
         data
     );
 
-    console.log(
-        "ADMIN TEAMS ERROR:",
-        error
-    );
-
-    if (error) {
-
-        box.innerHTML =
-            "REGISTRATION LOAD ERROR";
-
-        return;
-    }
 
     setText(
         "totalRegistrations",
         data.length
     );
+
 
     setText(
         "adminTeamCount",
@@ -337,7 +448,7 @@ async function loadRegistrations() {
 
     if (!data.length) {
 
-        box.innerHTML =
+        box.textContent =
             "NO REGISTERED TEAMS";
 
         loadGroups([]);
@@ -350,25 +461,31 @@ async function loadRegistrations() {
 
 
     data.forEach(
-        (registration, index) => {
+        function(registration, index) {
 
             const team =
                 registration.teams;
 
-            if (!team) return;
+
+            if (!team) {
+                return;
+            }
 
 
             const teamName =
                 team.name ||
                 "UNKNOWN TEAM";
 
+
             const teamTag =
                 team.tag ||
                 "TEAM";
 
+
             const group =
                 registration.group_name ||
                 "NOT ASSIGNED";
+
 
             const status =
                 registration.status ||
@@ -378,26 +495,43 @@ async function loadRegistrations() {
             let statusClass =
                 "registered";
 
+
             if (status === "approved") {
-                statusClass = "approved";
+
+                statusClass =
+                    "approved";
             }
+
 
             if (status === "rejected") {
-                statusClass = "rejected";
+
+                statusClass =
+                    "rejected";
             }
 
 
-           const logo =
-    team.logo_url
-        ? '<img src="' +
-          team.logo_url +
-          '" alt="' +
-          teamName +
-          '" class="admin-team-logo">'
-        : '<div class="admin-team-logo-placeholder">' +
-          teamName.charAt(0).toUpperCase() +
-          '</div>';
-            
+            let logo;
+
+
+            if (team.logo_url) {
+
+                logo =
+                    '<img src="' +
+                    team.logo_url +
+                    '" alt="' +
+                    teamName +
+                    '" class="admin-team-logo">';
+            }
+
+            else {
+
+                logo =
+                    '<div class="admin-team-logo-placeholder">' +
+                        teamName
+                            .charAt(0)
+                            .toUpperCase() +
+                    '</div>';
+            }
 
 
             const date =
@@ -406,67 +540,94 @@ async function loadRegistrations() {
                         registration.created_at
                     ).toLocaleDateString()
                     : "-";
-html +=
-    '<div class="admin-team-card">' +
 
-        '<div class="admin-team-number">' +
-            String(index + 1).padStart(2, "0") +
-        '</div>' +
 
-        logo +
+            html +=
+                '<div class="admin-team-card">' +
 
-        '<div class="admin-team-info">' +
+                    '<div class="admin-team-number">' +
+                        String(
+                            index + 1
+                        ).padStart(
+                            2,
+                            "0"
+                        ) +
+                    '</div>' +
 
-            '<h3>' +
-                teamName +
-            '</h3>' +
+                    logo +
 
-            '<small>' +
-                'TAG: ' +
-                teamTag +
-            '</small>' +
+                    '<div class="admin-team-info">' +
 
-            '<span>' +
-                'GROUP: ' +
-                group +
-            '</span>' +
+                        '<h3>' +
+                            teamName +
+                        '</h3>' +
 
-            '<span>' +
-                'REGISTERED: ' +
-                date +
-            '</span>' +
+                        '<small>' +
+                            'TAG: ' +
+                            teamTag +
+                        '</small>' +
 
-        '</div>' +
+                        '<span>' +
+                            'GROUP: ' +
+                            group +
+                        '</span>' +
 
-        '<div class="admin-team-actions">' +
+                        '<span>' +
+                            'REGISTERED: ' +
+                            date +
+                        '</span>' +
 
-            '<span class="admin-registration-status ' +
-                statusClass +
-            '">' +
-                String(status).toUpperCase() +
-            '</span>' +
-    
-'<button type="button" class="admin-approve-btn" ' +
-'onclick="updateRegistrationStatus(&quot;' +
-registration.id +
-'&quot;, &quot;approved&quot;)">' +
-'APPROVE' +
-'</button>' +
+                    '</div>' +
 
-'<button type="button" class="admin-reject-btn" ' +
-'onclick="updateRegistrationStatus(&quot;' +
-registration.id +
-'&quot;, &quot;rejected&quot;)">' +
-'REJECT' +
-'</button>' +
+                    '<div class="admin-team-actions">' +
 
-'</div>' +
+                        '<span class="admin-registration-status ' +
+                            statusClass +
+                        '">' +
 
-'</div>';
+                            String(
+                                status
+                            ).toUpperCase() +
 
-box.innerHTML = html;
+                        '</span>' +
 
-loadGroups(data);
+                        '<button ' +
+                            'type="button" ' +
+                            'class="admin-approve-btn" ' +
+                            'onclick="updateRegistrationStatus(\'' +
+                                registration.id +
+                            '\', \'approved\')">' +
+
+                            'APPROVE' +
+
+                        '</button>' +
+
+                        '<button ' +
+                            'type="button" ' +
+                            'class="admin-reject-btn" ' +
+                            'onclick="updateRegistrationStatus(\'' +
+                                registration.id +
+                            '\', \'rejected\')">' +
+
+                            'REJECT' +
+
+                        '</button>' +
+
+                    '</div>' +
+
+                '</div>';
+        }
+    );
+
+
+    box.innerHTML =
+        html ||
+        "NO REGISTERED TEAMS";
+
+
+    loadGroups(data);
+}
+
 
 // =========================================
 // APPROVE / REJECT
@@ -484,24 +645,24 @@ async function updateRegistrationStatus(
     );
 
 
-    const {
-        error
-    } = await adminClient
-        .from("tournament_registrations")
-        .update({
-            status: newStatus
-        })
-        .eq(
-            "id",
-            registrationId
-        );
+    const result =
+        await adminClient
+            .from("tournament_registrations")
+            .update({
+                status:
+                    newStatus
+            })
+            .eq(
+                "id",
+                registrationId
+            );
 
 
-    if (error) {
+    if (result.error) {
 
         console.error(
             "STATUS UPDATE ERROR:",
-            error
+            result.error
         );
 
         alert(
@@ -513,13 +674,19 @@ async function updateRegistrationStatus(
 
 
     console.log(
-        "REGISTRATION STATUS UPDATED:",
+        "REGISTRATION UPDATED:",
         newStatus
     );
 
 
     await loadRegistrations();
+
+    await loadScoreTeams();
 }
+
+
+window.updateRegistrationStatus =
+    updateRegistrationStatus;
 
 
 // =========================================
@@ -528,9 +695,12 @@ async function updateRegistrationStatus(
 
 function loadGroups(registrations) {
 
-    const box = $("adminGroups");
+    const box =
+        $("adminGroups");
 
-    if (!box) return;
+    if (!box) {
+        return;
+    }
 
 
     const groups = {};
@@ -547,6 +717,7 @@ function loadGroups(registrations) {
                 65 + i
             );
 
+
         groups[
             "Group " + letter
         ] = [];
@@ -554,10 +725,11 @@ function loadGroups(registrations) {
 
 
     registrations.forEach(
-        registration => {
+        function(registration) {
 
             const group =
                 registration.group_name;
+
 
             if (
                 group &&
@@ -576,70 +748,83 @@ function loadGroups(registrations) {
 
 
     Object.keys(groups).forEach(
-        groupName => {
+        function(groupName) {
 
             const teams =
                 groups[groupName];
 
-            if (!teams.length) return;
 
-
-           html +=
-    '<div class="admin-group">' +
-
-        '<div class="admin-group-header">' +
-
-            '<strong>' +
-                groupName +
-            '</strong>' +
-
-            '<span>' +
-                teams.length +
-                ' / 16' +
-            '</span>' +
-
-        '</div>' +
-
-        '<div class="admin-group-teams">';
-        
-
-    teams.forEach(
-        registration => {
-
-            const team =
-                registration.teams;
-
-            if (!team) {
+            if (!teams.length) {
                 return;
             }
 
+
             html +=
-                '<div>' +
+                '<div class="admin-group">' +
 
-                    '<strong>' +
-                        team.name +
-                    '</strong>' +
+                    '<div class="admin-group-header">' +
 
-                    '<small>' +
-                        (team.tag || "") +
-                    '</small>' +
+                        '<strong>' +
+                            groupName +
+                        '</strong>' +
+
+                        '<span>' +
+                            teams.length +
+                            ' / 16' +
+                        '</span>' +
+
+                    '</div>' +
+
+                    '<div class="admin-group-teams">';
+
+
+            teams.forEach(
+                function(registration) {
+
+                    const team =
+                        registration.teams;
+
+
+                    if (!team) {
+                        return;
+                    }
+
+
+                    html +=
+                        '<div>' +
+
+                            '<strong>' +
+                                (
+                                    team.name ||
+                                    "UNKNOWN TEAM"
+                                ) +
+                            '</strong>' +
+
+                            '<small>' +
+                                (
+                                    team.tag ||
+                                    ""
+                                ) +
+                            '</small>' +
+
+                        '</div>';
+                }
+            );
+
+
+            html +=
+                    '</div>' +
 
                 '</div>';
-
         }
     );
 
 
-    html +=
-        '</div>' +
-    '</div>';
+    box.innerHTML =
+        html ||
+        "NO GROUPS CREATED YET";
+}
 
-});
-
-
-box.innerHTML =
-    html ||
-    "NO GROUPS CREATED YET";
 
 // =========================================
 // REGISTRATION OPEN / CLOSED
@@ -650,7 +835,9 @@ function updateRegistrationButton(status) {
     const button =
         $("registrationToggle");
 
-    if (!button) return;
+    if (!button) {
+        return;
+    }
 
 
     if (
@@ -664,8 +851,9 @@ function updateRegistrationButton(status) {
 
         button.className =
             "lime";
+    }
 
-    } else {
+    else {
 
         button.textContent =
             "REGISTRATION CLOSED";
@@ -691,6 +879,7 @@ if (registrationToggle) {
                     .toUpperCase()
                     .includes("OPEN");
 
+
             const newStatus =
                 isOpen
                     ? "closed"
@@ -701,29 +890,28 @@ if (registrationToggle) {
                 true;
 
 
-            const {
-                error
-            } = await adminClient
-                .from("tournaments")
-                .update({
-                    registration_status:
-                        newStatus
-                })
-                .eq(
-                    "id",
-                    TOURNAMENT_ID
-                );
+            const result =
+                await adminClient
+                    .from("tournaments")
+                    .update({
+                        registration_status:
+                            newStatus
+                    })
+                    .eq(
+                        "id",
+                        TOURNAMENT_ID
+                    );
 
 
             this.disabled =
                 false;
 
 
-            if (error) {
+            if (result.error) {
 
                 console.error(
                     "REGISTRATION STATUS ERROR:",
-                    error
+                    result.error
                 );
 
                 alert(
@@ -737,7 +925,6 @@ if (registrationToggle) {
             updateRegistrationButton(
                 newStatus
             );
-
         }
     );
 }
@@ -794,33 +981,32 @@ if (saveTournamentChanges) {
                 "SAVING...";
 
 
-            const {
-                error
-            } = await adminClient
-                .from("tournaments")
-                .update({
+            const result =
+                await adminClient
+                    .from("tournaments")
+                    .update({
 
-                    max_teams:
-                        maxTeams,
+                        max_teams:
+                            maxTeams,
 
-                    prize_pool:
-                        prizePool,
+                        prize_pool:
+                            prizePool,
 
-                    status:
-                        status
+                        status:
+                            status
 
-                })
-                .eq(
-                    "id",
-                    TOURNAMENT_ID
-                );
+                    })
+                    .eq(
+                        "id",
+                        TOURNAMENT_ID
+                    );
 
 
-            if (error) {
+            if (result.error) {
 
                 console.error(
                     "TOURNAMENT SAVE ERROR:",
-                    error
+                    result.error
                 );
 
                 message.textContent =
@@ -852,30 +1038,46 @@ async function loadScoreTeams() {
     const select =
         $("scoreTeamSelect");
 
-    if (!select) return;
+    if (!select) {
+        return;
+    }
 
 
-    const {
-        data,
-        error
-    } = await adminClient
-        .from("tournament_registrations")
-        .select(`
-            team_id,
-            teams (
-                id,
-                name,
-                tag
+    const result =
+        await adminClient
+            .from("tournament_registrations")
+            .select(`
+                team_id,
+                status,
+                teams (
+                    id,
+                    name,
+                    tag
+                )
+            `)
+            .eq(
+                "tournament_id",
+                TOURNAMENT_ID
             )
-        `)
-        .eq(
-            "tournament_id",
-            TOURNAMENT_ID
-        )
-        .neq(
-            "status",
-            "rejected"
+            .neq(
+                "status",
+                "rejected"
+            );
+
+
+    const data =
+        result.data || [];
+
+
+    if (result.error) {
+
+        console.error(
+            "SCORE TEAM ERROR:",
+            result.error
         );
+
+        return;
+    }
 
 
     console.log(
@@ -884,50 +1086,50 @@ async function loadScoreTeams() {
     );
 
 
-    if (error) {
-
-        console.error(
-            "SCORE TEAM ERROR:",
-            error
-        );
-
-        return;
-    }
-
-
     adminRegisteredTeams =
-        data || [];
+        data;
 
 
- select.innerHTML =
-    '<option value="">' +
-        'SELECT TEAM' +
-    '</option>';
+    select.innerHTML =
+        '<option value="">' +
+            'SELECT TEAM' +
+        '</option>';
 
 
-adminRegisteredTeams.forEach(
-    registration => {
+    adminRegisteredTeams.forEach(
+        function(registration) {
 
-        if (!registration.teams) {
-            return;
+            if (!registration.teams) {
+                return;
+            }
+
+
+            const team =
+                registration.teams;
+
+
+            select.innerHTML +=
+                '<option value="' +
+                    registration.team_id +
+                '">' +
+
+                    (
+                        team.name ||
+                        "UNKNOWN TEAM"
+                    ) +
+
+                    (
+                        team.tag
+                            ? ' [' +
+                              team.tag +
+                              ']'
+                            : ""
+                    ) +
+
+                '</option>';
         }
-
-        const team =
-            registration.teams;
-
-        select.innerHTML +=
-            '<option value="' +
-                registration.team_id +
-            '">' +
-                team.name +
-                (
-                    team.tag
-                        ? ' [' + team.tag + ']'
-                        : ''
-                ) +
-            '</option>';
-    }
-);
+    );
+}
 
 
 // =========================================
@@ -938,19 +1140,22 @@ function calculateScoreTotal() {
 
     const wins =
         Number(
-            $("scoreWins")?.value || 0
+            $("scoreWins")?.value ||
+            0
         );
 
 
     const placement =
         Number(
-            $("scorePlacement")?.value || 0
+            $("scorePlacement")?.value ||
+            0
         );
 
 
     const kills =
         Number(
-            $("scoreKills")?.value || 0
+            $("scoreKills")?.value ||
+            0
         );
 
 
@@ -965,6 +1170,7 @@ function calculateScoreTotal() {
 
 
     if (preview) {
+
         preview.textContent =
             total;
     }
@@ -979,10 +1185,11 @@ function calculateScoreTotal() {
     "scorePlacement",
     "scoreKills"
 ].forEach(
-    id => {
+    function(id) {
 
         const input =
             $(id);
+
 
         if (input) {
 
@@ -1015,25 +1222,29 @@ if (saveTeamScore) {
 
             const matches =
                 Number(
-                    $("scoreMatches").value || 0
+                    $("scoreMatches").value ||
+                    0
                 );
 
 
             const wins =
                 Number(
-                    $("scoreWins").value || 0
+                    $("scoreWins").value ||
+                    0
                 );
 
 
             const placement =
                 Number(
-                    $("scorePlacement").value || 0
+                    $("scorePlacement").value ||
+                    0
                 );
 
 
             const kills =
                 Number(
-                    $("scoreKills").value || 0
+                    $("scoreKills").value ||
+                    0
                 );
 
 
@@ -1064,53 +1275,58 @@ if (saveTeamScore) {
                 "SAVING SCORE...";
 
 
-            const {
-                error
-            } = await adminClient
-                .from("tournament_scores")
-                .upsert({
+            const result =
+                await adminClient
+                    .from("tournament_scores")
+                    .upsert(
 
-                    tournament_id:
-                        TOURNAMENT_ID,
+                        {
 
-                    team_id:
-                        teamId,
+                            tournament_id:
+                                TOURNAMENT_ID,
 
-                    matches_played:
-                        matches,
+                            team_id:
+                                teamId,
 
-                    wins:
-                        wins,
+                            matches_played:
+                                matches,
 
-                    placement_points:
-                        placement,
+                            wins:
+                                wins,
 
-                    kill_points:
-                        kills,
+                            placement_points:
+                                placement,
 
-                    total_points:
-                        total,
+                            kill_points:
+                                kills,
 
-                    updated_at:
-                        new Date().toISOString()
+                            total_points:
+                                total,
 
-                }, {
+                            updated_at:
+                                new Date()
+                                    .toISOString()
 
-                    onConflict:
-                        "tournament_id,team_id"
+                        },
 
-                });
+                        {
+
+                            onConflict:
+                                "tournament_id,team_id"
+
+                        }
+                    );
 
 
             saveTeamScore.disabled =
                 false;
 
 
-            if (error) {
+            if (result.error) {
 
                 console.error(
                     "SCORE SAVE ERROR:",
-                    error
+                    result.error
                 );
 
                 message.textContent =
@@ -1139,21 +1355,39 @@ async function loadAdminAnnouncements() {
     const container =
         $("adminAnnouncements");
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
 
-    const {
-        data,
-        error
-    } = await adminClient
-        .from("announcements")
-        .select("*")
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
+    const result =
+        await adminClient
+            .from("announcements")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    const data =
+        result.data || [];
+
+
+    if (result.error) {
+
+        console.error(
+            "ANNOUNCEMENT LOAD ERROR:",
+            result.error
         );
+
+        container.textContent =
+            "UNABLE TO LOAD ANNOUNCEMENTS";
+
+        return;
+    }
 
 
     console.log(
@@ -1162,82 +1396,152 @@ async function loadAdminAnnouncements() {
     );
 
 
-    if (error) {
+    if (!data.length) {
 
-        console.error(
-            "ANNOUNCEMENT LOAD ERROR:",
-            error
-        );
-
-        container.innerHTML =
-            "UNABLE TO LOAD ANNOUNCEMENTS";
-
-        return;
-    }
-
-
-    if (
-        !data ||
-        data.length === 0
-    ) {
-
-        container.innerHTML =
+        container.textContent =
             "NO ANNOUNCEMENTS YET";
 
         return;
     }
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     data.forEach(
-        announcement => {
+        function(announcement) {
 
             const status =
                 announcement.published
                     ? "PUBLISHED"
                     : "DRAFT";
 
-container.innerHTML +=
-    '<div class="admin-announcement-card">' +
 
-        '<div>' +
+            const card =
+                document.createElement(
+                    "div"
+                );
 
-            '<small>' +
-                'ANNOUNCEMENT' +
-            '</small>' +
 
-            '<h3>' +
-                (announcement.title || "") +
-            '</h3>' +
+            card.className =
+                "admin-announcement-card";
 
-            '<p>' +
-                (announcement.content || "") +
-            '</p>' +
 
-            '<span>' +
-                status +
-            '</span>' +
+            const content =
+                document.createElement(
+                    "div"
+                );
 
-        '</div>' +
 
-        '<button ' +
-            'class="outline" ' +
-            'type="button" ' +
-            'onclick="deleteAnnouncement(\'' +
-                announcement.id +
-            '\')">' +
-            'DELETE' +
-        '</button>' +
+            const small =
+                document.createElement(
+                    "small"
+                );
 
-    '</div>';
 
-    
+            small.textContent =
+                "ANNOUNCEMENT";
+
+
+            const title =
+                document.createElement(
+                    "h3"
+                );
+
+
+            title.textContent =
+                announcement.title ||
+                "";
+
+
+            const message =
+                document.createElement(
+                    "p"
+                );
+
+
+            message.textContent =
+                announcement.content ||
+                "";
+
+
+            const statusElement =
+                document.createElement(
+                    "span"
+                );
+
+
+            statusElement.textContent =
+                status;
+
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.type =
+                "button";
+
+
+            deleteButton.className =
+                "outline";
+
+
+            deleteButton.textContent =
+                "DELETE";
+
+
+            deleteButton.addEventListener(
+                "click",
+                async function() {
+
+                    await deleteAnnouncement(
+                        announcement.id
+                    );
+                }
+            );
+
+
+            content.appendChild(
+                small
+            );
+
+
+            content.appendChild(
+                title
+            );
+
+
+            content.appendChild(
+                message
+            );
+
+
+            content.appendChild(
+                statusElement
+            );
+
+
+            card.appendChild(
+                content
+            );
+
+
+            card.appendChild(
+                deleteButton
+            );
+
+
+            container.appendChild(
+                card
+            );
         }
     );
-
 }
+
 
 // =========================================
 // CREATE ANNOUNCEMENT
@@ -1253,30 +1557,44 @@ if (publishAnnouncement) {
         "click",
         async function() {
 
+            const titleElement =
+                $("announcementTitle");
+
+
+            const messageElement =
+                $("announcementMessage");
+
+
+            const publishedElement =
+                $("announcementPublished");
+
+
+            const statusElement =
+                $("announcementMessageStatus");
+
+
             const title =
-                $("announcementTitle")
-                    .value
-                    .trim();
+                titleElement
+                    ? titleElement.value.trim()
+                    : "";
 
 
             const content =
-                $("announcementMessage")
-                    .value
-                    .trim();
+                messageElement
+                    ? messageElement.value.trim()
+                    : "";
 
 
             const published =
-                $("announcementPublished")
-                    .value === "true";
-
-
-            const status =
-                $("announcementMessageStatus");
+                publishedElement
+                    ? publishedElement.value ===
+                      "true"
+                    : true;
 
 
             if (!title) {
 
-                status.textContent =
+                statusElement.textContent =
                     "PLEASE ENTER A TITLE";
 
                 return;
@@ -1285,7 +1603,7 @@ if (publishAnnouncement) {
 
             if (!content) {
 
-                status.textContent =
+                statusElement.textContent =
                     "PLEASE ENTER A MESSAGE";
 
                 return;
@@ -1296,58 +1614,68 @@ if (publishAnnouncement) {
                 true;
 
 
-            status.textContent =
+            statusElement.textContent =
                 "PUBLISHING...";
 
 
-            const {
-                error
-            } = await adminClient
-                .from("announcements")
-                .insert({
+            const result =
+                await adminClient
+                    .from("announcements")
+                    .insert({
 
-                    title:
-                        title,
+                        title:
+                            title,
 
-                    content:
-                        content,
+                        content:
+                            content,
 
-                    published:
-                        published
+                        published:
+                            published
 
-                });
+                    });
 
 
             publishAnnouncement.disabled =
                 false;
 
 
-            if (error) {
+            if (result.error) {
 
                 console.error(
                     "ANNOUNCEMENT SAVE ERROR:",
-                    error
+                    result.error
                 );
 
-                status.textContent =
+                statusElement.textContent =
                     "FAILED TO PUBLISH ANNOUNCEMENT";
 
                 return;
             }
 
 
-            status.textContent =
+            statusElement.textContent =
                 "ANNOUNCEMENT PUBLISHED ✓";
 
 
-            $("announcementTitle").value =
-                "";
+            if (titleElement) {
 
-            $("announcementMessage").value =
-                "";
+                titleElement.value =
+                    "";
+            }
 
-            $("announcementPublished").value =
-                "true";
+
+            if (messageElement) {
+
+                messageElement.value =
+                    "";
+            }
+
+
+            if (publishedElement) {
+
+                publishedElement.value =
+                    "true";
+            }
 
 
             await loadAdminAnnouncements();
@@ -1367,25 +1695,27 @@ async function deleteAnnouncement(id) {
             "Delete this announcement?"
         );
 
+
     if (!confirmed) {
         return;
     }
 
-    const {
-        error
-    } = await adminClient
-        .from("announcements")
-        .delete()
-        .eq(
-            "id",
-            id
-        );
 
-    if (error) {
+    const result =
+        await adminClient
+            .from("announcements")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
+
+
+    if (result.error) {
 
         console.error(
             "ANNOUNCEMENT DELETE ERROR:",
-            error
+            result.error
         );
 
         alert(
@@ -1395,12 +1725,14 @@ async function deleteAnnouncement(id) {
         return;
     }
 
-    await loadAdminAnnouncements();
 
-    
-     }
-    
+    await loadAdminAnnouncements();
 }
+
+
+window.deleteAnnouncement =
+    deleteAnnouncement;
+
 
 // =========================================
 // LOGOUT
@@ -1408,6 +1740,7 @@ async function deleteAnnouncement(id) {
 
 const logoutBtn =
     $("adminLogout");
+
 
 if (logoutBtn) {
 
@@ -1429,4 +1762,3 @@ if (logoutBtn) {
 // =========================================
 
 checkAdmin();
-

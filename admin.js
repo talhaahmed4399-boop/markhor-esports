@@ -1396,8 +1396,13 @@ async function deleteAnnouncement(id) {
     }
 
     await loadAdminAnnouncements();
-}
 
+    
+     }
+    
+  );
+    
+}
 
 // =========================================
 // LOGOUT

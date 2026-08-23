@@ -906,38 +906,35 @@ async function loadScoreTeams() {
         data || [];
 
 
-    select.innerHTML = `
-        <option value="">
-            SELECT TEAM
-        </option>
-    
+ select.innerHTML =
+    '<option value="">' +
+        'SELECT TEAM' +
+    '</option>';
 
 
-    adminRegisteredTeams.forEach(
-        registration => {
+adminRegisteredTeams.forEach(
+    registration => {
 
-            if (!registration.teams) {
-                return;
-            }
-
-
-            const team =
-                registration.teams;
-
-
-            select.innerHTML += `
-                <option value="${registration.team_id}">
-                    ${team.name}
-                    ${
-                        team.tag
-                            ? " [" + team.tag + "]"
-                            : ""
-                    }
-                </option>
-            `;
+        if (!registration.teams) {
+            return;
         }
-    );
-}
+
+        const team =
+            registration.teams;
+
+        select.innerHTML +=
+            '<option value="' +
+                registration.team_id +
+            '">' +
+                team.name +
+                (
+                    team.tag
+                        ? ' [' + team.tag + ']'
+                        : ''
+                ) +
+            '</option>';
+    }
+);
 
 
 // =========================================

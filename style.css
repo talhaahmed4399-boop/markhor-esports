@@ -7433,3 +7433,139 @@
         font-size: 22px;
     }
 }
+/* MVP LIVE BOARD */
+
+#currentMvp {
+    margin-top:30px;
+}
+
+
+#currentMvp .mvp-card {
+
+    display:flex;
+    align-items:center;
+    gap:35px;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(190,255,0,.18),
+    rgba(20,20,20,.9)
+    );
+
+    border:1px solid rgba(190,255,0,.35);
+
+    box-shadow:
+    0 0 40px rgba(190,255,0,.15);
+
+}
+
+
+#currentMvp .mvp-character {
+
+    width:180px;
+    height:220px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:90px;
+
+    border-radius:20px;
+
+    background:
+    rgba(255,255,255,.05);
+
+}
+
+
+#currentMvp .mvp-info h1 {
+
+    font-size:55px;
+
+    margin:10px 0;
+
+    font-weight:1000;
+
+    text-transform:uppercase;
+
+}
+
+
+#currentMvp .mvp-info h3 {
+
+    color:#bfff00;
+
+    letter-spacing:2px;
+
+}
+
+
+
+#currentMvp .mvp-stats {
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+
+
+#currentMvp .mvp-stats div {
+
+    padding:15px 25px;
+
+    background:
+    rgba(255,255,255,.06);
+
+    border-radius:12px;
+
+    text-align:center;
+
+}
+
+
+#currentMvp .mvp-stats b {
+
+    display:block;
+
+    font-size:30px;
+
+    color:#bfff00;
+
+}
+
+
+#currentMvp .mvp-stats small {
+
+    font-size:10px;
+
+    color:white;
+
+}
+
+
+@media(max-width:700px){
+
+#currentMvp .mvp-card{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+
+#currentMvp .mvp-info h1{
+
+font-size:38px;
+
+}
+
+}

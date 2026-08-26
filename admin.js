@@ -2530,10 +2530,10 @@ async function addMatch(){
 
 
        scheduled_at:
-       $("matchDate").value + "T" + $("matchTime").value + ":00",
+       $("matchDate").value + "T" 
 
-
-      
+       match_time:
+       $("matchTime").value || null,
 
         status:
         $("matchStatus").value

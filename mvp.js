@@ -140,7 +140,10 @@ box.innerHTML =
 
 <div class="mvp-character">
 
-🪖
+    <img
+        src="assets/mvp-character.jpg"
+        alt="MVP Character"
+    >
 
 </div>
 

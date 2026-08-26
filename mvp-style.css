@@ -632,4 +632,22 @@ min-width:100px;
 
 
 }
+.mvp-character {
+    overflow: hidden;
+}
 
+.mvp-character img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+
+    filter:
+        drop-shadow(0 0 20px rgba(190,255,0,.25));
+
+    transition: transform .4s ease;
+}
+
+.mvp-card:hover .mvp-character img {
+    transform: scale(1.04);
+}

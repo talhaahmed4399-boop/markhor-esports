@@ -7569,3 +7569,11 @@ font-size:38px;
 }
 
 }
+.mvp-section {
+    background:red !important;
+    padding:50px !important;
+}
+
+#currentMvp {
+    border:5px solid yellow !important;
+}

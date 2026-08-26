@@ -2551,21 +2551,15 @@ async function addMatch(){
 
 
 
-    if(error){
+  if(error){
 
-        console.error(
-            "ADD MATCH ERROR",
-            error
-        );
+    console.error("ADD MATCH ERROR", error);
 
-        alert(
-            "Match add failed"
-        );
+    alert(error.message);
 
-        return;
+    return;
 
-    }
-
+}
 
 
     $("matchMessage").textContent =

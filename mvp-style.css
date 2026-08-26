@@ -1,1 +1,634 @@
+/* =====================================
+   MARKHOR ESPORTS
+   MVP PREMIUM STYLE
+===================================== */
 
+
+.mvp-section{
+    position:relative;
+    padding-top:60px;
+    padding-bottom:60px;
+    overflow:hidden;
+}
+
+
+.mvp-section::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    right:-200px;
+    top:-150px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(190,255,0,.20),
+        transparent 70%
+    );
+
+    filter:blur(60px);
+
+}
+
+
+/* TITLE */
+
+.mvp-title{
+    position:relative;
+    margin-bottom:35px;
+}
+
+
+.mvp-title small{
+
+    color:#bfff00;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:4px;
+
+}
+
+
+.mvp-title h2{
+
+    margin-top:10px;
+
+    font-size:45px;
+
+    font-weight:1000;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+}
+
+
+
+/* =====================================
+   MVP CARD
+===================================== */
+
+
+#currentMvp{
+
+    position:relative;
+
+}
+
+
+.mvp-card{
+
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:45px;
+
+
+    padding:40px;
+
+
+    min-height:320px;
+
+
+    border-radius:25px;
+
+
+    background:
+
+    linear-gradient(
+        135deg,
+        rgba(190,255,0,.15),
+        rgba(15,15,15,.95)
+    );
+
+
+    border:
+
+    1px solid rgba(190,255,0,.35);
+
+
+
+    box-shadow:
+
+    0 0 50px rgba(190,255,0,.12);
+
+
+
+    overflow:hidden;
+
+
+    animation:
+
+    mvpFade .7s ease;
+
+}
+
+
+
+@keyframes mvpFade{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+
+/* shine */
+
+
+.mvp-card::after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+top:0;
+
+
+left:-120%;
+
+
+width:80%;
+
+
+height:100%;
+
+
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.15),
+
+transparent
+
+);
+
+
+
+transform:skewX(-25deg);
+
+
+
+animation:
+
+mvpShine 5s infinite;
+
+
+}
+
+
+
+@keyframes mvpShine{
+
+
+0%{
+
+left:-120%;
+
+}
+
+
+40%{
+
+left:150%;
+
+}
+
+
+100%{
+
+left:150%;
+
+}
+
+
+}
+
+
+
+
+
+/* =====================================
+   CHARACTER
+===================================== */
+
+
+.mvp-character{
+
+
+width:230px;
+
+height:260px;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+
+font-size:120px;
+
+
+
+border-radius:25px;
+
+
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(190,255,0,.25),
+
+transparent 70%
+
+);
+
+
+
+border:
+
+1px solid rgba(190,255,0,.3);
+
+
+
+box-shadow:
+
+0 0 40px rgba(190,255,0,.2);
+
+
+
+animation:
+
+floatCharacter 3s infinite ease-in-out;
+
+
+}
+
+
+
+@keyframes floatCharacter{
+
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+
+}
+
+
+
+
+/* =====================================
+   MVP INFO
+===================================== */
+
+
+.mvp-info{
+
+
+position:relative;
+
+z-index:2;
+
+}
+
+
+
+.mvp-info span{
+
+
+display:inline-block;
+
+
+padding:8px 15px;
+
+
+border-radius:30px;
+
+
+background:
+
+rgba(190,255,0,.12);
+
+
+
+color:#bfff00;
+
+
+
+font-size:11px;
+
+
+font-weight:900;
+
+
+letter-spacing:2px;
+
+
+}
+
+
+
+
+.mvp-info h1{
+
+
+margin:15px 0 5px;
+
+
+font-size:65px;
+
+
+font-weight:1000;
+
+
+text-transform:uppercase;
+
+
+
+line-height:1;
+
+
+
+}
+
+
+
+.mvp-info h3{
+
+
+color:#bfff00;
+
+
+letter-spacing:3px;
+
+
+font-size:18px;
+
+
+}
+
+
+
+
+
+/* =====================================
+   STATS BOX
+===================================== */
+
+
+.mvp-stats{
+
+
+display:flex;
+
+
+gap:15px;
+
+
+margin-top:30px;
+
+
+}
+
+
+.mvp-stats div{
+
+
+min-width:130px;
+
+
+padding:18px;
+
+
+border-radius:15px;
+
+
+
+background:
+
+rgba(255,255,255,.06);
+
+
+
+border:
+
+1px solid rgba(255,255,255,.1);
+
+
+
+text-align:center;
+
+
+
+transition:.3s;
+
+
+}
+
+
+
+.mvp-stats div:hover{
+
+
+transform:translateY(-8px);
+
+
+border-color:#bfff00;
+
+
+}
+
+
+
+.mvp-stats b{
+
+
+display:block;
+
+
+font-size:35px;
+
+
+color:#bfff00;
+
+
+font-weight:1000;
+
+
+}
+
+
+
+.mvp-stats small{
+
+
+font-size:10px;
+
+
+letter-spacing:2px;
+
+
+color:#aaa;
+
+
+font-weight:900;
+
+
+}
+
+
+
+/* EMPTY */
+
+.mvp-empty,
+.mvp-loading{
+
+
+height:180px;
+
+
+display:flex;
+
+
+align-items:center;
+
+
+justify-content:center;
+
+
+flex-direction:column;
+
+
+border-radius:20px;
+
+
+background:
+
+rgba(255,255,255,.03);
+
+
+
+color:#aaa;
+
+
+font-weight:900;
+
+
+}
+
+
+
+/* MOBILE */
+
+
+@media(max-width:768px){
+
+
+.mvp-card{
+
+
+flex-direction:column;
+
+
+text-align:center;
+
+
+padding:25px;
+
+
+}
+
+
+
+.mvp-character{
+
+
+width:170px;
+
+height:190px;
+
+font-size:80px;
+
+}
+
+
+
+.mvp-info h1{
+
+
+font-size:40px;
+
+
+}
+
+
+
+.mvp-stats{
+
+
+justify-content:center;
+
+
+flex-wrap:wrap;
+
+
+}
+
+
+
+.mvp-stats div{
+
+
+min-width:100px;
+
+
+}
+
+
+}

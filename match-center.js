@@ -11,11 +11,11 @@ async function loadPublicMatches() {
 
     if (!box) return;
 
-    const { data, error } = await supabase
-        .from("matches")
-        .select("*")
-        .order("match_no", { ascending: true });
-
+const { data, error } = await supabaseClient
+    .from("matches")
+    .select("*")
+    .order("match_no", { ascending: true });
+    
     if (error) {
 
         console.error("MATCH LOAD ERROR:", error);

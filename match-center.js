@@ -1,7 +1,10 @@
 // =========================================
 // PUBLIC MATCH CENTER
 // =========================================
-
+const supabaseClient = window.supabase.createClient(
+    window.MARKHOR_CONFIG.supabaseUrl,
+    window.MARKHOR_CONFIG.supabasePublishableKey
+);
 async function loadPublicMatches() {
 
     const box = document.getElementById("publicMatches");

@@ -2504,89 +2504,80 @@ async function loadAdminMatches(){
 
 
 
-async function addMatch(){
+async function addMatch() {
 
+    const matchDate = $("matchDate").value;
+    const matchTime = $("matchTime").value;
+
+    if (!matchDate || !matchTime) {
+        alert("Please select match date and time.");
+        return;
+    }
+
+    const matchDateTime =
+        matchDate + "T" + matchTime + ":00";
 
     const match = {
 
-        tournament_id:
-        TOURNAMENT_ID,
+        tournament_id: TOURNAMENT_ID,
 
+        match_no: Number($("matchNo").value),
 
-        match_no:
-        $("matchNo").value,
+        map: $("matchMap").value,
 
-
-        map:
-        $("matchMap").value,
-
-
-        round:
-        $("matchRound").value,
-
+        round: $("matchRound").value,
 
         map_image:
-        $("matchImage").value,
+            $("matchImage").value || null,
 
+        scheduled_at: matchDateTime,
 
-      const matchDate = $("matchDate").value;
-const matchTime = $("matchTime").value;
+        match_time: matchDateTime,
 
-const matchDateTime = matchDate + "T" + matchTime + ":00";
-
-const match = {
-
-    tournament_id: TOURNAMENT_ID,
-
-    match_no: Number($("matchNo").value),
-
-    map: $("matchMap").value,
-
-    round: $("matchRound").value,
-
-    map_image: $("matchImage").value || null,
-
-    scheduled_at: matchDateTime,
-
-    match_time: matchDateTime,
-
-    status: $("matchStatus").value
-
-};
-        status:
-        $("matchStatus").value
+        status: $("matchStatus").value
 
     };
 
 
+    const { data, error } =
+        await adminClient
+            .from("matches")
+            .insert(match)
+            .select();
 
-    const {error} =
-    await adminClient
-    .from("matches")
-    .insert(match);
 
+    if (error) {
 
+        console.error(
+            "ADD MATCH ERROR:",
+            error
+        );
 
-  if(error){
+        alert(
+            "Match add failed: " +
+            error.message
+        );
 
-    console.error("ADD MATCH ERROR", error);
-
-    alert(error.message);
-
-    return;
-
-}
+        return;
+    }
 
 
     $("matchMessage").textContent =
-    "MATCH ADDED SUCCESSFULLY";
+        "MATCH ADDED SUCCESSFULLY";
+
+
+    // Clear form
+    $("matchNo").value = "";
+    $("matchRound").value = "";
+    $("matchImage").value = "";
+    $("matchDate").value = "";
+    $("matchTime").value = "";
+    $("matchStatus").value = "UPCOMING";
 
 
     loadAdminMatches();
 
-
 }
-
 
 
 

@@ -632,3 +632,13 @@ min-width:100px;
 
 
 }
+.mvp-section {
+    background:red !important;
+    border:10px solid yellow !important;
+}
+
+
+#currentMvp {
+    background:blue !important;
+    padding:50px !important;
+}

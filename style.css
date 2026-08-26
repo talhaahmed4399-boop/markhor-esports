@@ -6647,3 +6647,334 @@
     }
 
 }
+/* =========================================
+   MATCH CENTER
+========================================= */
+
+#matches {
+    position: relative;
+}
+
+#matches > h2 {
+    margin-bottom: 35px;
+}
+
+#publicMatches.matches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+
+/* MATCH CARD */
+
+.match-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 380px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20, 25, 15, .98),
+            rgba(5, 8, 5, .98)
+        );
+
+    border: 1px solid rgba(190, 255, 0, .18);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, .45),
+        inset 0 0 30px rgba(190, 255, 0, .025);
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+
+.match-card:hover {
+    transform: translateY(-8px);
+
+    border-color:
+        rgba(190, 255, 0, .65);
+
+    box-shadow:
+        0 20px 55px rgba(0, 0, 0, .6),
+        0 0 35px rgba(190, 255, 0, .10);
+}
+
+
+/* MAP IMAGE */
+
+.match-map {
+    position: relative;
+
+    width: 100%;
+    height: 190px;
+
+    overflow: hidden;
+
+    background: #101410;
+}
+
+
+.match-map::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(5, 8, 5, .95),
+            transparent 65%
+        );
+
+    pointer-events: none;
+}
+
+
+.match-map img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform .6s ease,
+        filter .6s ease;
+}
+
+
+.match-card:hover .match-map img {
+    transform: scale(1.08);
+
+    filter:
+        brightness(1.08)
+        saturate(1.08);
+}
+
+
+/* NO IMAGE */
+
+.no-map-image {
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+    color: rgba(190, 255, 0, .7);
+}
+
+
+/* MATCH INFO */
+
+.match-info {
+    position: relative;
+
+    padding: 22px 22px 18px;
+}
+
+
+.match-info > small {
+    color: #baff00;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+.match-info h3 {
+    margin: 7px 0 4px;
+
+    font-size: 28px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.match-info > span {
+    display: inline-block;
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    opacity: .55;
+}
+
+
+.match-info p {
+    margin-top: 15px;
+
+    line-height: 1.7;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    opacity: .85;
+}
+
+
+/* STATUS */
+
+.match-status {
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    z-index: 5;
+
+    padding: 8px 12px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+
+    backdrop-filter: blur(8px);
+}
+
+
+/* UPCOMING */
+
+.match-status.upcoming {
+    color: #dfff9a;
+
+    background:
+        rgba(100, 130, 30, .35);
+
+    border:
+        1px solid rgba(190, 255, 0, .35);
+}
+
+
+/* LIVE */
+
+.match-status.live {
+    color: #fff;
+
+    background: rgba(220, 30, 30, .75);
+
+    border: 1px solid rgba(255, 80, 80, .8);
+
+    animation: matchLivePulse 1.5s infinite;
+}
+
+
+.match-status.live::before {
+    content: "";
+
+    display: inline-block;
+
+    width: 6px;
+    height: 6px;
+
+    margin-right: 6px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    box-shadow:
+        0 0 10px #fff;
+}
+
+
+/* COMPLETED */
+
+.match-status.completed {
+    color: #ddd;
+
+    background:
+        rgba(80, 80, 80, .55);
+
+    border:
+        1px solid rgba(255, 255, 255, .18);
+}
+
+
+/* LOADING */
+
+.match-loading {
+    width: 100%;
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    opacity: .55;
+}
+
+
+/* LIVE ANIMATION */
+
+@keyframes matchLivePulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 rgba(255, 60, 60, 0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 22px rgba(255, 60, 60, .35);
+    }
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    #publicMatches.matches {
+        grid-template-columns: 1fr;
+    }
+
+    .match-card {
+        min-height: 360px;
+    }
+
+    .match-map {
+        height: 175px;
+    }
+
+    .match-info h3 {
+        font-size: 24px;
+    }
+
+}

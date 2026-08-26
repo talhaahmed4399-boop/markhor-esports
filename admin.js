@@ -2060,6 +2060,350 @@ if(saveTournamentResultBtn){
 loadResultTeams();
 
 loadTournamentResults();
+
+// =========================================
+// MVP SYSTEM
+// =========================================
+
+
+async function loadMvpLeaderboard(){
+
+    const box =
+        $("mvpLeaderboard");
+
+    if(!box) return;
+
+
+    const {
+        data,
+        error
+    } = await adminClient
+        .from("mvp_match_stats")
+        .select("*");
+
+
+    if(error){
+
+        console.error(
+            "MVP LOAD ERROR:",
+            error
+        );
+
+        box.innerHTML =
+            "MVP LOAD FAILED";
+
+        return;
+    }
+
+
+    if(!data || data.length === 0){
+
+        box.innerHTML =
+            "NO MVP STATS YET";
+
+        return;
+    }
+
+
+    let players = {};
+
+
+    data.forEach(stat => {
+
+
+        if(!players[stat.player_name]){
+
+            players[stat.player_name] = {
+
+                name:
+                stat.player_name,
+
+                team:
+                stat.team_name,
+
+                tag:
+                stat.team_tag,
+
+                kills:0,
+
+                damage:0,
+
+                matches:0
+            };
+
+        }
+
+
+        players[stat.player_name].kills +=
+            stat.kills;
+
+
+        players[stat.player_name].damage +=
+            stat.damage;
+
+
+        players[stat.player_name].matches++;
+
+    });
+
+
+
+    const leaderboard =
+        Object.values(players)
+        .sort(
+            (a,b)=>
+            b.kills-a.kills
+        );
+
+
+
+    box.innerHTML = "";
+
+
+    leaderboard.forEach(
+        (player,index)=>{
+
+
+        box.innerHTML += `
+
+        <div class="admin-team-card">
+
+            <div class="admin-team-number">
+                ${index+1}
+            </div>
+
+
+            <div class="admin-team-info">
+
+                <h3>
+                ${player.name}
+                </h3>
+
+
+                <small>
+                ${player.team}
+                [${player.tag || ""}]
+                </small>
+
+
+                <span>
+                ${player.matches} MATCHES
+                </span>
+
+
+                <span>
+                🔥 ${player.kills} KILLS
+                </span>
+
+
+                <span>
+                💥 ${player.damage} DAMAGE
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+        `;
+
+
+        }
+    );
+
+}
+
+
+
+// ADD MVP STATS
+
+
+const addMvpStats =
+    $("addMvpStats");
+
+
+if(addMvpStats){
+
+
+addMvpStats.addEventListener(
+"click",
+async function(){
+
+
+const player =
+$("mvpPlayerName").value.trim();
+
+
+const team =
+$("mvpTeamName").value.trim();
+
+
+const tag =
+$("mvpTeamTag").value.trim();
+
+
+const match =
+Number(
+$("mvpMatchNumber").value
+);
+
+
+const kills =
+Number(
+$("mvpKills").value
+);
+
+
+const damage =
+Number(
+$("mvpDamage").value
+);
+
+
+
+if(!player || !team){
+
+alert(
+"ENTER PLAYER AND TEAM"
+);
+
+return;
+
+}
+
+
+
+const {
+error
+}
+=
+await adminClient
+.from("mvp_match_stats")
+.insert({
+
+tournament_id:
+TOURNAMENT_ID,
+
+player_name:
+player,
+
+team_name:
+team,
+
+team_tag:
+tag,
+
+match_number:
+match,
+
+kills:
+kills,
+
+damage:
+damage
+
+});
+
+
+
+if(error){
+
+console.error(
+"MVP SAVE ERROR:",
+error
+);
+
+
+$("mvpSaveMessage").textContent =
+"MVP SAVE FAILED";
+
+
+return;
+
+}
+
+
+
+$("mvpSaveMessage").textContent =
+"MVP STATS SAVED ✓";
+
+
+
+await loadMvpLeaderboard();
+
+
+});
+
+
+}
+
+
+
+// CLEAR MVP
+
+
+const clearMvp =
+$("clearMvpLeaderboard");
+
+
+if(clearMvp){
+
+
+clearMvp.addEventListener(
+"click",
+async function(){
+
+
+const confirmClear =
+confirm(
+"Clear MVP leaderboard?"
+);
+
+
+if(!confirmClear)
+return;
+
+
+
+const {
+error
+}
+=
+await adminClient
+.from("mvp_match_stats")
+.delete()
+.neq(
+"id",
+"00000000-0000-0000-0000-000000000000"
+);
+
+
+
+if(error){
+
+console.error(
+"MVP CLEAR ERROR:",
+error
+);
+
+alert(
+"FAILED TO CLEAR MVP"
+);
+
+return;
+
+}
+
+
+
+loadMvpLeaderboard();
+
+
+});
+
+
+}
 // =========================================
 // START
 // =========================================

@@ -15,6 +15,8 @@ const { data, error } = await supabaseClient
     .from("matches")
     .select("*")
     .order("match_no", { ascending: true });
+    console.log("MATCH DATA:", data);
+console.log("MATCH ERROR:", error);
     
     if (error) {
 

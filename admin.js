@@ -2405,6 +2405,213 @@ loadMvpLeaderboard();
 
 }
 // =========================================
+// MATCH CENTER MANAGEMENT
+// =========================================
+
+
+async function loadAdminMatches(){
+
+    const box = $("adminMatches");
+
+    if(!box) return;
+
+
+    const {data,error} = await adminClient
+        .from("matches")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+
+    if(error){
+
+        console.error(
+            "MATCH LOAD ERROR",
+            error
+        );
+
+        box.innerHTML =
+        "MATCH LOAD FAILED";
+
+        return;
+    }
+
+
+    if(!data.length){
+
+        box.innerHTML =
+        "NO MATCHES ADDED";
+
+        return;
+    }
+
+
+    box.innerHTML="";
+
+
+    data.forEach(match=>{
+
+
+        box.innerHTML += `
+
+        <div class="admin-team-card">
+
+            <h3>
+            ${match.match_no}
+            </h3>
+
+            <p>
+            MAP:
+            ${match.map}
+            </p>
+
+            <p>
+            ROUND:
+            ${match.round || "-"}
+            </p>
+
+            <p>
+            TIME:
+            ${match.match_time}
+            </p>
+
+            <span>
+            ${match.status}
+            </span>
+
+
+            <button
+            onclick="deleteMatch('${match.id}')">
+            DELETE
+            </button>
+
+
+        </div>
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+
+async function addMatch(){
+
+
+    const match = {
+
+        tournament_id:
+        TOURNAMENT_ID,
+
+
+        match_no:
+        $("matchNo").value,
+
+
+        map:
+        $("matchMap").value,
+
+
+        round:
+        $("matchRound").value,
+
+
+        map_image:
+        $("matchImage").value,
+
+
+        scheduled_at:
+        $("matchDate").value,
+
+
+        match_time:
+        $("matchTime").value,
+
+
+        status:
+        $("matchStatus").value
+
+    };
+
+
+
+    const {error} =
+    await adminClient
+    .from("matches")
+    .insert(match);
+
+
+
+    if(error){
+
+        console.error(
+            "ADD MATCH ERROR",
+            error
+        );
+
+        alert(
+            "Match add failed"
+        );
+
+        return;
+
+    }
+
+
+
+    $("matchMessage").textContent =
+    "MATCH ADDED SUCCESSFULLY";
+
+
+    loadAdminMatches();
+
+
+}
+
+
+
+
+
+async function deleteMatch(id){
+
+
+    await adminClient
+    .from("matches")
+    .delete()
+    .eq(
+        "id",
+        id
+    );
+
+
+    loadAdminMatches();
+
+}
+
+
+
+
+
+const addMatchBtn =
+$("addMatch");
+
+
+if(addMatchBtn){
+
+    addMatchBtn.addEventListener(
+        "click",
+        addMatch
+    );
+
+}
+
+
+
+loadAdminMatches();
+// =========================================
 // START
 // =========================================
 

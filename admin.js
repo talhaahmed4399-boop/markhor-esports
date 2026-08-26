@@ -2529,12 +2529,30 @@ async function addMatch(){
         $("matchImage").value,
 
 
-       scheduled_at:
-       $("matchDate").value + "T" 
+      const matchDate = $("matchDate").value;
+const matchTime = $("matchTime").value;
 
-       match_time:
-       $("matchTime").value || null,
+const matchDateTime = matchDate + "T" + matchTime + ":00";
 
+const match = {
+
+    tournament_id: TOURNAMENT_ID,
+
+    match_no: Number($("matchNo").value),
+
+    map: $("matchMap").value,
+
+    round: $("matchRound").value,
+
+    map_image: $("matchImage").value || null,
+
+    scheduled_at: matchDateTime,
+
+    match_time: matchDateTime,
+
+    status: $("matchStatus").value
+
+};
         status:
         $("matchStatus").value
 

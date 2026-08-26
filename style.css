@@ -6231,3 +6231,419 @@
     }
 
 }
+/* =========================================
+   MARKHOR ESPORTS — MVP MANAGEMENT
+   PREMIUM ESPORTS UI
+========================================= */
+
+.admin-section:has(#mvpLeaderboard) {
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-section:has(#mvpLeaderboard)::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    top: -180px;
+    right: -100px;
+    background: rgba(190, 255, 0, 0.08);
+    filter: blur(80px);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+
+/* =========================================
+   MVP HEADING
+========================================= */
+
+.admin-section:has(#mvpLeaderboard) h2 {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.admin-section:has(#mvpLeaderboard)
+.admin-section-heading small {
+    color: #bfff00;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+
+/* =========================================
+   LIVE MVP BADGE
+========================================= */
+
+.admin-section:has(#mvpLeaderboard) .admin-badge {
+    position: relative;
+    padding: 9px 16px;
+    border: 1px solid rgba(190, 255, 0, .4);
+    color: #bfff00;
+    background: rgba(190, 255, 0, .07);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    box-shadow: 0 0 25px rgba(190, 255, 0, .12);
+}
+
+.admin-section:has(#mvpLeaderboard)
+.admin-badge::before {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: #bfff00;
+    box-shadow: 0 0 12px #bfff00;
+    animation: mvpPulse 1.5s infinite;
+}
+
+@keyframes mvpPulse {
+    0%,100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: .35;
+        transform: scale(.7);
+    }
+}
+
+
+/* =========================================
+   MVP INPUT PANEL
+========================================= */
+
+.admin-section:has(#mvpLeaderboard)
+.score-entry-panel {
+    position: relative;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.015)
+        );
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.25),
+        inset 0 1px rgba(255,255,255,.04);
+}
+
+.admin-section:has(#mvpLeaderboard)
+.control-field label {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,.55);
+}
+
+.admin-section:has(#mvpLeaderboard)
+.control-field input {
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease;
+}
+
+.admin-section:has(#mvpLeaderboard)
+.control-field input:focus {
+    border-color: #bfff00;
+    box-shadow:
+        0 0 0 3px rgba(191,255,0,.08),
+        0 0 25px rgba(191,255,0,.12);
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   ADD MATCH BUTTON
+========================================= */
+
+#addMvpStats {
+    position: relative;
+    margin-top: 18px;
+    min-height: 48px;
+    padding: 0 25px;
+    border: 0;
+    border-radius: 10px;
+    background: #bfff00;
+    color: #080808;
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+#addMvpStats:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 35px rgba(191,255,0,.25);
+}
+
+#addMvpStats:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   SAVE MESSAGE
+========================================= */
+
+#mvpSaveMessage {
+    margin-top: 14px;
+    min-height: 18px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #bfff00;
+}
+
+
+/* =========================================
+   MVP LEADERBOARD
+========================================= */
+
+#mvpLeaderboard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+
+/* =========================================
+   PLAYER ROW
+========================================= */
+
+#mvpLeaderboard .admin-team-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-height: 85px;
+    padding: 15px 18px;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            110deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 15px;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+#mvpLeaderboard .admin-team-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: rgba(255,255,255,.12);
+}
+
+#mvpLeaderboard .admin-team-card:hover {
+    transform: translateX(5px);
+    border-color: rgba(191,255,0,.35);
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.25),
+        0 0 25px rgba(191,255,0,.05);
+}
+
+
+/* =========================================
+   RANK NUMBER
+========================================= */
+
+#mvpLeaderboard .admin-team-number {
+    min-width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.05);
+
+    font-size: 18px;
+    font-weight: 950;
+    color: rgba(255,255,255,.65);
+}
+
+
+/* FIRST PLACE
+========================================= */
+
+#mvpLeaderboard .admin-team-card:first-child {
+    border-color: rgba(191,255,0,.45);
+
+    background:
+        linear-gradient(
+            100deg,
+            rgba(191,255,0,.10),
+            rgba(255,255,255,.025)
+        );
+
+    box-shadow:
+        0 0 35px rgba(191,255,0,.07);
+}
+
+#mvpLeaderboard .admin-team-card:first-child::after {
+    background: #bfff00;
+    box-shadow: 0 0 15px #bfff00;
+}
+
+#mvpLeaderboard .admin-team-card:first-child
+.admin-team-number {
+    color: #080808;
+    background: #bfff00;
+    box-shadow:
+        0 0 22px rgba(191,255,0,.25);
+}
+
+
+/* =========================================
+   PLAYER INFORMATION
+========================================= */
+
+#mvpLeaderboard .admin-team-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 7px 15px;
+    flex: 1;
+}
+
+#mvpLeaderboard .admin-team-info h3 {
+    width: 100%;
+    margin: 0;
+
+    font-size: 17px;
+    font-weight: 950;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+#mvpLeaderboard .admin-team-info small {
+    color: rgba(255,255,255,.55);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+#mvpLeaderboard .admin-team-info span {
+    padding: 6px 9px;
+
+    border-radius: 6px;
+
+    background: rgba(255,255,255,.045);
+
+    color: rgba(255,255,255,.7);
+
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .6px;
+}
+
+#mvpLeaderboard .admin-team-info span:nth-last-child(2) {
+    color: #bfff00;
+}
+
+#mvpLeaderboard .admin-team-info span:last-child {
+    color: #ffb84d;
+}
+
+
+/* =========================================
+   CLEAR BUTTON
+========================================= */
+
+#clearMvpLeaderboard {
+    margin-top: 20px;
+
+    min-height: 46px;
+    padding: 0 22px;
+
+    border-radius: 9px;
+
+    border: 1px solid rgba(255,80,80,.3);
+
+    color: #ff7777;
+
+    background: rgba(255,70,70,.05);
+
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    transition:
+        .2s ease;
+}
+
+#clearMvpLeaderboard:hover {
+    background: rgba(255,70,70,.1);
+    border-color: rgba(255,80,80,.55);
+
+    box-shadow:
+        0 0 25px rgba(255,70,70,.08);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .admin-section:has(#mvpLeaderboard) h2 {
+        font-size: 23px;
+    }
+
+    .admin-section:has(#mvpLeaderboard)
+    .score-entry-panel {
+        padding: 18px;
+    }
+
+    #mvpLeaderboard .admin-team-card {
+        gap: 12px;
+        padding: 13px;
+    }
+
+    #mvpLeaderboard .admin-team-number {
+        min-width: 36px;
+        height: 36px;
+        font-size: 15px;
+    }
+
+    #mvpLeaderboard .admin-team-info h3 {
+        font-size: 14px;
+    }
+
+}

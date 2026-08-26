@@ -2529,13 +2529,11 @@ async function addMatch(){
         $("matchImage").value,
 
 
-        scheduled_at:
-        $("matchDate").value,
+       scheduled_at:
+       $("matchDate").value + "T" + $("matchTime").value + ":00",
 
 
-        match_time:
-        $("matchTime").value,
-
+      
 
         status:
         $("matchStatus").value

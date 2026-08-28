@@ -55,18 +55,20 @@ async function checkAdmin() {
 
     console.log("CHECKING ADMIN...");
 
-    const result =
-        await adminClient.auth.getUser();
+    const {
+        data: {
+            user
+        },
+        error: authError
+    } = await adminClient.auth.getUser();
 
-    const user =
-        result.data &&
-        result.data.user;
 
-    if (result.error) {
+    // AUTH ERROR
+    if (authError) {
 
         console.error(
             "AUTH ERROR:",
-            result.error
+            authError
         );
 
         showAccessDenied(
@@ -77,6 +79,7 @@ async function checkAdmin() {
     }
 
 
+    // NOT LOGGED IN
     if (!user) {
 
         showAccessDenied(
@@ -93,7 +96,38 @@ async function checkAdmin() {
     );
 
 
-    if (user.id !== ADMIN_ID) {
+    // CHECK APPROVED ADMIN
+    const {
+        data: isAdmin,
+        error: adminError
+    } = await adminClient.rpc(
+        "is_admin"
+    );
+
+
+    // ADMIN CHECK ERROR
+    if (adminError) {
+
+        console.error(
+            "ADMIN CHECK ERROR:",
+            adminError
+        );
+
+        showAccessDenied(
+            "ADMIN VERIFICATION FAILED"
+        );
+
+        return;
+    }
+
+
+    // NOT APPROVED
+    if (!isAdmin) {
+
+        console.warn(
+            "USER IS NOT AN APPROVED ADMIN:",
+            user.id
+        );
 
         showAccessDenied(
             "ADMIN ACCESS DENIED"
@@ -101,6 +135,12 @@ async function checkAdmin() {
 
         return;
     }
+
+
+    // APPROVED ADMIN
+    console.log(
+        "APPROVED ADMIN ✓"
+    );
 
 
     if ($("adminLoading")) {
@@ -122,8 +162,15 @@ async function checkAdmin() {
     await loadScoreTeams();
 
     await loadAdminAnnouncements();
-}
 
+    await loadResultTeams();
+
+    await loadTournamentResults();
+
+    await loadMvpLeaderboard();
+
+    await loadAdminMatches();
+}
 
 // =========================================
 // ACCESS DENIED
